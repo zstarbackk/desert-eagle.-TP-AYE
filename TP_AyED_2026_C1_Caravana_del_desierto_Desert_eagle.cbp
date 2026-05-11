@@ -43,6 +43,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Jugador.h" />
+		<Unit filename="Movimiento.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Movimiento.h" />
 		<Unit filename="Tablero.c">
 			<Option compilerVar="CC" />
 		</Unit>
