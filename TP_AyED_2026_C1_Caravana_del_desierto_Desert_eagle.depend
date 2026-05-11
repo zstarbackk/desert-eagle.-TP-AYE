@@ -2,7 +2,7 @@
 1778465258 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\archivos.c
 	"Archivos.h"
 
-1778465258 c:\users\bangho\documents\github\desert-eagle.-tp-aye\archivos.h
+1778478441 c:\users\bangho\documents\github\desert-eagle.-tp-aye\archivos.h
 
 1778467769 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bandido.c
 	"Bandido.h"
@@ -32,10 +32,21 @@
 	"Tablero.h"
 	"Bandido.h"
 
-1778470116 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\utils.c
+1778478441 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\utils.c
 	"Utils.h"
 
-1778470202 c:\users\bangho\documents\github\desert-eagle.-tp-aye\utils.h
+1778478576 c:\users\bangho\documents\github\desert-eagle.-tp-aye\utils.h
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	"Errores.h"
+
+1778478539 c:\users\bangho\documents\github\desert-eagle.-tp-aye\errores.h
+
+1778478517 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\config.c
+	"Config.h"
+
+1778478441 c:\users\bangho\documents\github\desert-eagle.-tp-aye\config.h
+	"Utils.h"
+	<string.h>
 

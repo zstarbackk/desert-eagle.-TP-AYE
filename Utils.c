@@ -25,3 +25,15 @@ int AbrirArchivo(FILE** Pf,const char* NombreArchivo,const char* Modo)
 
     return EXITO;
 }
+
+int trozarLinea(char *linea, char **clave, char **valor)
+{
+    char *separador = strchr(linea, '=');
+    if (separador == NULL)
+        return FIN_ARCHIVO;
+
+    *separador = '\0';
+    *clave = linea;
+    *valor = separador + 1;
+    return EXITO;
+}

@@ -45,6 +45,12 @@
 #define ERROR_OPERACION        -51
 
 
+#define FIN_ARCHIVO            -99
+#define POCAS_POSICIONES       -101
+#define POCAS_VIDAS            -102
+#define EXCESO_EVENTOS         -103
+
+
 //const char* mensaje_error(int cod);
 
 #endif // ERRORES_H_INCLUDED
