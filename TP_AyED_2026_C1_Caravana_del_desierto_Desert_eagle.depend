@@ -1,0 +1,55 @@
+# depslib dependency file v1.0
+1778532043 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\archivos.c
+	"Archivos.h"
+
+1778532043 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\archivos.h
+
+1778532043 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bandido.c
+	"Bandido.h"
+
+1778532043 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bandido.h
+	"Tablero.h"
+
+1778539078 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\tablero.h
+
+1778532043 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\jugador.c
+	"Jugador.h"
+
+1778532043 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\jugador.h
+	"Tablero.h"
+
+1778532043 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\movimiento.c
+	"Movimiento.h"
+
+1778532043 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\movimiento.h
+
+1778532043 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\tablero.c
+	"Tablero.h"
+	"Bandido.h"
+
+1778532043 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\utils.c
+	"Utils.h"
+
+1778532043 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\utils.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Errores.h"
+
+1778532043 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\errores.h
+
+1778539103 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\config.c
+	"Config.h"
+
+1778539085 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\config.h
+	"Errores.h"
+	"Utils.h"
+	<stdio.h>
+	<string.h>
+
+1778539042 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"Config.h"
+

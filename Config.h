@@ -1,7 +1,8 @@
 #ifndef CONFIG_H_INCLUDED
 #define CONFIG_H_INCLUDED
-
+#include "Errores.h"
 #include "Utils.h"
+#include <stdio.h>
 #include <string.h>
 #define MAX_PORCENTAJE_HOSTILES 30
 #define MAX_PORCENTAJE_FAVORABLES 40
@@ -19,5 +20,7 @@ typedef struct
 
 int leerConfiguracion(char *nombreArchivo, tConfig *config);
 int validarConfig(tConfig *config);
+int crearArchivo();
+
 
 #endif // CONFIG_H_INCLUDED
