@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Archivos.h" />
+		<Unit filename="Bandido.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Bandido.h" />
 		<Unit filename="Tablero.c">
 			<Option compilerVar="CC" />
 		</Unit>
