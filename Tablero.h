@@ -12,7 +12,7 @@ typedef enum
     VIDA_EXTRA,
     OASIS,
     TORMENTA
-} tTipoEvento;  //Asigna valores distintos a cada evento para no hacer muchos defines
+} tTipoEvento;  //Asigna valores distintos a cada evento estático para no hacer muchos defines
 
 typedef struct
 {
