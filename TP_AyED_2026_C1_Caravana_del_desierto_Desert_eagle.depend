@@ -1,0 +1,41 @@
+# depslib dependency file v1.0
+1778465258 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\archivos.c
+	"Archivos.h"
+
+1778465258 c:\users\bangho\documents\github\desert-eagle.-tp-aye\archivos.h
+
+1778467769 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bandido.c
+	"Bandido.h"
+
+1778469510 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bandido.h
+	"Tablero.h"
+
+1778468182 c:\users\bangho\documents\github\desert-eagle.-tp-aye\tablero.h
+
+1778468182 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\jugador.c
+	"Jugador.h"
+
+1778469510 c:\users\bangho\documents\github\desert-eagle.-tp-aye\jugador.h
+	"Tablero.h"
+
+1778469923 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1778468732 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\movimiento.c
+	"Movimiento.h"
+
+1778468732 c:\users\bangho\documents\github\desert-eagle.-tp-aye\movimiento.h
+
+1778469448 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\tablero.c
+	"Tablero.h"
+	"Bandido.h"
+
+1778470116 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\utils.c
+	"Utils.h"
+
+1778470202 c:\users\bangho\documents\github\desert-eagle.-tp-aye\utils.h
+	<stdio.h>
+	<stdlib.h>
+

@@ -51,6 +51,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Tablero.h" />
+		<Unit filename="Utils.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Utils.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

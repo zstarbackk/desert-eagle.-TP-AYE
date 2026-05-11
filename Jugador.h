@@ -2,7 +2,7 @@
 #define JUGADOR_H_INCLUDED
 
 #include "Tablero.h"
-#include "TDAListaDoble.h"
+//#include "TDAListaDoble.h"
 
 typedef struct
 {
@@ -12,7 +12,7 @@ typedef struct
     int puntaje;
     int protegidoPorOasis;
     int pierdeTurno;
-    tNodoLista *posicionActual;
+    //tNodoLista *posicionActual;
 } tJugador;
 
 #endif // JUGADOR_H_INCLUDED
