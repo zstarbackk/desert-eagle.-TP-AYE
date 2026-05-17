@@ -53,3 +53,98 @@
 	<time.h>
 	"Config.h"
 
+1778810161 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\archivos.c
+	"Archivos.h"
+
+1778810161 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\archivos.h
+
+1779047378 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\config.c
+	"Config.h"
+
+1778810161 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\config.h
+	"Errores.h"
+	"Utils.h"
+	<stdio.h>
+	<string.h>
+
+1778810161 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\errores.h
+
+1779047372 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\utils.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Errores.h"
+
+1778810161 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\bandido.c
+	"Bandido.h"
+
+1779048162 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\bandido.h
+	"Tablero.h"
+	"Estructuras/listaDobleCircular.h"
+
+1779046093 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\tablero.h
+	"Estructuras/listaDobleCircular.h"
+
+1779045495 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblef.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../Errores.h"
+
+1778987915 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblef.c
+	"listaDobleF.h"
+
+1778810161 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\jugador.c
+	"Jugador.h"
+
+1779049540 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\jugador.h
+	"Tablero.h"
+	"Movimiento.h"
+
+1779048145 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblecircular.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../Errores.h"
+
+1779047961 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\colacircular.c
+	"colaCircular.h"
+	<string.h>
+
+1779047936 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\colacircular.h
+	<stdio.h>
+	<stdlib.h>
+	"../Errores.h"
+
+1778810161 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\movimiento.c
+	"Movimiento.h"
+
+1779049032 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\movimiento.h
+
+1778810161 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\tablero.c
+	"Tablero.h"
+	"Bandido.h"
+
+1779047315 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"test.h"
+
+1778810161 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\test.h
+	"Archivos.h"
+	"Config.h"
+	"Bandido.h"
+	"Jugador.h"
+	"Tablero.h"
+	"Utils.h"
+	"Movimiento.h"
+	<stdio.h>
+	<string.h>
+
+1779047371 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\utils.c
+	"Utils.h"
+
+1779048145 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblecircular.c
+	"listaDobleCircular.h"
+

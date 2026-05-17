@@ -9,6 +9,5 @@
 #include "Movimiento.h"
 #include <stdio.h>
 #include <string.h>
-void test_config();
 
 #endif // TEST_H_INCLUDED

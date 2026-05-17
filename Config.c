@@ -1,4 +1,5 @@
 #include "Config.h"
+
 int crearArchivo(){
     FILE * pf = fopen("config.txt", "wt");
     tConfig config;
@@ -55,8 +56,8 @@ int leerConfiguracion(char *nombreArchivo, tConfig *config)
     config->maximo_vidas_extra = 0;
     config->vidas_inicio = 0;
 
-    if ((AbrirArchivo(&archivo,nombreArchivo,"rt"))!=EXITO)
-        return ERROR_LECTURA;
+    if ((abrirArchivo(&archivo,nombreArchivo,"rt"))!=EXITO)
+        return ERROR_ARCHIVO;
 
     while (fgets(linea, sizeof(linea), archivo))
         if (trozarLinea(linea, &clave, &valor)==EXITO)
@@ -68,23 +69,31 @@ int leerConfiguracion(char *nombreArchivo, tConfig *config)
 
 int validarConfig(tConfig *config)
 {
-    unsigned int casillerosDisponibles = config->cantidad_posiciones - 2;
-    unsigned int elementosHostiles = config->maximo_bandidos + config->maximo_tormentas;
-    unsigned int elementosFavorables = config->maximo_premios +
-                                       config->maximo_vidas_extra +
-                                       config->maximo_oasis;
+    unsigned int casillerosDisponibles;
+    unsigned int elementosHostiles;
+    unsigned int elementosFavorables;
 
     if (config->cantidad_posiciones < 3)
     {
         printf("Error: cantidad_posiciones debe ser al menos 3\n");
         return POCAS_POSICIONES;
     }
+
     if (config->vidas_inicio == 0)
     {
         printf("Error: vidas_inicio debe ser mayor a 0\n");
         return POCAS_VIDAS;
     }
-
+    casillerosDisponibles = config->cantidad_posiciones - 2;
+    elementosHostiles = config->maximo_bandidos + config->maximo_tormentas;
+    elementosFavorables = config->maximo_premios +
+                                       config->maximo_vidas_extra +
+                                       config->maximo_oasis;
+    if(elementosHostiles + elementosFavorables > casillerosDisponibles)
+    {
+        printf("Error: demasiados eventos para el tamanio del tablero\n");
+        return EXCESO_EVENTOS;
+    }
     if (elementosHostiles > casillerosDisponibles * MAX_PORCENTAJE_HOSTILES / 100)
     {
         printf("Error: demasiados elementos hostiles para el tamanio del tablero\n");

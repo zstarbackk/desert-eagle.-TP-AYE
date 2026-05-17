@@ -4,5 +4,5 @@
 #include "test.h"
 int main()
 {
-    test_config();
+    srand(time(NULL));
 }

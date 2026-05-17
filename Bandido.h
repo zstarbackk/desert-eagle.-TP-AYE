@@ -2,12 +2,12 @@
 #define BANDIDO_H_INCLUDED
 
 #include "Tablero.h"
-//#include "TDAListaDoble.h"
+#include "Estructuras/listaDobleCircular.h"
 
 typedef struct tBandido
 {
     int idBandido;
-    //tNodoLista *posicionActual;  //Apunta al nodo de la lista en el que se encuentra el bandido
+    tNodo *posicionActual;  //Apunta al nodo de la lista en el que se encuentra el bandido
     int activo;
 } tBandido;
 

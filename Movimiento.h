@@ -1,8 +1,11 @@
 #ifndef MOVIMIENTO_H_INCLUDED
 #define MOVIMIENTO_H_INCLUDED
-#define ADELANTE 'F'
-#define ATRAS    'B'
 
+typedef enum
+{
+    ADELANTE='F',
+    ATRAS='B'
+} tDireccion;
 typedef enum
 {
     ACTOR_JUGADOR,
@@ -13,7 +16,7 @@ typedef struct
 {
     tTipoActor tipoActor;
     int idActor;
-    char direccion;
+    tDireccion direccion;
     unsigned cantidad;
 } tMovimiento;
 

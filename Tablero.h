@@ -1,6 +1,6 @@
 #ifndef TABLERO_H_INCLUDED
 #define TABLERO_H_INCLUDED
-
+#include "Estructuras/listaDobleCircular.h"
 typedef struct tBandido tBandido; //Solo informa que existe el tipo de datos para evitar dependencias circulares entre headers
 typedef enum
 {
