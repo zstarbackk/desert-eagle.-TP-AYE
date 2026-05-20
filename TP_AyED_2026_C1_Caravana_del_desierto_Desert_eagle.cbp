@@ -52,6 +52,10 @@
 		</Unit>
 		<Unit filename="Proyecto/Config.h" />
 		<Unit filename="Proyecto/Errores.h" />
+		<Unit filename="Proyecto/Juego.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Proyecto/Juego.h" />
 		<Unit filename="Proyecto/Jugador.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -51,6 +51,9 @@
 #define EXCESO_EVENTOS         -103
 
 
+#define JUGADOR_INEXISTENTE    -110
+
+
 //const char* mensaje_error(int cod);
 
 #endif // ERRORES_H_INCLUDED
