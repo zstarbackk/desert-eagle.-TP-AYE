@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Errores.h"
+#include "../Proyecto/Errores.h"
 
 #define MINIMO(X, Y) ((X) <= (Y) ? (X) : (Y))
 

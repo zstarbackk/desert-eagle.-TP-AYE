@@ -2,7 +2,7 @@
 #define COLACIRCULAR_H_INCLUDED
 #include <stdio.h>
 #include <stdlib.h>
-#include "../Errores.h"
+#include "../Proyecto/Errores.h"
 #define MINIMO( X , Y ) ( ( X ) <= ( Y ) ? ( X ) : ( Y ) )
 
 typedef struct tnodo

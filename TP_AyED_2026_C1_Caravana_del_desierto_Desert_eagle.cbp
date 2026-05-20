@@ -31,52 +31,49 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Archivos.c">
+		<Unit filename="Bibliotecas/colaCircular.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Archivos.h" />
-		<Unit filename="Bandido.c">
+		<Unit filename="Bibliotecas/colaCircular.h" />
+		<Unit filename="Bibliotecas/listaDobleCircular.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Bandido.h" />
-		<Unit filename="Config.c">
+		<Unit filename="Bibliotecas/listaDobleCircular.h" />
+		<Unit filename="Proyecto/Archivos.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Config.h" />
-		<Unit filename="Errores.h" />
-		<Unit filename="Estructuras/colaCircular.c">
+		<Unit filename="Proyecto/Archivos.h" />
+		<Unit filename="Proyecto/Bandido.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Estructuras/colaCircular.h" />
-		<Unit filename="Estructuras/listaDobleCircular.c">
+		<Unit filename="Proyecto/Bandido.h" />
+		<Unit filename="Proyecto/Config.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Estructuras/listaDobleCircular.h" />
-		<Unit filename="Jugador.c">
+		<Unit filename="Proyecto/Config.h" />
+		<Unit filename="Proyecto/Errores.h" />
+		<Unit filename="Proyecto/Jugador.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Jugador.h" />
-		<Unit filename="Movimiento.c">
+		<Unit filename="Proyecto/Jugador.h" />
+		<Unit filename="Proyecto/Movimiento.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Movimiento.h" />
-		<Unit filename="Partida.h" />
-		<Unit filename="Tablero.c">
+		<Unit filename="Proyecto/Movimiento.h" />
+		<Unit filename="Proyecto/Partida.h" />
+		<Unit filename="Proyecto/Tablero.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Tablero.h" />
-		<Unit filename="Utils.c">
+		<Unit filename="Proyecto/Tablero.h" />
+		<Unit filename="Proyecto/Utils.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Utils.h" />
+		<Unit filename="Proyecto/Utils.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
-			<code_completion />
-			<envvars />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

@@ -1,9 +1,11 @@
 #include "Config.h"
 
-int crearArchivo(){
+int crearArchivo()
+{
     FILE * pf = fopen("config.txt", "wt");
     tConfig config;
-    if(pf ==  NULL){
+    if(pf ==  NULL)
+    {
         printf("error al generar archivo de configuracion...\n\n");
         return ERROR_ESCRITURA;
     }
@@ -22,6 +24,8 @@ int crearArchivo(){
     fprintf(pf, "maximo_oasis=%u\n", config.maximo_oasis);
     fprintf(pf, "maximo_tormentas=%u\n", config.maximo_tormentas);
     fclose(pf);
+
+    return EXITO;
 }
 
 void cargarValor(char *clave, char *valor, tConfig *config)

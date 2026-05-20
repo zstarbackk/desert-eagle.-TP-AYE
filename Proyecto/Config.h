@@ -18,6 +18,7 @@ typedef struct
     unsigned maximo_tormentas;
 } tConfig;
 
+void cargarValor(char *clave, char *valor, tConfig *config);
 int leerConfiguracion(char *nombreArchivo, tConfig *config);
 int validarConfig(tConfig *config);
 int crearArchivo();
