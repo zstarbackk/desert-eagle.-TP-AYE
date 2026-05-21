@@ -148,7 +148,7 @@
 1779048145 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblecircular.c
 	"listaDobleCircular.h"
 
-1779250713 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
+1779333445 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -225,11 +225,11 @@
 	"Tablero.h"
 	"Bandido.h"
 
-1779251254 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.h
+1779332750 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.h
 	"Jugador.h"
-	"Utils.h"
 	"Archivos.h"
+	"Config.h"
 
-1779250830 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
+1779332815 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 
