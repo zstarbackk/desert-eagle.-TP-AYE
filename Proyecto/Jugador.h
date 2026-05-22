@@ -12,7 +12,7 @@ typedef struct
     int puntaje;
     int protegidoPorOasis;
     int pierdeTurno;
-    tNodo *posicionActual;
+    tPosicion *posicionActual;
     unsigned cantMovimientos;
 } tJugador;
 

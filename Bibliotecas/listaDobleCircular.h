@@ -14,26 +14,13 @@ typedef struct tnodo
     unsigned tamInfo;
     struct tnodo* sig;
     struct tnodo* ant;
-} tNodo;
+} tNodoListaDC;
 
-typedef tNodo* tListaD;
+typedef tNodoListaDC* tListaDC;
 
-void crearLista(tListaD* pl);
+void crearListaDC(tListaDC* pl);
 
-int insertarOrdenado(
-    tListaD* pl,
-    const void* info,
-    unsigned tamInfo,
-    int (*cmp)(const void*, const void*),
-    int duplicados,
-    void (*accion)(void*, const void*)
-);
-
-int eliminarNodoPorClaveOrdenado(
-    tListaD* pl,
-    void* info,
-    unsigned tamInfo,
-    int (*cmp)(const void*, const void*)
-);
+int insertarAlFinalDC(tListaDC *pl,const void *d,unsigned tamInfo);
+void vaciarListaDC(tListaDC *pl);
 
 #endif // LISTADOBLEF_H_INCLUDED

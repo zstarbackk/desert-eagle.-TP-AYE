@@ -7,7 +7,7 @@
 typedef struct tBandido
 {
     int idBandido;
-    tNodo *posicionActual;  //Apunta al nodo de la lista en el que se encuentra el bandido
+    tPosicion posicionActual;  //Apunta al nodo de la lista en el que se encuentra el bandido
     int activo;
 } tBandido;
 

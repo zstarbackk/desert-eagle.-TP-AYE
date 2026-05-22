@@ -1,129 +1,62 @@
 #include "listaDobleCircular.h"
 
 
-void crearLista(tListaD* pl)
+void crearListaDC(tListaDC* pl)
 {
     *pl = NULL;
 }
 
-int insertarOrdenado(
-    tListaD* pl,
-    const void* info,
-    unsigned tamInfo,
-    int (*cmp)(const void*, const void*),
-    int duplicados,
-    void (*accion)(void*, const void*)
-)
+int insertarAlFinal(tListaDC *pl,const void *d,unsigned tamInfo)
 {
-    tNodo *nue, *actual, *auxAnt, *auxSig;
-
-    if(*pl)
-    {
-        actual = *pl;
-
-        while(actual->sig && cmp(info, actual->info) > 0)
-            actual = actual->sig;
-
-        while(actual->ant && cmp(info, actual->info) < 0)
-            actual = actual->ant;
-
-        if(cmp(info, actual->info) > 0)
-        {
-            auxAnt = actual;
-            auxSig = actual->sig;
-        }
-        else
-        {
-            auxAnt = actual->ant;
-            auxSig = actual;
-        }
-
-        if(cmp(info, actual->info) == 0 && !duplicados)
-        {
-            accion(actual->info, info);
-            return EXITO;
-        }
-    }
-    else
-    {
-        auxAnt = NULL;
-        auxSig = NULL;
-    }
-
-    nue = (tNodo*)malloc(sizeof(tNodo));
-
+    tNodoListaDC *nue;
+    nue=(tNodoListaDC*)malloc(sizeof(tNodoListaDC));
     if(!nue)
         return ERROR_MEMORIA;
-
-    nue->info = malloc(tamInfo);
-
+    nue->info=malloc(tamInfo);
     if(!nue->info)
     {
         free(nue);
         return ERROR_MEMORIA;
     }
 
-    memcpy(nue->info, info, tamInfo);
-    nue->tamInfo = tamInfo;
-    nue->ant = auxAnt;
-    nue->sig = auxSig;
+    memcpy(nue->info,d,tamInfo);
+    nue->tamInfo=tamInfo;
 
-    if(auxAnt)
-        auxAnt->sig = nue;
-
-    if(auxSig)
-        auxSig->ant = nue;
-
-    *pl = nue;
-
+    if(!*pl)
+    {
+        nue->ant=nue;
+        nue->sig=nue;
+    }else
+    {
+        nue->sig=(*pl)->sig;
+        nue->ant=(*pl);
+        (*pl)->sig=nue;
+        (*pl)->sig->ant=nue;
+    }
+    *pl=nue;
     return EXITO;
 }
 
-int eliminarNodoPorClaveOrdenado(
-    tListaD* pl,
-    void* info,
-    unsigned tamInfo,
-    int (*cmp)(const void*, const void*)
-)
+void vaciarListaDC(tListaDC *pl)
 {
-    tNodo *elim, *actual, *auxSig, *auxAnt;
+    tNodoListaDC *elim;
 
     if(!*pl)
-        return 0;
+        return;
+    while((*pl)->sig !=*pl)
+    {
+        //pl siempre apunta al ultimo, y siempre elimino en el segundo
+        elim=(*pl)->sig;
+        (*pl)->sig=elim->sig;
+        elim->sig->ant=*pl;
 
-    actual = *pl;
+        free(elim->info);
+        free(elim);
 
-    while(actual->sig && cmp(info, actual->info) > 0)
-        actual = actual->sig;
+    }
+    free((*pl)->info);
+    free(*pl);
 
-    while(actual->ant && cmp(info, actual->info) < 0)
-        actual = actual->ant;
+    *pl=NULL;
 
-    if(cmp(info, actual->info) != 0)
-        return 0;
-
-    elim = actual;
-
-    auxSig = actual->sig;
-    auxAnt = actual->ant;
-
-    if(auxAnt)
-        auxAnt->sig = auxSig;
-
-    if(auxSig)
-        auxSig->ant = auxAnt;
-
-    memcpy(info, elim->info, MINIMO(tamInfo, elim->tamInfo));
-
-    free(elim->info);
-    free(elim);
-
-    if(auxAnt)
-        *pl = auxAnt;
-    else if(auxSig)
-        *pl = auxSig;
-    else
-        *pl = NULL;
-
-    return EXITO;
 }
