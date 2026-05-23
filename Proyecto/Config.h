@@ -17,11 +17,11 @@ typedef struct
     unsigned maximo_oasis;
     unsigned maximo_tormentas;
 } tConfig;
-
-void cargarValor(char *clave, char *valor, tConfig *config);
-int leerConfiguracion(char *nombreArchivo, tConfig *config);
-int validarConfig(tConfig *config);
-int crearArchivo();
+int crearArchivoPrueba();
+void cargarValor(const char *clave,const char *valor, tConfig *config);
+int leerConfiguracion(const char *nombreArchivo, tConfig *config);
+int validarConfig(const tConfig *config);
+int cargarConfiguracion(const char *nombreArchivo, tConfig *config);
 
 
 #endif // CONFIG_H_INCLUDED

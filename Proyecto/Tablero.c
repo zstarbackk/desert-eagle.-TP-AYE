@@ -1,2 +1,149 @@
 #include "Tablero.h"
 #include "Bandido.h"
+#include "../Bibliotecas/listaDobleCircular.h"
+
+void inicializarTablero(tTablero* tablero)
+{
+    crearListaDC(&tablero->casilleros);
+    tablero->inicio=NULL;
+    tablero->fin=NULL;
+    tablero->cantidadCasilleros=0;
+    crearLista(&tablero->bandidos);
+}
+int crearCasilleros(tTablero* tablero, unsigned cantidadCasilleros)
+{
+    int i;
+    tCasillero aux;
+
+    for(i=0; i<cantidadCasilleros; i++)
+    {
+        aux.tipoEvento=DESPEJADO;
+        aux.numeroCasillero=i;
+        aux.tieneJugador=0;
+        aux.bandido=NULL;
+        if(i==0)
+        {
+            aux.tipoEvento=INICIO;
+        }else if(i==cantidadCasilleros-1)
+            aux.tipoEvento=SALIDA;
+
+        if(insertarAlFinalDC(&(tablero->casilleros),&aux,sizeof(tCasillero))!=EXITO)
+            return ERROR_MEMORIA;
+        //com lalista queda apuntando al ultimo nodo
+        if(i==0)
+        {
+            tablero->inicio=tablero->casilleros;
+        }else if(i==cantidadCasilleros-1)
+            tablero->fin=tablero->casilleros;
+    }
+    tablero->cantidadCasilleros=cantidadCasilleros;
+    return EXITO;
+}
+tPosicion obtenerCasilleroAleatorioLibre(const tTablero* tablero)
+{
+    tPosicion actual;
+    tCasillero* casAux;
+    int pos;
+    do
+    {
+         actual=tablero->casilleros->sig;
+         pos=rand() % tablero->cantidadCasilleros;
+         while(pos--)
+            actual=actual->sig;
+        casAux=(tCasillero*)actual->info;
+        if(casAux->tipoEvento==DESPEJADO && !casAux->bandido && !casAux->tieneJugador)
+            return actual;
+    }while(1);
+
+}
+int colocarEventos(tTablero* tablero, tTipoEvento evento, unsigned maximo)
+{
+    int i,cantidadReal;
+    tPosicion pos;
+    tCasillero * cas;
+    if(maximo==0)
+        return EXITO;
+    cantidadReal=(maximo * PORCENTAJE_MINIMO_EVENTOS)/100; //calculo un porcentaje del maximo, a mas porcentaje mas complicado podria ser
+
+    if(cantidadReal==0)
+        cantidadReal=1;
+    cantidadReal+=rand()%(maximo-cantidadReal+1); //elijo aleatoriamente entre ese minimo y el maximo
+
+
+    for(i=0;i<cantidadReal;i++)
+    {
+        pos=obtenerCasilleroAleatorioLibre(tablero);
+        cas=(tCasillero*)pos->info;
+        cas->tipoEvento=evento;
+    }
+    return EXITO;
+}
+int colocarBandidos(tTablero* tablero, unsigned maximo)
+{
+    int i, cantidadReal;
+    tPosicion pos;
+    tCasillero* cas;
+    tBandido banAux;
+
+    if(maximo == 0)
+        return EXITO;
+
+    cantidadReal = (maximo * PORCENTAJE_MINIMO_EVENTOS) / 100;
+
+    if(cantidadReal == 0)
+        cantidadReal = 1;
+
+    cantidadReal += rand() % (maximo - cantidadReal + 1);
+
+    for(i = 0; i < cantidadReal; i++)
+    {
+        pos = obtenerCasilleroAleatorioLibre(tablero);
+        cas = (tCasillero*)pos->info;
+
+        banAux.activo = 1;
+        banAux.idBandido = i + 1;
+        banAux.posicionActual = pos;
+
+        if(insertarAlFinal(&tablero->bandidos, &banAux, sizeof(tBandido))!=EXITO)
+            return ERROR_MEMORIA;
+
+        //cas->bandido = (tBandido*)tablero->bandidos->info;
+    }
+
+    return EXITO;
+}
+
+int generarTablero(tTablero* tablero, const tConfig* config)
+{
+    int ret;
+    inicializarTablero(tablero);
+
+    ret=crearCasilleros(tablero,config->cantidad_posiciones);
+    if(ret!=EXITO)
+        return ret;
+
+    ret=colocarEventos(tablero,PREMIO,config->maximo_premios);
+    if(ret!=EXITO)
+        return ret;
+
+    ret=colocarEventos(tablero,VIDA_EXTRA,config->maximo_vidas_extra);
+    if(ret!=EXITO)
+        return ret;
+
+    ret=colocarEventos(tablero,OASIS,config->maximo_oasis);
+    if(ret!=EXITO)
+        return ret;
+
+    ret=colocarEventos(tablero,TORMENTA,config->maximo_tormentas);
+    if(ret!=EXITO)
+        return ret;
+    ret=colocarBandidos(tablero,config->maximo_bandidos);
+    if(ret!=EXITO)
+        return ret;
+
+    return EXITO;
+
+}
+
+
+

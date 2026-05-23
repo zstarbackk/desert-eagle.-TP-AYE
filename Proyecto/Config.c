@@ -1,13 +1,13 @@
 #include "Config.h"
 
-int crearArchivo()
+int crearArchivoPrueba()
 {
     FILE * pf = fopen("config.txt", "wt");
     tConfig config;
     if(pf ==  NULL)
     {
         printf("error al generar archivo de configuracion...\n\n");
-        return ERROR_ESCRITURA;
+        return ERROR_ARCHIVO;
     }
     config.cantidad_posiciones = 10;
     config.maximo_bandidos = 1;
@@ -28,7 +28,7 @@ int crearArchivo()
     return EXITO;
 }
 
-void cargarValor(char *clave, char *valor, tConfig *config)
+void cargarValor(const char *clave,const char *valor, tConfig *config)
 {
     if (strcmp(clave, "cantidad_posiciones") == 0)
         sscanf(valor, "%u", &config->cantidad_posiciones);
@@ -46,7 +46,7 @@ void cargarValor(char *clave, char *valor, tConfig *config)
         sscanf(valor, "%u", &config->maximo_tormentas);
 }
 
-int leerConfiguracion(char *nombreArchivo, tConfig *config)
+int leerConfiguracion(const char *nombreArchivo, tConfig *config)
 {
     FILE *archivo;
     char linea[100];
@@ -71,7 +71,7 @@ int leerConfiguracion(char *nombreArchivo, tConfig *config)
     return EXITO;
 }
 
-int validarConfig(tConfig *config)
+int validarConfig(const tConfig *config)
 {
     unsigned int casillerosDisponibles;
     unsigned int elementosHostiles;
@@ -111,4 +111,14 @@ int validarConfig(tConfig *config)
     }
 
     return EXITO;
+}
+
+int cargarConfiguracion(const char *nombreArchivo, tConfig *config)
+{
+    int ret=leerConfiguracion(nombreArchivo,config);
+
+    if(ret!=EXITO)
+    return ret;
+
+    return validarConfig(config);
 }

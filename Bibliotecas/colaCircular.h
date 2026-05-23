@@ -10,9 +10,9 @@ typedef struct tnodo
     void* info;
     unsigned tamInfo;
     struct tnodo* sig;
-} tNodo;
+} tNodoCola;
 
-typedef tNodo* tCola;
+typedef tNodoCola* tCola;
 
 void crearCola(tCola* c);
 int colaLlena(const tCola* c, unsigned tamInfo);

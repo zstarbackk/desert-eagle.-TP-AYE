@@ -49,7 +49,7 @@
 #define POCAS_POSICIONES       -101
 #define POCAS_VIDAS            -102
 #define EXCESO_EVENTOS         -103
-
+#define DATO_NO_ENCONTRADO     -104
 
 #define JUGADOR_INEXISTENTE    -110
 

@@ -2,7 +2,6 @@
 #define BANDIDO_H_INCLUDED
 
 #include "Tablero.h"
-#include "../Bibliotecas/listaDobleCircular.h"
 
 typedef struct tBandido
 {

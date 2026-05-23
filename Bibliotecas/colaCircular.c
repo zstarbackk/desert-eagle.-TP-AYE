@@ -8,7 +8,7 @@ void crearCola(tCola* c)
 
 int encolar(tCola* c, const void* info, unsigned tamInfo)
 {
-    tNodo* nue = (tNodo*)malloc(sizeof(tNodo));
+    tNodoCola* nue = (tNodoCola*)malloc(sizeof(tNodoCola));
 
     if(!nue)
         return ERROR_MEMORIA;
@@ -40,7 +40,7 @@ int encolar(tCola* c, const void* info, unsigned tamInfo)
 
 int desencolar(tCola* c, void* info, unsigned tamBuffer)
 {
-    tNodo* elim;
+    tNodoCola* elim;
 
     if(!*c)
         return COLA_VACIA;
@@ -62,7 +62,7 @@ int desencolar(tCola* c, void* info, unsigned tamBuffer)
 
 int colaLlena(const tCola* c, unsigned tamInfo)
 {
-    tNodo* nue = (tNodo*)malloc(sizeof(tNodo));
+    tNodoCola* nue = (tNodoCola*)malloc(sizeof(tNodoCola));
     void* info = malloc(tamInfo);
 
     free(nue);
@@ -78,7 +78,7 @@ int colaVacia(const tCola* c)
 
 void vaciarCola(tCola* c)
 {
-    tNodo* elim;
+    tNodoCola* elim;
 
     if(!*c)
         return;
@@ -99,7 +99,7 @@ void vaciarCola(tCola* c)
 
 int verPrimero(const tCola* c, void* info, unsigned tamBuffer)
 {
-    tNodo* pri;
+    tNodoCola* pri;
 
     if(!*c)
         return COLA_VACIA;

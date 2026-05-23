@@ -1,0 +1,282 @@
+#include "TdaListaDinamica.h"
+#include <string.h>
+
+
+void crearLista(tLista* pl)
+{
+    *pl = NULL;
+}
+
+int listaLlena(const tLista* pl, unsigned tamInfo)
+{
+    return 0;
+}
+
+int listaVacia(const tLista* pl)
+{
+    return *pl == NULL;
+}
+
+int insertarAlFinal(tLista* pl, const void* info, unsigned tamInfo)
+{
+    tNodoL* nue;
+
+    nue = malloc(sizeof(tNodoL));
+    if(nue == NULL)
+        return ERROR_MEMORIA;
+
+    nue->info = malloc(tamInfo);
+    if(nue->info == NULL)
+    {
+        free(nue);
+        return ERROR_MEMORIA;
+    }
+
+    memcpy(nue->info, info, tamInfo);
+    nue->tamInfo = tamInfo;
+    nue->sig = NULL;
+
+    while(*pl)
+        pl = &(*pl)->sig;
+
+    *pl = nue;
+
+    return EXITO;
+}
+
+void vaciarLista(tLista* pl)
+{
+    tNodoL* elim;
+
+    while(*pl)
+    {
+        elim = *pl;
+        *pl = elim->sig;
+
+        free(elim->info);
+        free(elim);
+    }
+}
+
+void mapLista(tLista* pl, void (*accion)(const void*, unsigned))
+{
+    while(*pl)
+    {
+        accion((*pl)->info, (*pl)->tamInfo);
+        pl = &(*pl)->sig;
+    }
+}
+
+int insertarOrdenadoAdelante(tLista* pl, const void* info, unsigned tamInfo,
+                             int (*cmp)(const void*, const void*), int duplicados,
+                             void (*accion)(void*, const void*))
+{
+    tNodoL* nue;
+
+    while(*pl && cmp(info, (*pl)->info) > 0)
+        pl = &(*pl)->sig;
+
+    if(*pl && cmp(info, (*pl)->info) == 0 && !duplicados)
+    {
+        accion((*pl)->info, info);
+        return EXITO;
+    }
+
+    nue = malloc(sizeof(tNodoL));
+    if(nue == NULL)
+        return ERROR_MEMORIA;
+
+    nue->info = malloc(tamInfo);
+    if(nue->info == NULL)
+    {
+        free(nue);
+        return ERROR_MEMORIA;
+    }
+
+    memcpy(nue->info, info, tamInfo);
+    nue->tamInfo = tamInfo;
+
+    nue->sig = *pl;
+    *pl = nue;
+
+    return EXITO;
+}
+
+int insertarOrdenadoAtras(tLista* pl, const void* info, unsigned tamInfo,
+                          int (*cmp)(const void*, const void*), int duplicados,
+                          void (*accion)(void*, const void*))
+{
+    tNodoL* nue;
+
+    while(*pl && cmp(info, (*pl)->info) > 0)
+        pl = &(*pl)->sig;
+
+    if(*pl && cmp(info, (*pl)->info) == 0 && !duplicados)
+    {
+        if(accion)
+            accion((*pl)->info, info);
+
+        return EXITO;
+    }
+
+     if(duplicados)
+    {
+        while(*pl && cmp(info, (*pl)->info) == 0)
+            pl = &(*pl)->sig;
+    }
+
+    nue = malloc(sizeof(tNodoL));
+    if(nue == NULL)
+        return ERROR_MEMORIA;
+
+    nue->info = malloc(tamInfo);
+    if(nue->info == NULL)
+    {
+        free(nue);
+        return ERROR_MEMORIA;
+    }
+
+    memcpy(nue->info, info, tamInfo);
+    nue->tamInfo = tamInfo;
+
+    nue->sig = *pl;
+    *pl = nue;
+
+    return EXITO;
+}
+
+int eliminarNodoPrimerApEnListaOrdenada(tLista* pl, void* info, unsigned tamBuffer,
+                                        int (*cmp)(const void*, const void*))
+{
+    tNodoL* elim;
+
+    while(*pl && cmp(info, (*pl)->info) > 0)
+        pl = &(*pl)->sig;
+
+    if(*pl == NULL)
+        return DATO_NO_ENCONTRADO;
+
+    if(cmp(info, (*pl)->info) < 0)
+        return DATO_NO_ENCONTRADO;
+
+    elim = *pl;
+    *pl = elim->sig;
+
+    memcpy(info, elim->info, MINIMO(elim->tamInfo, tamBuffer));
+
+    free(elim->info);
+    free(elim);
+
+    return EXITO;
+}
+
+int eliminarNodoTodasApEnListaOrdenada(tLista* pl, void* info,
+                                       int (*cmp)(const void*, const void*))
+{
+    tNodoL* elim;
+    int cant = 0;
+
+    while(*pl && cmp(info, (*pl)->info) > 0)
+        pl = &(*pl)->sig;
+
+    if(*pl == NULL)
+        return cant;
+
+    if(cmp(info, (*pl)->info) < 0)
+        return cant;
+
+    while(*pl && cmp(info, (*pl)->info) == 0)
+    {
+        elim = *pl;
+        *pl = elim->sig;
+
+        free(elim->info);
+        free(elim);
+
+        cant++;
+    }
+
+    return cant;
+}
+
+int eliminarNodoPrimerApEnListaDesordenada(tLista* pl, void* info, unsigned tamBuffer,
+                                           int (*cmp)(const void*, const void*))
+{
+    tNodoL* elim;
+
+    while(*pl && cmp(info, (*pl)->info) != 0)
+        pl = &(*pl)->sig;
+
+    if(*pl == NULL)
+        return DATO_NO_ENCONTRADO;
+
+    elim = *pl;
+    *pl = elim->sig;
+
+    memcpy(info, elim->info, MINIMO(elim->tamInfo, tamBuffer));
+
+    free(elim->info);
+    free(elim);
+
+    return EXITO;
+}
+
+int eliminarNodoTodasApEnListaDesordenada(tLista* pl, void* info,
+                                          int (*cmp)(const void*, const void*))
+{
+    tNodoL* elim;
+    int cant = 0;
+
+    while(*pl)
+    {
+        if(cmp(info, (*pl)->info) == 0)
+        {
+            elim = *pl;
+            *pl = elim->sig;
+
+            free(elim->info);
+            free(elim);
+
+            cant++;
+        }
+        else
+            pl = &(*pl)->sig;
+    }
+
+    return cant;
+}
+
+void seleccionSortLista(tLista* pl, int (*cmp)(const void*, const void*))
+{
+    tNodoL* min;
+    tLista* pivote;
+    tLista* pmin;
+    tLista* rec;
+
+    pivote = pl;
+
+    while(*pivote)
+    {
+        pmin = pivote;
+        rec = &(*pivote)->sig;
+
+        while(*rec)
+        {
+            if(cmp((*rec)->info, (*pmin)->info) < 0)
+                pmin = rec;
+
+            rec = &(*rec)->sig;
+        }
+
+        if(pmin != pivote)
+        {
+            min = *pmin;
+            *pmin = min->sig;
+
+            min->sig = *pivote;
+            *pivote = min;
+        }
+
+        pivote = &(*pivote)->sig;
+    }
+}

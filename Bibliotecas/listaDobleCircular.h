@@ -6,7 +6,6 @@
 #include <string.h>
 #include "../Proyecto/Errores.h"
 
-#define MINIMO(X, Y) ((X) <= (Y) ? (X) : (Y))
 
 typedef struct tnodo
 {

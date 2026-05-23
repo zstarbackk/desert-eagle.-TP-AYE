@@ -1,6 +1,6 @@
 #include "Archivos.h"
 
-int obtenerPosicionJugador(FILE *archivo, char *nickname)     //Para implementar el arbol solo se modifica esta funcion.
+int obtenerPosicionJugador(FILE *archivo, const char *nickname)     //Para implementar el arbol solo se modifica esta funcion.
 {
     tJugadorArchivo registro;
     int posicion = 0;
@@ -16,7 +16,7 @@ int obtenerPosicionJugador(FILE *archivo, char *nickname)     //Para implementar
     return JUGADOR_INEXISTENTE;
 }
 
-int buscarJugador(FILE *archivo, char *nickname, tJugador *jugador)
+int buscarJugador(FILE *archivo,const char *nickname, tJugador *jugador)
 {
     tJugadorArchivo registro;
     int posicion;
@@ -48,7 +48,7 @@ int obtenerUltimoId(FILE *archivo)
     return ultimoId;
 }
 
-void darDeAltaJugador(FILE *archivo, char *nickname, tJugador *jugador)
+void darDeAltaJugador(FILE *archivo,const char *nickname, tJugador *jugador)
 {
     tJugadorArchivo registro;
 

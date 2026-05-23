@@ -6,7 +6,7 @@ void crearListaDC(tListaDC* pl)
     *pl = NULL;
 }
 
-int insertarAlFinal(tListaDC *pl,const void *d,unsigned tamInfo)
+int insertarAlFinalDC(tListaDC *pl,const void *d,unsigned tamInfo)
 {
     tNodoListaDC *nue;
     nue=(tNodoListaDC*)malloc(sizeof(tNodoListaDC));
