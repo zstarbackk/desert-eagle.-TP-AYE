@@ -22,8 +22,8 @@ typedef struct
 {
     tTipoEvento tipoEvento;
     int tieneJugador;
-    int numeroCasillero;
-    tBandido *bandido;  //Si hay un bandido en el casillero, permite pasarlo a inactivo directamente
+    unsigned numeroCasillero;
+    unsigned  idBandido;  //
 } tCasillero;
 typedef struct
 {
@@ -35,12 +35,10 @@ typedef struct
 }tTablero;
 
 
-
-
-
 int generarTablero(tTablero* tablero, const tConfig* config);
 int validarTablero(tTablero* tablero);
-
+void vaciarTablero(tTablero* tablero);
+void probarGenerarTablero(void);
 
 
 #endif // TABLERO_H_INCLUDED

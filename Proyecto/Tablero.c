@@ -20,7 +20,7 @@ int crearCasilleros(tTablero* tablero, unsigned cantidadCasilleros)
         aux.tipoEvento=DESPEJADO;
         aux.numeroCasillero=i;
         aux.tieneJugador=0;
-        aux.bandido=NULL;
+        aux.idBandido=0;
         if(i==0)
         {
             aux.tipoEvento=INICIO;
@@ -51,7 +51,7 @@ tPosicion obtenerCasilleroAleatorioLibre(const tTablero* tablero)
          while(pos--)
             actual=actual->sig;
         casAux=(tCasillero*)actual->info;
-        if(casAux->tipoEvento==DESPEJADO && !casAux->bandido && !casAux->tieneJugador)
+        if(casAux->tipoEvento==DESPEJADO && !casAux->idBandido && !casAux->tieneJugador)
             return actual;
     }while(1);
 
@@ -100,14 +100,10 @@ int colocarBandidos(tTablero* tablero, unsigned maximo)
         pos = obtenerCasilleroAleatorioLibre(tablero);
         cas = (tCasillero*)pos->info;
 
-        banAux.activo = 1;
-        banAux.idBandido = i + 1;
-        banAux.posicionActual = pos;
-
+        inicializarBandido(&banAux, i+1,pos);
         if(insertarAlFinal(&tablero->bandidos, &banAux, sizeof(tBandido))!=EXITO)
             return ERROR_MEMORIA;
-
-        //cas->bandido = (tBandido*)tablero->bandidos->info;
+        cas->idBandido=banAux.idBandido;
     }
 
     return EXITO;
@@ -144,6 +140,68 @@ int generarTablero(tTablero* tablero, const tConfig* config)
     return EXITO;
 
 }
+void vaciarTablero(tTablero* tablero)
+{
+    vaciarListaDC(&tablero->casilleros);
+    vaciarLista(&tablero->bandidos);
+}
+void mostrarTablero(const tTablero* tablero)
+{
+    tPosicion actual;
+    tCasillero* cas;
+    unsigned i;
+
+    actual = tablero->inicio;
+
+    for(i = 0; i < tablero->cantidadCasilleros; i++)
+    {
+        cas = (tCasillero*)actual->info;
+
+        if(cas->idBandido)
+            printf("[B]");
+        else
+        {
+            switch(cas->tipoEvento)
+            {
+                case INICIO: printf("[I]"); break;
+                case SALIDA: printf("[S]"); break;
+                case PREMIO: printf("[P]"); break;
+                case VIDA_EXTRA: printf("[V]"); break;
+                case OASIS: printf("[O]"); break;
+                case TORMENTA: printf("[T]"); break;
+                case DESPEJADO: printf("[.]"); break;
+            }
+        }
+        printf("\n");
+
+        actual = actual->sig;
+    }
+
+    printf("\n");
+}
+
+void probarGenerarTablero(void)
+{
+    tConfig config;
+    tTablero tablero;
+
+    if(cargarConfiguracion("Archivos/config.txt", &config) != EXITO)
+    {
+        printf("Error cargando configuracion\n");
+        return;
+    }
+
+    if(generarTablero(&tablero, &config) != EXITO)
+    {
+        printf("Error generando tablero\n");
+        return;
+    }
+
+    mostrarTablero(&tablero);
+
+    vaciarTablero(&tablero);
+}
+
 
 
 

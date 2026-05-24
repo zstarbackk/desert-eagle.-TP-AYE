@@ -29,7 +29,7 @@ int main()
 //    }
 //
 //    mostrarMenu(&jugador,&config);
-
+//  probarGenerarTablero();
 
     return 0;
 }

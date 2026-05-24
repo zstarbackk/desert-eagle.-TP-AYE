@@ -54,6 +54,7 @@ void darDeAltaJugador(FILE *archivo,const char *nickname, tJugador *jugador)
 
     registro.idJugador = obtenerUltimoId(archivo) + 1;
     strcpy(registro.nickname, nickname);
+    fseek(archivo,0,SEEK_END);
 
     fwrite(&registro, sizeof(tJugadorArchivo), 1, archivo);
 

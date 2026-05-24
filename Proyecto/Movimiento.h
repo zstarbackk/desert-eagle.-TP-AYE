@@ -15,9 +15,16 @@ typedef enum
 typedef struct
 {
     tTipoActor tipoActor;
-    int idActor;
+    unsigned idActor;
     tDireccion direccion;
     unsigned cantidad;
 } tMovimiento;
+
+typedef struct
+{
+    tDireccion direccion;
+    unsigned cantidad;
+}tMovimientoHistorico;
+
 
 #endif // MOVIMIENTO_H_INCLUDED

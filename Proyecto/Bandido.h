@@ -10,4 +10,7 @@ typedef struct tBandido
     int activo;
 } tBandido;
 
+void inicializarBandido(tBandido * bandido,unsigned idBandido, tPosicion posicion);
+void desactivarBandido(tBandido* bandido);
+
 #endif // BANDIDO_H_INCLUDED

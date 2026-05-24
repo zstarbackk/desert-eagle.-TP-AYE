@@ -3,23 +3,21 @@
 
 #include "Tablero.h"
 #include "Movimiento.h"
+#define TAM_NICKNAME 30
 
 typedef struct
 {
-    int idJugador;
-    char nickname[30];
+    unsigned idJugador;
+    char nickname[TAM_NICKNAME];
     int vidas;
     int puntaje;
     int protegidoPorOasis;
     int pierdeTurno;
-    tPosicion *posicionActual;
+    tPosicion posicionActual;
     unsigned cantMovimientos;
+    tLista historialMovimientos;
 } tJugador;
 
-typedef struct
-{
-    tDireccion dreccion;
-    int cantidad;
-}tMovimientoHistorico;
+void inicializarEstadoJugador(tJugador * jugador,unsigned vidasInicio, tPosicion inicio);
 
 #endif // JUGADOR_H_INCLUDED
