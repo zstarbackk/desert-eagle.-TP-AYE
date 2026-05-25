@@ -26,5 +26,8 @@ typedef struct
     unsigned cantidad;
 }tMovimientoHistorico;
 
+tMovimiento crearMovimientoJugador(unsigned idJugador, tDireccion direccion,unsigned cantidad);
+tMovimiento crearMovimientoBandido(unsigned idBandido, tDireccion direccion, unsigned cantidad);
+tMovimientoHistorico crearMovimientoHistorico(tDireccion,unsigned cantidad);
 
 #endif // MOVIMIENTO_H_INCLUDED

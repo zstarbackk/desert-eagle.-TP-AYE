@@ -31,7 +31,7 @@ tBandido* buscarBandidoPorId(tLista* bandidos,unsigned idBandido)
     return NULL;
 }
 
-int distanciaAdelante(tPosicion origen, tPosicion destino)
+int distanciaAdelante(const tPosicion origen, const tPosicion destino)
 {
     int distancia=0;
     tPosicion actual=origen;
@@ -42,7 +42,7 @@ int distanciaAdelante(tPosicion origen, tPosicion destino)
     }
     return distancia;
 }
-int distanciaAtras(tPosicion origen, tPosicion destino)
+int distanciaAtras(const tPosicion origen,const tPosicion destino)
 {
     int distancia=0;
     tPosicion actual=origen;
@@ -54,11 +54,11 @@ int distanciaAtras(tPosicion origen, tPosicion destino)
     return distancia;
 }
 
-tDireccion decidirDireccionBandido(tBandido* bandido, tPosicion posJugador)
+tDireccion decidirDireccionBandido(const tBandido* bandido,const tPosicion posJugador,const tTablero *tablero)
 {
     int adelante=distanciaAdelante(bandido->posicionActual,posJugador);
-    int atras=distanciaAtras(bandido->posicionActual,posJugador);
-    if(adelante<=)
+    int atras=(tablero->cantidadCasilleros-adelante)% tablero->cantidadCasilleros;
+    if(adelante<= atras)
         return ADELANTE;
     return ATRAS;
 }

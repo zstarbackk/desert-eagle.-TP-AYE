@@ -61,3 +61,25 @@ void mostrarMenu(tJugador *jugador, tConfig *config)
     } while (opcion != 4);
 
 }
+
+int inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config)
+{
+    int ret;
+
+    ret=cargarConfiguracion(ARCH_CONFIGURACION,config);
+    if(ret != EXITO)
+        return ret;
+
+    ret=generarTablero(tablero,config);
+
+    if(ret != EXITO)
+        return ret;
+
+    ret=validarTablero(tablero);
+    if(ret != EXITO)
+        return ret;
+    inicializarEstadoJugador(jugador,config->vidas_inicio,tablero->inicio);
+
+    return EXITO;
+
+}

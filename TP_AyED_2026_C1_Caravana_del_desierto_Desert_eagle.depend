@@ -242,7 +242,7 @@
 	<stdlib.h>
 	"../Proyecto/Errores.h"
 
-1779501753 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\errores.h
+1779665238 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\errores.h
 
 1779391215 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\juego.h
 	"Jugador.h"
@@ -253,11 +253,12 @@
 	"Tablero.h"
 	"Movimiento.h"
 
-1779571756 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\tablero.h
+1779665299 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\tablero.h
 	<stdlib.h>
 	"../Bibliotecas/listaDobleCircular.h"
 	"../Bibliotecas/TdaListaDinamica.h"
 	"Config.h"
+	"Movimiento.h"
 
 1779502142 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.h
 	<stdio.h>
@@ -265,7 +266,7 @@
 	<string.h>
 	"../Proyecto/Errores.h"
 
-1779575376 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\movimiento.h
+1779667830 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\movimiento.h
 
 1779501077 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\archivos.h
 	<stdio.h>
@@ -286,10 +287,10 @@
 1779575036 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\archivos.c
 	"Archivos.h"
 
-1779302045 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.c
+1779665480 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.c
 	"Bandido.h"
 
-1779456679 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.h
+1779575999 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.h
 	"Tablero.h"
 
 1779501231 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\config.c
@@ -304,7 +305,7 @@
 1779302045 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\movimiento.c
 	"Movimiento.h"
 
-1779572815 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\tablero.c
+1779665317 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\tablero.c
 	"Tablero.h"
 	"Bandido.h"
 	"../Bibliotecas/listaDobleCircular.h"

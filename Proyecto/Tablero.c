@@ -201,6 +201,29 @@ void probarGenerarTablero(void)
 
     vaciarTablero(&tablero);
 }
+int validarTablero(tTablero* tablero)
+{
+    int i;
+    int casillaJugable = 0;
+    tPosicion actual = tablero->inicio->sig;
+    tCasillero* cas;
+
+    for(i = 0; i < MAX_DADO && i <tablero->cantidadCasilleros - 1; i++)
+    {
+        cas = (tCasillero*)actual->info;
+
+        if(cas->idBandido == 0)
+        {
+            casillaJugable = 1;
+            break;
+        }
+
+        actual = actual->sig;
+    }
+
+    return casillaJugable ? EXITO : TABLERO_NO_JUGABLE;
+}
+
 
 
 
