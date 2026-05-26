@@ -35,6 +35,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Bibliotecas/TdaListaDinamica.h" />
+		<Unit filename="Bibliotecas/arbol.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Bibliotecas/arbol.h" />
 		<Unit filename="Bibliotecas/colaCircular.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -82,9 +86,6 @@
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
-			<code_completion />
-			<envvars />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
