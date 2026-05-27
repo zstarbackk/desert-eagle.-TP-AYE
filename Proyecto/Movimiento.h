@@ -1,6 +1,6 @@
 #ifndef MOVIMIENTO_H_INCLUDED
 #define MOVIMIENTO_H_INCLUDED
-
+#include "Tablero.h"
 typedef enum
 {
     ADELANTE='F',
@@ -14,10 +14,10 @@ typedef enum
 
 typedef struct
 {
-    tTipoActor tipoActor;
+    tTipoActor Actor;
     unsigned idActor;
-    tDireccion direccion;
-    unsigned cantidad;
+    tPosicion origen;
+    tPosicion destino;
 } tMovimiento;
 
 typedef struct
@@ -26,8 +26,8 @@ typedef struct
     unsigned cantidad;
 }tMovimientoHistorico;
 
-tMovimiento crearMovimientoJugador(unsigned idJugador, tDireccion direccion,unsigned cantidad);
-tMovimiento crearMovimientoBandido(unsigned idBandido, tDireccion direccion, unsigned cantidad);
+tMovimiento crearMovimiento(tTipoActor tipo ,unsigned id, tPosicion origen,tPosicion destino);
+
 tMovimientoHistorico crearMovimientoHistorico(tDireccion,unsigned cantidad);
 
 #endif // MOVIMIENTO_H_INCLUDED

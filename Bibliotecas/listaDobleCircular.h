@@ -16,7 +16,7 @@ typedef struct tnodo
 } tNodoListaDC;
 
 typedef tNodoListaDC* tListaDC;
-
+typedef tNodoListaDC * tPosicion;
 void crearListaDC(tListaDC* pl);
 
 int insertarAlFinalDC(tListaDC *pl,const void *d,unsigned tamInfo);

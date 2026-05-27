@@ -29,7 +29,7 @@ int crearCasilleros(tTablero* tablero, unsigned cantidadCasilleros)
 
         if(insertarAlFinalDC(&(tablero->casilleros),&aux,sizeof(tCasillero))!=EXITO)
             return ERROR_MEMORIA;
-        //com lalista queda apuntando al ultimo nodo
+        //com la lista queda apuntando al ultimo nodo
         if(i==0)
         {
             tablero->inicio=tablero->casilleros;
@@ -46,7 +46,7 @@ tPosicion obtenerCasilleroAleatorioLibre(const tTablero* tablero)
     int pos;
     do
     {
-         actual=tablero->casilleros->sig;
+         actual=tablero->inicio;
          pos=rand() % tablero->cantidadCasilleros;
          while(pos--)
             actual=actual->sig;

@@ -7,7 +7,7 @@
 #include "Movimiento.h"
 #define PORCENTAJE_MINIMO_EVENTOS 70
 #define MAX_DADO 6
-typedef tNodoListaDC * tPosicion;
+
 typedef struct tBandido tBandido; //Solo informa que existe el tipo de datos para evitar dependencias circulares entre headers
 typedef enum
 {

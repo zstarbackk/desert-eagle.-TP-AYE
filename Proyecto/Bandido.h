@@ -12,5 +12,6 @@ typedef struct tBandido
 
 void inicializarBandido(tBandido * bandido,unsigned idBandido, tPosicion posicion);
 void desactivarBandido(tBandido* bandido);
-
+tBandido* buscarBandidoPorId(tLista* bandidos,unsigned idBandido);
+tPosicion calcularDestinoBandido(const tBandido *bandido, const tTablero *tablero,tDireccion, unsigned cantidad);
 #endif // BANDIDO_H_INCLUDED

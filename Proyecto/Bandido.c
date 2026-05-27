@@ -15,7 +15,7 @@ void desactivarBandido(tBandido* bandido)
 
 tBandido* buscarBandidoPorId(tLista* bandidos,unsigned idBandido)
 {
-    tNodoL* actual;
+    tPosicion actual;
     tBandido* bandido;
 
     actual=*bandidos;
@@ -62,3 +62,4 @@ tDireccion decidirDireccionBandido(const tBandido* bandido,const tPosicion posJu
         return ADELANTE;
     return ATRAS;
 }
+
