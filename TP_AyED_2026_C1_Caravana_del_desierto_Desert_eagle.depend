@@ -249,7 +249,7 @@
 	"Archivos.h"
 	"Tablero.h"
 
-1779853591 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\jugador.h
+1779985890 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\jugador.h
 	"Tablero.h"
 	"Movimiento.h"
 
@@ -291,7 +291,7 @@
 1779852796 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.c
 	"Bandido.h"
 
-1779851058 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.h
+1779985765 c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\bandido.h
 	"Tablero.h"
 
 1779501231 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\config.c
@@ -300,16 +300,15 @@
 1779674460 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 
-1779852796 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\jugador.c
+1779853571 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\jugador.c
 	"Jugador.h"
 
 1779853223 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\movimiento.c
 	"Movimiento.h"
 
-1779673005 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\tablero.c
+1779985531 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\tablero.c
 	"Tablero.h"
 	"Bandido.h"
-	"../Bibliotecas/listaDobleCircular.h"
 
 1779302045 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\utils.c
 	"Utils.h"

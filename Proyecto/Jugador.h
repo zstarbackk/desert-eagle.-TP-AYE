@@ -5,7 +5,7 @@
 #include "Movimiento.h"
 #define TAM_NICKNAME 30
 
-typedef struct
+typedef struct tJugador
 {
     unsigned idJugador;
     char nickname[TAM_NICKNAME];

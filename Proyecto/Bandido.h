@@ -1,8 +1,8 @@
 #ifndef BANDIDO_H_INCLUDED
 #define BANDIDO_H_INCLUDED
-
+#define MAX_MOVIMIENTO_BANDIDO 3
 #include "Tablero.h"
-
+typedef struct tJugador tJugador;
 typedef struct tBandido
 {
     int idBandido;
@@ -13,5 +13,5 @@ typedef struct tBandido
 void inicializarBandido(tBandido * bandido,unsigned idBandido, tPosicion posicion);
 void desactivarBandido(tBandido* bandido);
 tBandido* buscarBandidoPorId(tLista* bandidos,unsigned idBandido);
-tPosicion calcularDestinoBandido(const tBandido *bandido, const tTablero *tablero,tDireccion, unsigned cantidad);
+tMovimiento generarMovimientoBandido(const tBandido* bandido, const tJugador* jugador, const tTablero* tablero);
 #endif // BANDIDO_H_INCLUDED

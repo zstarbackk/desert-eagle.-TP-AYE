@@ -1,6 +1,6 @@
 #include "Tablero.h"
 #include "Bandido.h"
-#include "../Bibliotecas/listaDobleCircular.h"
+
 
 void inicializarTablero(tTablero* tablero)
 {
