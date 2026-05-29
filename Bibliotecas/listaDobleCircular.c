@@ -9,31 +9,37 @@ void crearListaDC(tListaDC* pl)
 int insertarAlFinalDC(tListaDC *pl,const void *d,unsigned tamInfo)
 {
     tNodoListaDC *nue;
-    nue=(tNodoListaDC*)malloc(sizeof(tNodoListaDC));
+
+    nue = (tNodoListaDC*)malloc(sizeof(tNodoListaDC));
     if(!nue)
         return ERROR_MEMORIA;
-    nue->info=malloc(tamInfo);
+
+    nue->info = malloc(tamInfo);
     if(!nue->info)
     {
         free(nue);
         return ERROR_MEMORIA;
     }
 
-    memcpy(nue->info,d,tamInfo);
-    nue->tamInfo=tamInfo;
+    memcpy(nue->info, d, tamInfo);
+    nue->tamInfo = tamInfo;
 
     if(!*pl)
     {
-        nue->ant=nue;
-        nue->sig=nue;
-    }else
-    {
-        nue->sig=(*pl)->sig;
-        nue->ant=(*pl);
-        (*pl)->sig=nue;
-        (*pl)->sig->ant=nue;
+        nue->sig = nue;
+        nue->ant = nue;
     }
-    *pl=nue;
+    else
+    {
+        nue->sig = (*pl)->sig;   // apunta al primero
+        nue->ant = *pl;          // apunta al ultimo
+
+        (*pl)->sig->ant = nue;   // el primero ahora apunta atras al nuevo
+        (*pl)->sig = nue;        // el ultimo ahora apunta adelante al nuevo
+    }
+
+    *pl = nue; // el nuevo pasa a ser el ultimo
+
     return EXITO;
 }
 

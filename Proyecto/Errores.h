@@ -54,6 +54,8 @@
 #define JUGADOR_INEXISTENTE    -110
 #define TABLERO_NO_JUGABLE     -111
 
+#define NO_RETROCEDE -115
+
 
 //const char* mensaje_error(int cod);
 

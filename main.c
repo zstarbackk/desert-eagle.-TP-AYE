@@ -5,8 +5,9 @@
 
 int main()
 {
-//    tConfig config;
-//    tJugador jugador;
+    tConfig config;
+    tJugador jugador;
+    tTablero tablero;
 //
    srand(time(NULL));
 //
@@ -22,14 +23,14 @@ int main()
 //        return 1;
 //    }
 //
-//    if(ingresarJugador(&jugador)!= EXITO)
-//    {
-//        printf("Error critico: No se pudo abrir el archivo de jugadores. Vuelva a iniciar sesion\n");
-//        return 1;
-//    }
+    if(ingresarJugador(&jugador)!= EXITO)
+    {
+        printf("Error critico: No se pudo abrir el archivo de jugadores. Vuelva a iniciar sesion\n");
+        return 1;
+    }
 //
-//    mostrarMenu(&jugador,&config);
-//  probarGenerarTablero();
+    mostrarMenu(&jugador,&tablero,&config);
+//    probarGenerarTablero();
 
     return 0;
 }

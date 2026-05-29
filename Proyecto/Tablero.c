@@ -29,6 +29,7 @@ int crearCasilleros(tTablero* tablero, unsigned cantidadCasilleros)
 
         if(insertarAlFinalDC(&(tablero->casilleros),&aux,sizeof(tCasillero))!=EXITO)
             return ERROR_MEMORIA;
+
         //com la lista queda apuntando al ultimo nodo
         if(i==0)
         {
@@ -145,39 +146,63 @@ void vaciarTablero(tTablero* tablero)
     vaciarListaDC(&tablero->casilleros);
     vaciarLista(&tablero->bandidos);
 }
-void mostrarTablero(const tTablero* tablero)
+
+char obtenerCharEvento(tTipoEvento evento)
+{
+    switch(evento)
+    {
+        case INICIO:     return 'I';
+        case SALIDA:     return 'S';
+        case PREMIO:     return 'P';
+        case VIDA_EXTRA: return 'V';
+        case OASIS:      return 'O';
+        case TORMENTA:   return 'T';
+        default:         return '.';
+    }
+}
+
+void mostrarTablero(const tTablero* tablero, FILE* salida)
 {
     tPosicion actual;
     tCasillero* cas;
     unsigned i;
-
     actual = tablero->inicio;
-
     for(i = 0; i < tablero->cantidadCasilleros; i++)
     {
         cas = (tCasillero*)actual->info;
-
-        if(cas->idBandido)
-            printf("[B]");
-        else
+        fprintf(salida, "%02u:", cas->numeroCasillero + 1);
+        if(cas->tieneJugador && cas->idBandido)
+            fprintf(salida, "[%c B J]", obtenerCharEvento(cas->tipoEvento));
+        else if(cas->tieneJugador)
         {
-            switch(cas->tipoEvento)
-            {
-                case INICIO: printf("[I]"); break;
-                case SALIDA: printf("[S]"); break;
-                case PREMIO: printf("[P]"); break;
-                case VIDA_EXTRA: printf("[V]"); break;
-                case OASIS: printf("[O]"); break;
-                case TORMENTA: printf("[T]"); break;
-                case DESPEJADO: printf("[.]"); break;
-            }
+            if(cas->tipoEvento == DESPEJADO)
+                fprintf(salida, "[J]");
+            else
+                fprintf(salida, "[%c J]", obtenerCharEvento(cas->tipoEvento));
         }
-        printf("\n");
+        else if(cas->idBandido)
+        {
+            if(cas->tipoEvento == DESPEJADO)
+                fprintf(salida, "[B]");
+            else
+                fprintf(salida, "[%c B]", obtenerCharEvento(cas->tipoEvento));
+        }
+        else
+            fprintf(salida, "[%c]", obtenerCharEvento(cas->tipoEvento));
 
+        fprintf(salida, "\n");
         actual = actual->sig;
     }
+}
 
-    printf("\n");
+int exportarTablero(const tTablero* tablero, char* nombreArchivo)
+{
+    FILE* archivo;
+    if(abrirArchivo(&archivo,nombreArchivo, "wt")!=EXITO)
+        return ERROR_ARCHIVO;
+    mostrarTablero(tablero, archivo);
+    fclose(archivo);
+    return EXITO;
 }
 
 void probarGenerarTablero(void)
@@ -197,7 +222,7 @@ void probarGenerarTablero(void)
         return;
     }
 
-    mostrarTablero(&tablero);
+    mostrarTablero(&tablero, stdout);
 
     vaciarTablero(&tablero);
 }

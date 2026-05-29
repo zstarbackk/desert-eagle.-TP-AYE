@@ -29,6 +29,7 @@ tBandido* buscarBandidoPorId(tLista* bandidos, unsigned idBandido)
 
     return NULL;
 }
+
 int distanciaAdelante(const tPosicion origen, const tPosicion destino)
 {
     int distancia=0;

@@ -2,6 +2,8 @@
 
 void inicializarEstadoJugador(tJugador * jugador,unsigned vidasInicio, tPosicion inicio)
 {
+    tCasillero* cas = (tCasillero*)inicio->info;
+
     jugador->vidas=vidasInicio;
     jugador->puntaje=0,
     jugador->protegidoPorOasis=0;
@@ -9,14 +11,15 @@ void inicializarEstadoJugador(tJugador * jugador,unsigned vidasInicio, tPosicion
     jugador->cantMovimientos=0;
     crearLista(&jugador->historialMovimientos);
     jugador->posicionActual=inicio;
+
+    cas->tieneJugador = 1;
 }
 
-int generarMovimientoJugador( tJugador * jugador, const tTablero *tablero, unsigned dado, tMovimiento *mov)
+int generarMovimientoJugador( tJugador * jugador, const tTablero *tablero, unsigned dado, tMovimiento *mov, tDireccion dir)
 {
     tPosicion actual=jugador->posicionActual;
     unsigned pasosAdelante=0;
     unsigned pasosAtras=0;
-    tDireccion dir=ADELANTE;
     tMovimientoHistorico movHist;
     while(dado--)
     {

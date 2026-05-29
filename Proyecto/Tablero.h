@@ -38,6 +38,8 @@ typedef struct
 int generarTablero(tTablero* tablero, const tConfig* config);
 int validarTablero(tTablero* tablero);
 void vaciarTablero(tTablero* tablero);
+int exportarTablero(const tTablero* tablero, char* nombreArchivo);
+void mostrarTablero(const tTablero* tablero, FILE* salida);
 void probarGenerarTablero(void);
 
 
