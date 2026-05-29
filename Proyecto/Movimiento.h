@@ -1,6 +1,6 @@
 #ifndef MOVIMIENTO_H_INCLUDED
 #define MOVIMIENTO_H_INCLUDED
-#include "Tablero.h"
+#include "../Bibliotecas/listaDobleCircular.h"
 typedef enum
 {
     ADELANTE='F',
@@ -27,7 +27,6 @@ typedef struct
 }tMovimientoHistorico;
 
 tMovimiento crearMovimiento(tTipoActor tipo ,unsigned id, tPosicion origen,tPosicion destino);
-
 tMovimientoHistorico crearMovimientoHistorico(tDireccion,unsigned cantidad);
 
 #endif // MOVIMIENTO_H_INCLUDED

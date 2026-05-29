@@ -2,6 +2,7 @@
 #define BANDIDO_H_INCLUDED
 #define MAX_MOVIMIENTO_BANDIDO 3
 #include "Tablero.h"
+#include "Movimiento.h"
 typedef struct tJugador tJugador;
 typedef struct tBandido
 {

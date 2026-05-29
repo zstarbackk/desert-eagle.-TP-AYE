@@ -1,5 +1,6 @@
 #include "Juego.h"
-
+#include "Bandido.h"
+#include "Utils.h"
 int ingresarJugador(tJugador *jugador)
 {
     char nickname[TAM_NICKNAME];
@@ -79,6 +80,47 @@ int inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config)
     if(ret != EXITO)
         return ret;
     inicializarEstadoJugador(jugador,config->vidas_inicio,tablero->inicio);
+
+    return EXITO;
+
+}
+
+int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos)
+{
+    int ret;
+    unsigned dado;
+    tMovimiento mov;
+    tBandido *bandido;
+    tLista *pl=&tablero->bandidos;
+
+    if(jugador->pierdeTurno)
+    {
+        jugador->pierdeTurno=0;
+    }else
+    {
+        dado=tirarDado();
+        ret=generarMovimientoJugador(jugador,tablero,dado,&mov);
+        if(ret!=EXITO)
+            return ret;
+        ret=encolar(colaMovimientos,&mov,sizeof(tMovimiento));
+        if(ret!=EXITO)
+            return ret;
+
+    }
+
+
+    while(*pl)
+    {
+        bandido=(tBandido*)(*pl)->info;
+        if(bandido->activo)
+        {
+            mov=generarMovimientoBandido(bandido,jugador,tablero);
+            ret=encolar(colaMovimientos,&mov,sizeof(tMovimiento));
+            if(ret!=EXITO)
+                return ret;
+        }
+        pl=&(*pl)->sig;
+    }
 
     return EXITO;
 

@@ -65,22 +65,18 @@ tMovimiento generarMovimientoBandido(const tBandido* bandido, const tJugador* ju
 
     for(i = 0; i < MAX_MOVIMIENTO_BANDIDO; i++)
     {
-        cantidad = ((cantidadInicial - 1 + i) % MAX_MOVIMIENTO_BANDIDO) + 1;
+        cantidad = ((cantidadInicial - 1 + i) % MAX_MOVIMIENTO_BANDIDO) + 1; //prueba una cantidad aleatoria, si n sirve prueba las otras
 
-        destino = bandido->posicionActual;
+        destino = bandido->posicionActual;                                  //sin cambiar de direccion, si no sirve ninguna, se queda en el lugar
 
         if(dir == ADELANTE)
         {
-            unsigned pasos = cantidad;
-
-            while(pasos--)
+            while(cantidad--)
                 destino = destino->sig;
         }
         else
         {
-            unsigned pasos = cantidad;
-
-            while(pasos--)
+            while(cantidad--)
                 destino = destino->ant;
         }
 
@@ -90,16 +86,10 @@ tMovimiento generarMovimientoBandido(const tBandido* bandido, const tJugador* ju
            cas->tipoEvento != SALIDA &&
            cas->idBandido == 0)
         {
-            return crearMovimiento(ACTOR_BANDIDO,
-                                   bandido->idBandido,
-                                   bandido->posicionActual,
-                                   destino);
+            return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,destino);
         }
     }
-
-    return crearMovimiento(ACTOR_BANDIDO,
-                           bandido->idBandido,
-                           bandido->posicionActual,
-                           bandido->posicionActual);
+    //se queda en el lugar
+    return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,bandido->posicionActual);
 }
 

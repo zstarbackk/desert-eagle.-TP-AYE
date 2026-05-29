@@ -45,6 +45,7 @@ int generarMovimientoJugador( tJugador * jugador, const tTablero *tablero, unsig
         movHist=crearMovimientoHistorico(ATRAS,pasosAtras);
         insertarAlFinal(&jugador->historialMovimientos,&movHist,sizeof(movHist));
     }
+    jugador->cantMovimientos++;
     *mov=crearMovimiento(ACTOR_JUGADOR,jugador->idJugador,jugador->posicionActual,actual);
     return EXITO;
 }

@@ -5,11 +5,11 @@
 #include "../Proyecto/Errores.h"
 #define MINIMO( X , Y ) ( ( X ) <= ( Y ) ? ( X ) : ( Y ) )
 
-typedef struct tnodo
+typedef struct tnodoC
 {
     void* info;
     unsigned tamInfo;
-    struct tnodo* sig;
+    struct tnodoC* sig;
 } tNodoCola;
 
 typedef tNodoCola* tCola;
