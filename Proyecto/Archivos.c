@@ -1,6 +1,6 @@
 #include "Archivos.h"
 
-int obtenerPosicionJugador(FILE *archivo, const char *nickname)     //Para implementar el arbol solo se modifica esta funcion.
+unsigned obtenerPosicionJugador(FILE *archivo, const char *nickname)     //Para implementar el arbol solo se modifica esta funcion.
 {
     tJugadorArchivo registro;
     int posicion = 0;
@@ -35,7 +35,7 @@ int buscarJugador(FILE *archivo,const char *nickname, tJugador *jugador)
 
 
 
-int obtenerUltimoId(FILE *archivo)
+unsigned obtenerUltimoIdJugador(FILE *archivo)
 {
     tJugadorArchivo registro;
     int ultimoId = 0;
@@ -52,7 +52,7 @@ void darDeAltaJugador(FILE *archivo,const char *nickname, tJugador *jugador)
 {
     tJugadorArchivo registro;
 
-    registro.idJugador = obtenerUltimoId(archivo) + 1;
+    registro.idJugador = obtenerUltimoIdJugador(archivo) + 1;
     strcpy(registro.nickname, nickname);
     fseek(archivo,0,SEEK_END);
 
@@ -61,3 +61,43 @@ void darDeAltaJugador(FILE *archivo,const char *nickname, tJugador *jugador)
     jugador->idJugador = registro.idJugador;
     strcpy(jugador->nickname, nickname);
 }
+
+unsigned obtenerUltimoIdPartida(FILE* archivo)
+{
+    tPartida partida;
+    unsigned ultimoId = 0;
+
+    rewind(archivo);
+
+    while(fread(&partida, sizeof(tPartida), 1, archivo) == 1)
+        ultimoId = partida.idPartida;
+
+    return ultimoId;
+}
+
+int guardarPartida(const char* nombreArchivo, const tJugador* jugador, tResultadoPartida resultado)
+{
+    FILE* archivo;
+    tPartida partida;
+    unsigned idPartida;
+
+    if(abrirArchivo(&archivo, nombreArchivo, "a+b") != EXITO)
+        return ERROR_APERTURA;
+
+    idPartida = obtenerUltimoIdPartida(archivo) + 1;
+
+    crearPartida(&partida, idPartida, jugador, resultado);
+
+    fseek(archivo, 0, SEEK_END);
+
+    if(fwrite(&partida, sizeof(tPartida), 1, archivo) != 1)
+    {
+        fclose(archivo);
+        return ERROR_ESCRITURA;
+    }
+
+    fclose(archivo);
+    return EXITO;
+}
+
+

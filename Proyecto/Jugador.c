@@ -49,6 +49,26 @@ int generarMovimientoJugador( tJugador * jugador, const tTablero *tablero, unsig
         insertarAlFinal(&jugador->historialMovimientos,&movHist,sizeof(movHist));
     }
     jugador->cantMovimientos++;
-    *mov=crearMovimiento(ACTOR_JUGADOR,jugador->idJugador,jugador->posicionActual,actual);
+    *mov=crearMovimiento(ACTOR_JUGADOR,jugador->idJugador,jugador->posicionActual,actual,dir);
     return EXITO;
 }
+
+void mostrarMovimientoHistorico(const void* info, unsigned tamInfo)
+{
+    tMovimientoHistorico* mov = (tMovimientoHistorico*)info;
+
+    printf("%c%u ", mov->direccion, mov->cantidad);
+}
+
+void mostrarHistorialJugador(tJugador* jugador)
+{
+    printf("Historial de movimientos: ");
+
+    if(listaVacia(&jugador->historialMovimientos))
+        printf("sin movimientos");
+    else
+        mapLista(&jugador->historialMovimientos, mostrarMovimientoHistorico);
+
+    printf("\n");
+}
+

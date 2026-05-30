@@ -4,8 +4,8 @@
 #include "Utils.h"
 #include <stdio.h>
 #include <string.h>
-#define MAX_PORCENTAJE_HOSTILES 30
-#define MAX_PORCENTAJE_FAVORABLES 40
+#define MAX_PORCENTAJE_HOSTILES 45
+#define MAX_PORCENTAJE_FAVORABLES 50
 
 typedef struct
 {

@@ -20,6 +20,8 @@ typedef struct tJugador
 
 void inicializarEstadoJugador(tJugador * jugador,unsigned vidasInicio, tPosicion inicio);
 int generarMovimientoJugador(tJugador * jugador, const tTablero *tablero, unsigned dado, tMovimiento *mov, tDireccion);
+void mostrarMovimientoHistorico(const void* info, unsigned tamInfo);
+void mostrarHistorialJugador(tJugador* jugador);
 
 
 #endif // JUGADOR_H_INCLUDED

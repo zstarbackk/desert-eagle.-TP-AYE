@@ -1,7 +1,6 @@
 #include "Juego.h"
 #include "Bandido.h"
 #include "Utils.h"
-
 int ingresarJugador(tJugador *jugador)
 {
     char nickname[TAM_NICKNAME];
@@ -60,7 +59,7 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
                 printf("Hasta luego, %s!\n", jugador->nickname);
                 break;
             default:
-                printf("Opcion invalida\n");
+                printf("Opcion invalida.\n");
         }
     } while (opcion != 4);
 
@@ -87,7 +86,7 @@ tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfi
     }while(validarTablero(tablero)!=EXITO);
 
 
-    printf("Tablero valido\n");
+    printf("Tablero valido.\n");
 
     ret = exportarTablero(tablero, ARCH_CARAVANA);
     if(ret != EXITO)
@@ -114,28 +113,20 @@ int puedeRetroceder(const tJugador* jugador, unsigned pasos)
     return EXITO;
 }
 
-int validarMovimiento(const tJugador* jugador, unsigned pasos, tDireccion direccion)
-{
-    if(direccion == ATRAS)
-        return puedeRetroceder(jugador, pasos);
-
-    return EXITO;
-}
-
 tDireccion pedirDireccion(const tJugador* jugador, unsigned dado)
 {
     char dir;
 
-    if(validarMovimiento(jugador, dado, ATRAS) != EXITO)
+    if(puedeRetroceder(jugador,dado)!=EXITO)
     {
-        printf("Solo puede avanzar, no hay casilleros disponibles para retroceder\n");
+        printf("No tenes espacio para retroceder %u casilleros. La caravana debe avanzar.\n", dado);
         return ADELANTE;
     }
 
     do
     {
-        printf("Puede elegir entre avanzar o retroceder\n");
-        printf("Presione 'F' para avanzar o 'B' para retroceder\n");
+        printf("Puede elegir entre avanzar o retroceder.\n");
+        printf("Presione 'F' para avanzar o 'B' para retroceder.\n");
 
         scanf(" %c", &dir);
 
@@ -162,32 +153,32 @@ int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos)
     if(jugador->pierdeTurno)
     {
         jugador->pierdeTurno=0;
-        printf("Como ha perdido un turno, es el turno de los bandidos, tenga cuidado!!\n\n");
+        printf("Ha perdido un turno por la tormenta, es el turno de los bandidos, tenga cuidado!!.\n\n");
     }
     else
     {
 
         do
         {
-           printf("Presione ENTER para tirar el dado\n");
+           printf("Presione ENTER para tirar el dado..\n");
            fflush(stdin);
            scanf("%c", &tecla);
            if(tecla != '\n')
-            printf("Tecla invalida\n");
+            printf("Tecla invalida.\n");
         }while(tecla != '\n');
 
         dado=tirarDado();
 
-        system("cls");
+        //system("cls");
 
-        printf("El dado giro en el aire y cayo, el numero es: %u\n", dado);
+        printf("El dado giro en el aire y cayo, el numero es: %u.\n", dado);
 
         direccion = pedirDireccion(jugador, dado);
 
         if(direccion == ATRAS)
-           printf("Retrocede %u casilleros, suerte!!\n\n", dado);
+           printf("Retrocede %u casilleros, suerte!!.\n\n", dado);
         else
-           printf("Avanza %u casilleros, suerte!!\n\n", dado);
+           printf("Avanza %u casilleros, suerte!!.\n\n", dado);
 
         ret=generarMovimientoJugador(jugador,tablero,dado,&mov,direccion);
         if(ret!=EXITO)
@@ -217,26 +208,27 @@ int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos)
 }
 
 
-void aplicarEvento(tJugador* jugador, tCasillero* cas, tTablero* tablero)
+void aplicarEvento(tJugador* jugador, tCasillero* cas)
 {
     switch(cas->tipoEvento)
     {
         case PREMIO:
-            printf("Enhorabuena, se ha topado con un premio, su puntaje se ha incrementado con exito!!\n\n");
+            printf("Felicidades, se ha topado con un premio, su puntaje se ha incrementado con exito!!.\n\n");
             jugador->puntaje++;
             cas->tipoEvento = DESPEJADO;
             break;
         case VIDA_EXTRA:
-            printf("Parece que es su dia de suerte, ha conseguido una vida extra, aprovechelaa \n\n");
+            printf("Parece que es su dia de suerte, ha conseguido una vida extra, aprovechela. \n\n");
             jugador->vidas++;
             cas->tipoEvento = DESPEJADO;
             break;
         case OASIS:
-            printf("Al parecer un desierto no es solo arena, felicidades ha encontrado un oasis, mala suerte para los bandidos\n\n");
+            printf("Llegaste a un oasis. Tendras proteccion contra el proximo peligro.\n\n");
             jugador->protegidoPorOasis = 1;
+            cas->tipoEvento = DESPEJADO;
             break;
         case TORMENTA:
-            printf("A juzgar por el viento se avecina una tormenta, menos mal que traje paraguas\n\n");
+            printf("A juzgar por el viento se avecina una tormenta, menos mal que traje paraguas.\n\n");
             if(!jugador->protegidoPorOasis)
                 {
                    printf("Te costara un turno (-_-)\n\n");
@@ -244,7 +236,7 @@ void aplicarEvento(tJugador* jugador, tCasillero* cas, tTablero* tablero)
                 }
             else
                 {
-                   printf("Que util el oasis no? Esta vez te salvaste, a seguir jugando!!\n\n");
+                   printf("Que util el oasis no? Esta vez te salvaste, a seguir jugando!!.\n\n");
                    jugador->protegidoPorOasis = 0;
                 }
 
@@ -260,12 +252,12 @@ void interceptarJugador(tJugador* jugador, tBandido* bandido, tCasillero* cas, t
 
     if(jugador->protegidoPorOasis)
     {
-        printf("Buena suerte, tenias blindaje contra bandidos, sigue con cuidado que ya no lo tienes!!\n\n");
+        printf("Buena suerte, tenias blindaje contra bandidos, sigue con cuidado que ya no lo tienes!!.\n\n");
         jugador->protegidoPorOasis = 0;
     }
     else
     {
-        printf("Fuiste interceptado por el bandido %u, volviste al inicio [);]\n\n", bandido->idBandido);
+        printf("Fuiste interceptado por el bandido %u, volviste al inicio [);].\n\n", bandido->idBandido);
 
         // mover jugador al inicio
         cas->tieneJugador = 0;
@@ -296,25 +288,36 @@ int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero)
         casOrigen  = (tCasillero*)mov.origen->info;
         casDestino = (tCasillero*)mov.destino->info;
 
-        if(mov.Actor == ACTOR_JUGADOR && !jugador->pierdeTurno)
+        if(mov.actor == ACTOR_JUGADOR) //en preparar turno ya se contempla si pierde el turno porque no genera el movimiento
         {
             casOrigen->tieneJugador  = 0;
             casDestino->tieneJugador = 1;
             jugador->posicionActual  = mov.destino;
-            aplicarEvento(jugador, casDestino, tablero);
+            aplicarEvento(jugador, casDestino);
         }
         else
         {
             bandido = buscarBandidoPorId(&tablero->bandidos, mov.idActor);
+
             if(bandido && bandido->activo)
             {
-                casOrigen->idBandido    = 0;
-                casDestino->idBandido   = bandido->idBandido;
-                bandido->posicionActual = mov.destino;
+                ajustarDestinoBandido(&mov);
+
+                casOrigen = (tCasillero*)bandido->posicionActual->info;
+                casDestino = (tCasillero*)mov.destino->info;
+
+                if(mov.destino != bandido->posicionActual)
+                    {
+                        if(casOrigen->idBandido == bandido->idBandido)
+                        casOrigen->idBandido = 0;
+
+                        casDestino->idBandido = bandido->idBandido;
+                        bandido->posicionActual = mov.destino;
+                    }
             }
         }
-    }
 
+    }
     casDestino = (tCasillero*)jugador->posicionActual->info;
     if(casDestino->idBandido)
     {
@@ -376,12 +379,13 @@ tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig *co
 void finalizarPartida(tJugador* jugador, tResultadoPartida resultado)
 {
     if(resultado == PARTIDA_GANADA)
-        printf("Felicitaciones %s, llegaste a la Ciudad Refugio!\n", jugador->nickname);
+        printf("Felicitaciones %s, llegaste a la Ciudad Refugio!.\n", jugador->nickname);
     else if (resultado == PARTIDA_PERDIDA)
-        printf("Game over %s, perdiste todas tus vidas!\n", jugador->nickname);
+        printf("Game over %s, perdiste todas tus vidas!.\n", jugador->nickname);
     else
-        printf("Ocurrio un error durante la partida\n");
+        printf("Ocurrio un error durante la partida.\n");
 
-    //mostrarHistorial(jugador);
-    //guardarPartida(jugador, resultado);
+    mostrarHistorialJugador(jugador);
+    if(guardarPartida(ARCH_PARTIDAS,jugador, resultado)!=EXITO)
+        printf("No se pudo guardar la partida.\n");
 }

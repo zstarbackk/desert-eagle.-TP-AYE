@@ -83,14 +83,49 @@ tMovimiento generarMovimientoBandido(const tBandido* bandido, const tJugador* ju
 
         cas = (tCasillero*)destino->info;
 
-        if(cas->tipoEvento != INICIO &&
-           cas->tipoEvento != SALIDA &&
-           cas->idBandido == 0)
-        {
-            return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,destino);
-        }
+        if(cas->tipoEvento != INICIO && cas->tipoEvento != SALIDA )
+            return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,destino,dir);
+
     }
     //se queda en el lugar
-    return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,bandido->posicionActual);
+    return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,bandido->posicionActual,dir);
 }
+
+
+void ajustarDestinoBandido(tMovimiento* mov)
+{
+    tCasillero* cas;
+    tPosicion destino;
+    unsigned intentos = 0;
+
+    cas = (tCasillero*)mov->destino->info;
+
+    if(cas->idBandido == 0 )
+        return;
+
+    destino = mov->destino;
+
+    while(intentos < MAX_MOVIMIENTO_BANDIDO)
+    {
+        if(mov->direccion == ADELANTE)
+            destino = destino->sig;
+        else
+            destino = destino->ant;
+
+        cas = (tCasillero*)destino->info;
+
+        if(cas->idBandido == 0 &&
+           cas->tipoEvento != INICIO &&
+           cas->tipoEvento != SALIDA)
+        {
+            mov->destino = destino;
+            return;
+        }
+
+        intentos++;
+    }
+
+    mov->destino = mov->origen;
+}
+
 

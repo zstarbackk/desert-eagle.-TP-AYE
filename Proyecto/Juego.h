@@ -4,19 +4,13 @@
 #include "Jugador.h"
 #include "Archivos.h"
 #include "Tablero.h"
+#include "Partida.h"
 #include "../Bibliotecas/colaCircular.h"
 #define TAM_NICKNAME 30
 #define ARCH_JUGADORES "Archivos/jugadores.dat"
 #define ARCH_CONFIGURACION "Archivos/config.txt"
 #define ARCH_CARAVANA "Archivos/caravana.txt"
-
-typedef enum
-{
-    PARTIDA_EN_CURSO,
-    PARTIDA_GANADA,
-    PARTIDA_PERDIDA,
-    PARTIDA_ERROR
-} tResultadoPartida;
+#define ARCH_PARTIDAS "Archivos/partidas.dat"
 
 int ingresarJugador(tJugador *jugador);
 void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config);

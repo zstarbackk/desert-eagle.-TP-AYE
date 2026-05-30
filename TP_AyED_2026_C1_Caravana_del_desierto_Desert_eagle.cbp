@@ -72,6 +72,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Proyecto/Movimiento.h" />
+		<Unit filename="Proyecto/Partida.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Proyecto/Partida.h" />
 		<Unit filename="Proyecto/Tablero.c">
 			<Option compilerVar="CC" />
@@ -86,6 +89,9 @@
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
+			<code_completion />
+			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

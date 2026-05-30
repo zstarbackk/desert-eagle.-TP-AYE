@@ -1,13 +1,14 @@
 #include "Movimiento.h"
 
-tMovimiento crearMovimiento(tTipoActor tipo ,unsigned id, tPosicion origen,tPosicion destino)
+tMovimiento crearMovimiento(tTipoActor tipo ,unsigned id, tPosicion origen,tPosicion destino,tDireccion direccion)
 {
     tMovimiento mov;
 
-    mov.Actor=tipo;
+    mov.actor=tipo;
     mov.idActor=id;
     mov.origen=origen;
     mov.destino=destino;
+    mov.direccion=direccion;
     return mov;
 }
 

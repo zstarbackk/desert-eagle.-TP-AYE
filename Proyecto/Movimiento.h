@@ -14,10 +14,11 @@ typedef enum
 
 typedef struct
 {
-    tTipoActor Actor;
+    tTipoActor actor;
     unsigned idActor;
     tPosicion origen;
     tPosicion destino;
+    tDireccion direccion;
 } tMovimiento;
 
 typedef struct
@@ -26,7 +27,7 @@ typedef struct
     unsigned cantidad;
 }tMovimientoHistorico;
 
-tMovimiento crearMovimiento(tTipoActor tipo ,unsigned id, tPosicion origen,tPosicion destino);
+tMovimiento crearMovimiento(tTipoActor tipo ,unsigned id, tPosicion origen,tPosicion destino,tDireccion direccion);
 tMovimientoHistorico crearMovimientoHistorico(tDireccion,unsigned cantidad);
 
 #endif // MOVIMIENTO_H_INCLUDED
