@@ -3,7 +3,7 @@
 
 #include "Tablero.h"
 #include "Movimiento.h"
-#define TAM_NICKNAME 30
+#define TAM_NICKNAME 50
 
 typedef struct tJugador
 {

@@ -6,7 +6,6 @@
 #include "Tablero.h"
 #include "Partida.h"
 #include "../Bibliotecas/colaCircular.h"
-#define TAM_NICKNAME 30
 #define ARCH_JUGADORES "Archivos/jugadores.dat"
 #define ARCH_CONFIGURACION "Archivos/config.txt"
 #define ARCH_CARAVANA "Archivos/caravana.txt"

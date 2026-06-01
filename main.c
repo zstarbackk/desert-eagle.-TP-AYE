@@ -8,27 +8,20 @@ int main()
     tConfig config;
     tJugador jugador;
     tTablero tablero;
-//
-   srand(time(NULL));
-//
-//    if (!leerConfiguracion(ARCH_CONFIGURACION, &config))
-//    {
-//        printf("Error critico: No fue posible extraer las configuraciones iniciales.\nPongase en contacto con el equipo desarrollador\n");
-//        return 1;
-//    }
-//
-//    if (!validarConfig(&config))
-//    {
-//        printf("Error critico: Las configuraciones iniciales son inadecuadas para desplegar el juego.\nPongase en contacto con el equipo desarrollador\n");
-//        return 1;
-//    }
-//
-    if(ingresarJugador(&jugador)!= EXITO)
+    int ret;
+
+    srand(time(NULL));
+
+    do
     {
-        printf("Error critico: No se pudo abrir el archivo de jugadores. Vuelva a iniciar sesion\n");
-        return 1;
-    }
-//
+        ret=ingresarJugador(&jugador);
+        if(ret==ERROR_APERTURA)
+        {
+            printf("Error critico: No se pudo abrir el archivo de jugadores. Vuelva a iniciar sesion\n");
+            return 1;
+        }
+    }while (ret== ERROR_JUGADOR_NO_ENCONTRADO);
+
     mostrarMenu(&jugador,&tablero,&config);
 //    probarGenerarTablero();
 

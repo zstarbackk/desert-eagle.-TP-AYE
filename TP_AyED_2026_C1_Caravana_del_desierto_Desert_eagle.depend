@@ -148,23 +148,24 @@
 1779048145 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblecircular.c
 	"listaDobleCircular.h"
 
-1780068752 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
+1780281379 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	"Proyecto/Juego.h"
 
-1779676154 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.c
+1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.c
 	"Archivos.h"
 
-1779676154 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.h
+1780176867 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.h
 	<stdio.h>
 	"Jugador.h"
+	"Partida.h"
 
-1780052205 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\movimiento.c
+1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\movimiento.c
 	"Movimiento.h"
 
-1780052205 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\movimiento.h
+1780176867 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\movimiento.h
 	"../Bibliotecas/listaDobleCircular.h"
 
 1779676154 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\colacircular.c
@@ -176,7 +177,7 @@
 	<stdlib.h>
 	"../Proyecto/Errores.h"
 
-1780095060 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\errores.h
+1780280172 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\errores.h
 
 1780071406 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.c
 	"listaDobleCircular.h"
@@ -190,7 +191,7 @@
 1779676154 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\config.c
 	"Config.h"
 
-1779676154 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\config.h
+1780176867 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\config.h
 	"Errores.h"
 	"Utils.h"
 	<stdio.h>
@@ -205,10 +206,10 @@
 1779236690 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\utils.c
 	"Utils.h"
 
-1780093805 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\jugador.c
+1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\jugador.c
 	"Jugador.h"
 
-1780093854 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\jugador.h
+1780280172 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\jugador.h
 	"Tablero.h"
 	"Movimiento.h"
 
@@ -218,11 +219,11 @@
 	"../Bibliotecas/TdaListaDinamica.h"
 	"Config.h"
 
-1780093805 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\bandido.c
+1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\bandido.c
 	"Bandido.h"
 	"Jugador.h"
 
-1780052205 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\bandido.h
+1780176867 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\bandido.h
 	"Tablero.h"
 	"Movimiento.h"
 
@@ -230,14 +231,15 @@
 	"Tablero.h"
 	"Bandido.h"
 
-1780095145 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.h
+1780280273 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.h
 	<ctype.h>
 	"Jugador.h"
 	"Archivos.h"
 	"Tablero.h"
+	"Partida.h"
 	"../Bibliotecas/colaCircular.h"
 
-1780097109 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
+1780280991 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 	"Bandido.h"
 	"Utils.h"
@@ -370,5 +372,11 @@
 	"Jugador.h"
 
 1780166558 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\proyecto\partida.c
+	"Partida.h"
+
+1780176867 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\partida.h
+	"Jugador.h"
+
+1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\partida.c
 	"Partida.h"
 

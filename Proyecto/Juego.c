@@ -1,30 +1,72 @@
 #include "Juego.h"
 #include "Bandido.h"
 #include "Utils.h"
+
+
+void generarNickname(char* nombre, char* nickname, unsigned tam)
+{
+    int n = rand() % 10000;
+    snprintf(nickname, tam, "%s%d", nombre, n);
+}
+
 int ingresarJugador(tJugador *jugador)
 {
     char nickname[TAM_NICKNAME];
+    char nombre[TAM_NICKNAME];
     FILE *archivo;
+    char letra;
 
-    printf("Ingrese su nickname: ");
-    fgets(nickname, TAM_NICKNAME , stdin);
-    nickname[strcspn(nickname, "\n")] = '\0';  // elimina el \n que deja fgets
+    printf("------Bienvenido a 'Caravana del desierto'------\n\n");
+    printf("Antes de comenzar, se requiere que responda la siguiente pregunta:\n");
+    printf("Es su primera vez en el juego?\nPresione 'S' para Si o 'N' para No:\t");
 
+    do
+    {
+        fflush(stdin);
+        scanf("%c", &letra);
+        letra = toupper(letra);
+        if(letra != 'S' && letra != 'N')
+            printf("Opcion invalida, reingrese:\n");
+    } while(letra != 'S' && letra != 'N');
 
-    if (abrirArchivo(&archivo,ARCH_JUGADORES, "a+b") != EXITO)
+    if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
         return ERROR_APERTURA;
 
-    if (buscarJugador(archivo, nickname, jugador) == JUGADOR_INEXISTENTE)
+    if(letra == 'S')
     {
-        printf("Jugador nuevo, dando de alta...\n");
+        printf("\nSea una vez mas bienvenido, esperamos que disfrute esta experiencia\n");
+        printf("A continuacion ingrese su nombre y se le asignara un apodo\n");
+        printf("Nombre:\t");
+        fflush(stdin);
+        fgets(nombre, TAM_NICKNAME, stdin);
+        nombre[strcspn(nombre, "\n")] = '\0';
+
+        do
+        {
+            generarNickname(nombre, nickname, TAM_NICKNAME);
+
+        } while(buscarJugador(archivo, nickname, jugador) != JUGADOR_INEXISTENTE);
+
+        printf("\nSu apodo sera: %s\nSe te solicitara cada vez que ingreses\nNo lo olvides!!\n", nickname);
         darDeAltaJugador(archivo, nickname, jugador);
     }
     else
     {
-        printf("Bienvenido de vuelta, %s!\n", jugador->nickname);
-    }
-    fclose(archivo);
+        printf("\nNos alegra que este de regreso, para cargar su progeso ingrese su apodo:\n");
+        fflush(stdin);
+        fgets(nickname, TAM_NICKNAME, stdin);
+        nickname[strcspn(nickname, "\n")] = '\0';
 
+        if(buscarJugador(archivo, nickname, jugador) == JUGADOR_INEXISTENTE)
+        {
+            printf("Apodo no encontrado, intentelo nuevamente\n\n");
+            fclose(archivo);
+            return ERROR_JUGADOR_NO_ENCONTRADO;
+        }
+        printf("\nBienvenido de vuelta, %s!\n", jugador->nickname);
+    }
+
+    fclose(archivo);
     return EXITO;
 }
 
@@ -218,7 +260,7 @@ void aplicarEvento(tJugador* jugador, tCasillero* cas)
             cas->tipoEvento = DESPEJADO;
             break;
         case VIDA_EXTRA:
-            printf("Parece que es su dia de suerte, ha conseguido una vida extra, aprovechela. \n\n");
+            printf("Parece que es su dia de suerte, ha conseguido una vida extra, aprovechela! \n\n");
             jugador->vidas++;
             cas->tipoEvento = DESPEJADO;
             break;
