@@ -32,6 +32,7 @@ void vaciarArbol(tArbol *p);
 int verNodo(tArbol *p, void *dato, unsigned tam);
 int cargarArbolDesdeArchivoDesordenado(tArbol *p, FILE *pf, unsigned tam, LEER leer, CMP cmp);
 int cargarArchivoDesdeArbol(tArbol *p, FILE *pf);
+int cargarArchivoDesdeArbolBalanceado(tArbol *p, FILE *pf);
 int crearArchivoIndice(const char* nombArchDat, const char* nombArchInd, unsigned tam, LEER leer, CMP cmp);
 int cargarArbolDesdeArchivoOrdenado(tArbol *p, FILE *pf, unsigned tam);
 int __cargarArbolDesdeArchivoOrdenado(tArbol *p, FILE *pf, unsigned tam, int li, int ls);

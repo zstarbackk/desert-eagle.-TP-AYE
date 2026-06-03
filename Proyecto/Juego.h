@@ -5,13 +5,15 @@
 #include "Archivos.h"
 #include "Tablero.h"
 #include "Partida.h"
+#include "indiceJugador.h"
 #include "../Bibliotecas/colaCircular.h"
 #define ARCH_JUGADORES "Archivos/jugadores.dat"
+#define ARCH_JUGADORES_IDX "Archivos/jugadores.idx"
 #define ARCH_CONFIGURACION "Archivos/config.txt"
 #define ARCH_CARAVANA "Archivos/caravana.txt"
 #define ARCH_PARTIDAS "Archivos/partidas.dat"
 
-int ingresarJugador(tJugador *jugador);
+int ingresarJugador(tJugador *jugador, tArbol * indice);
 void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config);
 tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config);
 int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos);

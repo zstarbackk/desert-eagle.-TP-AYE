@@ -380,3 +380,116 @@
 1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\partida.c
 	"Partida.h"
 
+1779720022 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.c
+	"arbol.h"
+
+1779720058 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1779717078 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\colacircular.c
+	"colaCircular.h"
+	<string.h>
+
+1780149392 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\colacircular.h
+	<stdio.h>
+	<stdlib.h>
+	"../Proyecto/Errores.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\errores.h
+
+1780149392 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.c
+	"listaDobleCircular.h"
+
+1780149392 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../Proyecto/Errores.h"
+
+1779717078 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
+	"TdaListaDinamica.h"
+	<string.h>
+
+1779717078 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
+	<stdio.h>
+	<stdlib.h>
+	"../Proyecto/Errores.h"
+
+1780357046 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\archivos.c
+	"Archivos.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\archivos.h
+	<stdio.h>
+	"Jugador.h"
+	"Partida.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\jugador.h
+	"Tablero.h"
+	"Movimiento.h"
+
+1780149392 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\tablero.h
+	<stdlib.h>
+	"../Bibliotecas/listaDobleCircular.h"
+	"../Bibliotecas/TdaListaDinamica.h"
+	"Config.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\config.h
+	"Errores.h"
+	"Utils.h"
+	<stdio.h>
+	<string.h>
+
+1779717078 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\utils.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Errores.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\movimiento.h
+	"../Bibliotecas/listaDobleCircular.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\partida.h
+	"Jugador.h"
+
+1780357046 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\bandido.c
+	"Bandido.h"
+	"Jugador.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\bandido.h
+	"Tablero.h"
+	"Movimiento.h"
+
+1779717078 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\config.c
+	"Config.h"
+
+1780431965 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.c
+	"Juego.h"
+	"Bandido.h"
+	"Utils.h"
+
+1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.h
+	<ctype.h>
+	"Jugador.h"
+	"Archivos.h"
+	"Tablero.h"
+	"Partida.h"
+	"../Bibliotecas/colaCircular.h"
+
+1780357046 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\jugador.c
+	"Jugador.h"
+
+1780357046 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\movimiento.c
+	"Movimiento.h"
+
+1780357046 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\partida.c
+	"Partida.h"
+
+1780149392 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\tablero.c
+	"Tablero.h"
+	"Bandido.h"
+
+1779717078 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\utils.c
+	"Utils.h"
+

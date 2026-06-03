@@ -163,6 +163,15 @@ int cargarArchivoDesdeArbol(tArbol *p, FILE *pf){
     cargarArchivoDesdeArbol(&(*p)->der, pf);
     return 1;
 }
+int cargarArchivoDesdeArbolBalanceado(tArbol *p, FILE *pf){
+    if(!*p)return 0;
+
+    fwrite((*p)->dato, (*p)->tam, 1, pf);
+
+    cargarArchivoDesdeArbolBalanceado(&(*p)->izq, pf);
+    cargarArchivoDesdeArbolBalanceado(&(*p)->der, pf);
+    return 1;
+}
 
 int crearArchivoIndice(const char* nombArchDat, const char* nombArchInd, unsigned tam, LEER leer, CMP cmp){
     tArbol arbol;

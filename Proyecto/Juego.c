@@ -9,11 +9,11 @@ void generarNickname(char* nombre, char* nickname, unsigned tam)
     snprintf(nickname, tam, "%s%d", nombre, n);
 }
 
-int ingresarJugador(tJugador *jugador)
+int ingresarJugador(tJugador *jugador, tArbol *indice)
 {
     char nickname[TAM_NICKNAME];
     char nombre[TAM_NICKNAME];
-    FILE *archivo;
+    FILE *archivoUsuarios *archivoIndice;
     char letra;
 
     printf("------Bienvenido a 'Caravana del desierto'------\n\n");
@@ -30,6 +30,8 @@ int ingresarJugador(tJugador *jugador)
     } while(letra != 'S' && letra != 'N');
 
     if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
+        return ERROR_APERTURA;
+    if(abrirArchivo(&archivoIndice, ARCH_JUGADORES_IDX, "r+b") != EXITO)
         return ERROR_APERTURA;
 
     if(letra == 'S')
