@@ -13,12 +13,16 @@ int ingresarJugador(tJugador *jugador, tArbol *indice)
 {
     char nickname[TAM_NICKNAME];
     char nombre[TAM_NICKNAME];
-    FILE *archivoUsuarios *archivoIndice;
+    FILE *archivoUsuarios;
     char letra;
+    tIndiceJugador indiceEncontrado;
+    unsigned posRegistro;
 
     printf("------Bienvenido a 'Caravana del desierto'------\n\n");
     printf("Antes de comenzar, se requiere que responda la siguiente pregunta:\n");
     printf("Es su primera vez en el juego?\nPresione 'S' para Si o 'N' para No:\t");
+
+
 
     do
     {
@@ -29,28 +33,28 @@ int ingresarJugador(tJugador *jugador, tArbol *indice)
             printf("Opcion invalida, reingrese:\n");
     } while(letra != 'S' && letra != 'N');
 
-    if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
-        return ERROR_APERTURA;
-    if(abrirArchivo(&archivoIndice, ARCH_JUGADORES_IDX, "r+b") != EXITO)
+    if(abrirArchivo(&archivoUsuarios, ARCH_JUGADORES, "a+b") != EXITO)
         return ERROR_APERTURA;
 
     if(letra == 'S')
     {
         printf("\nSea una vez mas bienvenido, esperamos que disfrute esta experiencia\n");
         printf("A continuacion ingrese su nombre y se le asignara un apodo\n");
-        printf("Nombre:\t");
-        fflush(stdin);
-        fgets(nombre, TAM_NICKNAME, stdin);
-        nombre[strcspn(nombre, "\n")] = '\0';
 
         do
         {
-            generarNickname(nombre, nickname, TAM_NICKNAME);
+            printf("Nombre:\t");
+            fflush(stdin);
+            fgets(nombre, TAM_NICKNAME, stdin);
+            nombre[strcspn(nombre, "\n")] = '\0';
+        } while(buscarIndiceJugador(indice, nombre, &indiceEncontrado) != JUGADOR_INEXISTENTE);
 
-        } while(buscarJugador(archivo, nickname, jugador) != JUGADOR_INEXISTENTE);
+        printf("\nSu apodo sera: %s\nSe te solicitara cada vez que ingreses\nNo lo olvides!!\n", nombre);
+        fseek(archivoUsuarios, 0,SEEK_END);
 
-        printf("\nSu apodo sera: %s\nSe te solicitara cada vez que ingreses\nNo lo olvides!!\n", nickname);
-        darDeAltaJugador(archivo, nickname, jugador);
+        posRegistro = ftell(archivoUsuarios);
+        darDeAltaJugador(archivoUsuarios, nombre, jugador);
+        insertarIndiceJugador(indice,nombre,posRegistro);
     }
     else
     {
@@ -59,16 +63,16 @@ int ingresarJugador(tJugador *jugador, tArbol *indice)
         fgets(nickname, TAM_NICKNAME, stdin);
         nickname[strcspn(nickname, "\n")] = '\0';
 
-        if(buscarJugador(archivo, nickname, jugador) == JUGADOR_INEXISTENTE)
+        if(buscarIndiceJugador(indice,nickname,&indiceEncontrado) == JUGADOR_INEXISTENTE)
         {
             printf("Apodo no encontrado, intentelo nuevamente\n\n");
-            fclose(archivo);
+            fclose(archivoUsuarios);
             return ERROR_JUGADOR_NO_ENCONTRADO;
         }
         printf("\nBienvenido de vuelta, %s!\n", jugador->nickname);
     }
 
-    fclose(archivo);
+    fclose(archivoUsuarios);
     return EXITO;
 }
 

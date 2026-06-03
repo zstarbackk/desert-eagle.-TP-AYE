@@ -1,7 +1,10 @@
 #ifndef INDICEJUGADOR_H_INCLUDED
 #define INDICEJUGADOR_H_INCLUDED
+
 #include "../Bibliotecas/arbol.h"
 #include <stdio.h>
+#include "Jugador.h"
+#include "Archivos.h"
 typedef struct
 {
     char nickname[TAM_NICKNAME];

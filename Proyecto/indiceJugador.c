@@ -2,7 +2,7 @@
 int cmpIndiceJugadorPorNickname(const void* a, const void* b){
     tIndiceJugador * jugadorX = (tIndiceJugador*)a;
     tIndiceJugador * jugadorY = (tIndiceJugador*)b;
-    return strcmp(jugadorX->nickname, jugadorY->nickname);
+    return strcmpi(jugadorX->nickname, jugadorY->nickname);
 }
 int cargarIndiceJugadores(tArbol* indice, const char* nombreArchivoIndice, const char * nombreArchivoUsuarios){
     FILE * archIdx = fopen(nombreArchivoIndice, "rb");
@@ -41,7 +41,7 @@ int guardarIndiceJugadores(const tArbol* indice, const char* nombreArchivoIndice
     FILE *archTemp = fopen("indice_temp.idx", "wb");
     if (!archTemp) return ERROR_APERTURA;
 
-    cargarArchivoDesdeArbol(indice, archTemp);
+    cargarArchivoDesdeArbolBalanceado(indice, archTemp);
     fclose(archTemp);
 
     remove(nombreArchivoIndice);
@@ -50,10 +50,15 @@ int guardarIndiceJugadores(const tArbol* indice, const char* nombreArchivoIndice
     return EXITO;
 }
 int buscarIndiceJugador(tArbol* indice, const char* nickname, tIndiceJugador* indiceEncontrado){
-    tIndiceJugador temp;
-    strcpy(temp.nickname, nickname);
-    return verNodo(buscarNodo(indice,&temp,cmpIndiceJugadorPorNickname),indiceEncontrado,sizeof(tIndiceJugador));
+    strcpy(indiceEncontrado->nickname, nickname);
+    tArbol * nodoAux;
+    if((nodoAux =buscarNodo(indice,indiceEncontrado,cmpIndiceJugadorPorNickname))!=NULL){
+        printf("ENCONTRADOOOO");
+        return EXITO;
+    }
+    return JUGADOR_INEXISTENTE;
 }
+
 int insertarIndiceJugador(tArbol* indice, const char* nickname, unsigned posicionRegistro){
     tIndiceJugador jug;
     strcpy(jug.nickname, nickname);

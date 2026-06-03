@@ -47,11 +47,11 @@
 	<stdio.h>
 	<string.h>
 
-1778539042 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\main.c
+1780453766 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
-	"Config.h"
+	"Proyecto/Juego.h"
 
 1778810161 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\archivos.c
 	"Archivos.h"
@@ -380,10 +380,10 @@
 1780176867 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\partida.c
 	"Partida.h"
 
-1779720022 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.c
+1780453586 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.c
 	"arbol.h"
 
-1779720058 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.h
+1780453563 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -464,17 +464,18 @@
 1779717078 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\config.c
 	"Config.h"
 
-1780431965 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.c
+1780460750 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 	"Bandido.h"
 	"Utils.h"
 
-1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.h
+1780453801 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.h
 	<ctype.h>
 	"Jugador.h"
 	"Archivos.h"
 	"Tablero.h"
 	"Partida.h"
+	"indiceJugador.h"
 	"../Bibliotecas/colaCircular.h"
 
 1780357046 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\jugador.c
@@ -492,4 +493,13 @@
 
 1779717078 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\utils.c
 	"Utils.h"
+
+1780455810 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\indicejugador.h
+	"../Bibliotecas/arbol.h"
+	<stdio.h>
+	"Jugador.h"
+	"Archivos.h"
+
+1780460772 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\indicejugador.c
+	"indiceJugador.h"
 
