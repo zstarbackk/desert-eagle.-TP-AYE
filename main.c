@@ -8,22 +8,17 @@ int main()
     tConfig config;
     tJugador jugador;
     tTablero tablero;
-    int ret;
 
     srand(time(NULL));
 
-    do
+    if(ingresarJugador(&jugador)!=EXITO)
     {
-        ret=ingresarJugador(&jugador);
-        if(ret==ERROR_APERTURA)
-        {
-            printf("Error critico: No se pudo abrir el archivo de jugadores. Vuelva a iniciar sesion\n");
-            return 1;
-        }
-    }while (ret== ERROR_JUGADOR_NO_ENCONTRADO);
+        printf("Error en la autenticacion. Vuelva a iniciar sesion\n");
+        exit(1);
+    }
 
     mostrarMenu(&jugador,&tablero,&config);
-//    probarGenerarTablero();
+//  probarGenerarTablero();
 
     return 0;
 }

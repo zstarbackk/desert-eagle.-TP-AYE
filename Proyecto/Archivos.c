@@ -1,5 +1,24 @@
 #include "Archivos.h"
 
+int buscarJugadoresPorNombre(FILE* archivo, char* nombre, tJugadorArchivo* resultados)
+{
+    tJugadorArchivo registro;
+    int cantidad = 0;
+
+    rewind(archivo);
+    while(fread(&registro, sizeof(tJugadorArchivo), 1, archivo) == 1)
+    {
+        if(strcmp(registro.nombre, nombre) == 0)
+        {
+            (resultados+cantidad)->idJugador = registro.idJugador;
+            strcpy((resultados+cantidad)->nombre,registro.nombre);
+            strcpy((resultados+cantidad)->nickname,registro.nickname);
+            cantidad++;
+        }
+    }
+    return cantidad;
+}
+
 unsigned obtenerPosicionJugador(FILE *archivo, const char *nickname)     //Para implementar el arbol solo se modifica esta funcion.
 {
     tJugadorArchivo registro;
@@ -48,11 +67,12 @@ unsigned obtenerUltimoIdJugador(FILE *archivo)
     return ultimoId;
 }
 
-void darDeAltaJugador(FILE *archivo,const char *nickname, tJugador *jugador)
+void darDeAltaJugador(FILE *archivo,const char *nombre, const char *nickname, tJugador *jugador)  //deberia actualizar el indice
 {
     tJugadorArchivo registro;
 
     registro.idJugador = obtenerUltimoIdJugador(archivo) + 1;
+    strcpy(registro.nombre,nombre);
     strcpy(registro.nickname, nickname);
     fseek(archivo,0,SEEK_END);
 

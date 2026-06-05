@@ -9,61 +9,79 @@ void generarNickname(char* nombre, char* nickname, unsigned tam)
     snprintf(nickname, tam, "%s%d", nombre, n);
 }
 
-int ingresarJugador(tJugador *jugador)
+void mostrarJugadoresEncontrados(tJugadorArchivo* resultados, int cantidad)
 {
-    char nickname[TAM_NICKNAME];
+    int i;
+    printf("\nJugadores encontrados con ese nombre:\n");
+    for(i = 0; i < cantidad; i++)
+        printf("%u. %s\n", i + 1, (resultados+i)->nickname);
+    printf("%u. Ninguno es el mio\n", cantidad + 1);
+}
+
+int seleccionarJugador(tJugadorArchivo* resultados, int cantidad)
+{
+    int opcion;
+    do {
+        printf("Ingrese una opcion: ");
+        scanf("%d", &opcion);
+        if(opcion < 1 || opcion > (cantidad + 1))
+            printf("Opcion invalida, reingrese: ");
+    } while(opcion < 1 || opcion > (cantidad + 1));
+    return opcion;
+}
+
+int ingresarJugador(tJugador* jugador)
+{
     char nombre[TAM_NICKNAME];
-    FILE *archivo;
-    char letra;
+    char nickname[TAM_NICKNAME];
+    FILE* archivo;
+    tJugadorArchivo resultados[MAX_JUGADORES];
+    int cantidad;
+    int opcion;
 
-    printf("------Bienvenido a 'Caravana del desierto'------\n\n");
-    printf("Antes de comenzar, se requiere que responda la siguiente pregunta:\n");
-    printf("Es su primera vez en el juego?\nPresione 'S' para Si o 'N' para No:\t");
-
-    do
-    {
-        fflush(stdin);
-        scanf("%c", &letra);
-        letra = toupper(letra);
-        if(letra != 'S' && letra != 'N')
-            printf("Opcion invalida, reingrese:\n");
-    } while(letra != 'S' && letra != 'N');
+    printf("Bienvenido a 'Caravana del desierto'\n");
+    printf("Ingrese su nombre: ");
+    fgets(nombre, TAM_NICKNAME, stdin);
+    nombre[strcspn(nombre, "\n")] = '\0';
 
     if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
         return ERROR_APERTURA;
 
-    if(letra == 'S')
-    {
-        printf("\nSea una vez mas bienvenido, esperamos que disfrute esta experiencia\n");
-        printf("A continuacion ingrese su nombre y se le asignara un apodo\n");
-        printf("Nombre:\t");
-        fflush(stdin);
-        fgets(nombre, TAM_NICKNAME, stdin);
-        nombre[strcspn(nombre, "\n")] = '\0';
+    cantidad=buscarJugadoresPorNombre(archivo, nombre, resultados);
 
+    if(cantidad == 0)
+    {
+        printf("Generando apodo...\n");
         do
         {
             generarNickname(nombre, nickname, TAM_NICKNAME);
-
         } while(buscarJugador(archivo, nickname, jugador) != JUGADOR_INEXISTENTE);
 
-        printf("\nSu apodo sera: %s\nSe te solicitara cada vez que ingreses\nNo lo olvides!!\n", nickname);
-        darDeAltaJugador(archivo, nickname, jugador);
+        printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
+        darDeAltaJugador(archivo, nombre, nickname, jugador);
     }
     else
     {
-        printf("\nNos alegra que este de regreso, para cargar su progeso ingrese su apodo:\n");
-        fflush(stdin);
-        fgets(nickname, TAM_NICKNAME, stdin);
-        nickname[strcspn(nickname, "\n")] = '\0';
+        mostrarJugadoresEncontrados(resultados, cantidad);
+        opcion = seleccionarJugador(resultados, cantidad);
 
-        if(buscarJugador(archivo, nickname, jugador) == JUGADOR_INEXISTENTE)
+        if(opcion == (cantidad + 1))
         {
-            printf("Apodo no encontrado, intentelo nuevamente\n\n");
-            fclose(archivo);
-            return ERROR_JUGADOR_NO_ENCONTRADO;
+            printf("Generando apodo...\n");
+            do
+            {
+                generarNickname(nombre, nickname, TAM_NICKNAME);
+            } while(buscarJugador(archivo, nickname, jugador) != JUGADOR_INEXISTENTE);
+
+            printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
+            darDeAltaJugador(archivo, nombre, nickname, jugador);
         }
-        printf("\nBienvenido de vuelta, %s!\n", jugador->nickname);
+        else
+        {
+            jugador->idJugador = (resultados+opcion - 1)->idJugador;
+            strcpy(jugador->nickname, (resultados+opcion - 1)->nickname);
+            printf("Bienvenido de vuelta, %s!\n", jugador->nickname);
+        }
     }
 
     fclose(archivo);
@@ -385,7 +403,10 @@ tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig *co
 
     crearCola(&cola);
 
-    system("cls");
+    //system("cls");
+
+    printf("\n");
+    printf("Cuenta con %d vidas, a jugar!\n", jugador->vidas);
 
     while(resultado == PARTIDA_EN_CURSO)
     {
