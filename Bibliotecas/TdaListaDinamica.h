@@ -43,4 +43,8 @@ int eliminarNodoTodasApEnListaDesordenada(tLista* pl, void* info,
 
 void seleccionSortLista(tLista* pl, int (*cmp)(const void*, const void*));
 
+void mostrarLista (const tLista* L, void(*mostrar)(const void*, unsigned));
+
+int buscarEnListaPorPosicion(const tLista* pl, int pos, void* res, unsigned cantBytes);
+
 #endif // TDALISTADINAMICA_H_INCLUDED

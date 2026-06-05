@@ -148,16 +148,16 @@
 1779048145 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblecircular.c
 	"listaDobleCircular.h"
 
-1780693418 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
+1780696650 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	"Proyecto/Juego.h"
 
-1780696044 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.c
+1780701287 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.c
 	"Archivos.h"
 
-1780695087 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.h
+1780701287 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.h
 	<stdio.h>
 	"Jugador.h"
 	"Partida.h"
@@ -240,7 +240,7 @@
 	"Partida.h"
 	"../Bibliotecas/colaCircular.h"
 
-1780696457 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
+1780701022 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 	"Bandido.h"
 	"Utils.h"
@@ -352,11 +352,11 @@
 	<stdlib.h>
 	<string.h>
 
-1779676154 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
+1780701173 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
 	"TdaListaDinamica.h"
 	<string.h>
 
-1779676154 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
+1780701329 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
 	<stdio.h>
 	<stdlib.h>
 	"../Proyecto/Errores.h"

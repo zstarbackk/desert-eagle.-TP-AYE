@@ -9,16 +9,13 @@ void generarNickname(char* nombre, char* nickname, unsigned tam)
     snprintf(nickname, tam, "%s%d", nombre, n);
 }
 
-void mostrarJugadoresEncontrados(tJugadorArchivo* resultados, int cantidad)
+void mostrarJugadoresEncontrados(const void* dato, unsigned inc)
 {
-    int i;
-    printf("\nJugadores encontrados con ese nombre:\n");
-    for(i = 0; i < cantidad; i++)
-        printf("%u. %s\n", i + 1, (resultados+i)->nickname);
-    printf("%u. Ninguno es el mio\n", cantidad + 1);
+    tJugadorArchivo registro = *(tJugadorArchivo*)dato;
+    printf("%u. %s\n",inc+1, registro.nickname);
 }
 
-int seleccionarJugador(tJugadorArchivo* resultados, int cantidad)
+int seleccionarJugador(int cantidad)
 {
     int opcion;
     do {
@@ -35,7 +32,8 @@ int ingresarJugador(tJugador* jugador)
     char nombre[TAM_NICKNAME];
     char nickname[TAM_NICKNAME];
     FILE* archivo;
-    tJugadorArchivo resultados[MAX_JUGADORES];
+    tLista resultados;
+    tJugadorArchivo jugadorEncontrado;
     int cantidad;
     int opcion;
 
@@ -47,7 +45,9 @@ int ingresarJugador(tJugador* jugador)
     if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
         return ERROR_APERTURA;
 
-    cantidad=buscarJugadoresPorNombre(archivo, nombre, resultados);
+    crearLista(&resultados);
+
+    cantidad=buscarJugadoresPorNombre(archivo, nombre, &resultados);
 
     if(cantidad == 0)
     {
@@ -60,10 +60,12 @@ int ingresarJugador(tJugador* jugador)
         printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
         darDeAltaJugador(archivo, nombre, nickname, jugador);
     }
-    else
+    else if(cantidad != ERROR)
     {
-        mostrarJugadoresEncontrados(resultados, cantidad);
-        opcion = seleccionarJugador(resultados, cantidad);
+        printf("\nJugadores encontrados con ese nombre:\n");
+        mostrarLista(&resultados,mostrarJugadoresEncontrados);
+        printf("%u. Ninguno es el mio\n", cantidad + 1);
+        opcion = seleccionarJugador(cantidad);
 
         if(opcion == (cantidad + 1))
         {
@@ -78,13 +80,32 @@ int ingresarJugador(tJugador* jugador)
         }
         else
         {
-            jugador->idJugador = (resultados+opcion - 1)->idJugador;
-            strcpy(jugador->nickname, (resultados+opcion - 1)->nickname);
-            printf("Bienvenido de vuelta, %s!\n", jugador->nickname);
+            if(buscarEnListaPorPosicion(&resultados, opcion - 1, &jugadorEncontrado, sizeof(tJugadorArchivo)) == EXITO)
+            {
+                jugador->idJugador = jugadorEncontrado.idJugador;
+                strcpy(jugador->nickname, jugadorEncontrado.nickname);
+                printf("Bienvenido de vuelta, %s!\n", jugador->nickname);
+
+            }
+            else
+            {
+                printf("Error al recuperar el jugador seleccionado.\n");
+                fclose(archivo);
+                vaciarLista(&resultados);
+                return ERROR;
+            }
         }
+    }
+    else
+    {
+        printf("Error en recuperacion de apodos. Contacte al equipo de desarrollo\n");
+        fclose(archivo);
+        vaciarLista(&resultados);
+        return ERROR;
     }
 
     fclose(archivo);
+    vaciarLista(&resultados);
     return EXITO;
 }
 

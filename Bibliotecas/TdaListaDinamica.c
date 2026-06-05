@@ -280,3 +280,32 @@ void seleccionSortLista(tLista* pl, int (*cmp)(const void*, const void*))
         pivote = &(*pivote)->sig;
     }
 }
+
+void mostrarLista (const tLista* pl, void(*mostrar)(const void*, unsigned))
+{
+    unsigned inc=0;
+    while(*pl)
+    {
+        mostrar((*pl)->info, inc);
+        inc++;
+        pl=&(*pl)->sig;
+    }
+}
+
+int buscarEnListaPorPosicion(const tLista* pl, int pos, void* res, unsigned cantBytes)
+{
+    int i = 0;
+
+    if(*pl == NULL)
+        return LISTA_VACIA;
+
+    while(*pl && i < pos)
+    {
+        pl = &(*pl)->sig;
+        i++;
+    }
+
+    memcpy(res, (*pl)->info, MINIMO(cantBytes, (*pl)->tamInfo));
+
+    return EXITO;
+}

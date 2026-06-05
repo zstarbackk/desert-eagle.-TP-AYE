@@ -1,6 +1,6 @@
 #include "Archivos.h"
 
-int buscarJugadoresPorNombre(FILE* archivo, char* nombre, tJugadorArchivo* resultados)
+int buscarJugadoresPorNombre(FILE* archivo, char* nombre, tLista* resultados)
 {
     tJugadorArchivo registro;
     int cantidad = 0;
@@ -10,9 +10,10 @@ int buscarJugadoresPorNombre(FILE* archivo, char* nombre, tJugadorArchivo* resul
     {
         if(strcmp(registro.nombre, nombre) == 0)
         {
-            (resultados+cantidad)->idJugador = registro.idJugador;
-            strcpy((resultados+cantidad)->nombre,registro.nombre);
-            strcpy((resultados+cantidad)->nickname,registro.nickname);
+
+            if(insertarAlFinal(resultados,&registro,sizeof(tJugadorArchivo))!=EXITO)
+                return ERROR;
+
             cantidad++;
         }
     }
