@@ -1,6 +1,9 @@
 #ifndef MOVIMIENTO_H_INCLUDED
 #define MOVIMIENTO_H_INCLUDED
 #include "../Bibliotecas/listaDobleCircular.h"
+
+typedef tNodoListaDC * tPosicion;
+
 typedef enum
 {
     ADELANTE='F',

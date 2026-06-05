@@ -4,6 +4,7 @@
 #include "../Bibliotecas/listaDobleCircular.h"
 #include "../Bibliotecas/TdaListaDinamica.h"
 #include "Config.h"
+#include "Movimiento.h"
 #define PORCENTAJE_MINIMO_EVENTOS 70
 #define MAX_DADO 6
 

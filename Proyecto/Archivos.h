@@ -3,10 +3,12 @@
 #include <stdio.h>
 #include "Jugador.h"
 #include "Partida.h"
+
 typedef struct
 {
     int idJugador;
-    char nickname[30];
+    char nombre[TAM_NICKNAME];
+    char nickname[TAM_NICKNAME];
 } tJugadorArchivo;
 
 unsigned obtenerPosicionJugador(FILE *archivo, const char *nickname);
