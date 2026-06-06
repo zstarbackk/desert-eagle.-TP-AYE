@@ -38,5 +38,5 @@ int __cargarArbolDesdeArchivoOrdenado(tArbol *p, FILE *pf, unsigned tam, int li,
 int buscarEnArbolIndice(tArbol *p, void *dato, const void *clave, FILE *pf, LEER leer, CMP cmp);
 int verMenorNodo(tArbol *p, void *dato, unsigned tam);
 int buscarNodo2(tArbol *p, void *dato, const void *clave, unsigned tam, CMP cmp);
-
+int cargarArchivoDesdeArbolBalanceado(tArbol *p, FILE *pf);
 #endif // ARBOL_H_INCLUDED

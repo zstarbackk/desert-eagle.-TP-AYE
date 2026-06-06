@@ -27,15 +27,17 @@ int seleccionarJugador(int cantidad)
     return opcion;
 }
 
-int ingresarJugador(tJugador* jugador)
+int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
 {
     char nombre[TAM_NICKNAME];
     char nickname[TAM_NICKNAME];
     FILE* archivo;
     tLista resultados;
     tJugadorArchivo jugadorEncontrado;
+    tIndiceJugador indiceEncontrado;
     int cantidad;
     int opcion;
+    unsigned posRegistro;
 
     printf("Bienvenido a 'Caravana del desierto'\n");
     printf("Ingrese su nombre: ");
@@ -44,8 +46,8 @@ int ingresarJugador(tJugador* jugador)
 
     if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
         return ERROR_APERTURA;
-
     crearLista(&resultados);
+
 
     cantidad=buscarJugadoresPorNombre(archivo, nombre, &resultados);
 
@@ -55,10 +57,13 @@ int ingresarJugador(tJugador* jugador)
         do
         {
             generarNickname(nombre, nickname, TAM_NICKNAME);
-        } while(buscarJugador(archivo, nickname, jugador) != JUGADOR_INEXISTENTE);
+        } while(buscarIndiceJugador(indiceJugador, nickname, &indiceEncontrado) != JUGADOR_INEXISTENTE);
 
         printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
+        fseek(archivo, 0,SEEK_END);
+        posRegistro = ftell(archivo);
         darDeAltaJugador(archivo, nombre, nickname, jugador);
+        insertarIndiceJugador(indiceJugador,nickname,posRegistro);
     }
     else if(cantidad != ERROR)
     {
@@ -73,10 +78,12 @@ int ingresarJugador(tJugador* jugador)
             do
             {
                 generarNickname(nombre, nickname, TAM_NICKNAME);
-            } while(buscarJugador(archivo, nickname, jugador) != JUGADOR_INEXISTENTE);
-
+            } while(buscarIndiceJugador(indiceJugador, nickname, &indiceEncontrado) != JUGADOR_INEXISTENTE);
             printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
+            fseek(archivo, 0,SEEK_END);
+            posRegistro = ftell(archivo);
             darDeAltaJugador(archivo, nombre, nickname, jugador);
+            insertarIndiceJugador(indiceJugador,nickname,posRegistro);
         }
         else
         {
