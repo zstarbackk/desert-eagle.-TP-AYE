@@ -163,7 +163,7 @@ int cargarArchivoDesdeArbol(tArbol *p, FILE *pf){
     cargarArchivoDesdeArbol(&(*p)->der, pf);
     return 1;
 }
-int cargarArchivoDesdeArbolBalanceado(tArbol *p, FILE *pf){
+int cargarArchivoDesdeArbolBalanceado(const tArbol *p, FILE *pf){
     if(!*p)return 0;
 
     fwrite((*p)->dato, (*p)->tam, 1, pf);

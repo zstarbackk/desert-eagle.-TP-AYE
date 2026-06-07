@@ -148,16 +148,16 @@
 1779048145 source:c:\users\usuario\documents\programacion\proyects\tp_algoritmos\desert-eagle.-tp-aye\estructuras\listadoblecircular.c
 	"listaDobleCircular.h"
 
-1780696650 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
+1780861453 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	"Proyecto/Juego.h"
 
-1780701287 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.c
+1780862693 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.c
 	"Archivos.h"
 
-1780701287 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.h
+1780862693 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\archivos.h
 	<stdio.h>
 	"Jugador.h"
 	"Partida.h"
@@ -232,15 +232,17 @@
 	"Tablero.h"
 	"Bandido.h"
 
-1780280273 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.h
+1780858345 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.h
 	<ctype.h>
 	"Jugador.h"
 	"Archivos.h"
 	"Tablero.h"
 	"Partida.h"
+	"indiceJugador.h"
+	"Ranking.h"
 	"../Bibliotecas/colaCircular.h"
 
-1780701022 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
+1780863311 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 	"Bandido.h"
 	"Utils.h"
@@ -352,19 +354,19 @@
 	<stdlib.h>
 	<string.h>
 
-1780701173 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
+1780854781 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
 	"TdaListaDinamica.h"
 	<string.h>
 
-1780701329 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
+1780859945 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
 	<stdio.h>
 	<stdlib.h>
 	"../Proyecto/Errores.h"
 
-1780052205 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\arbol.c
+1780856842 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\arbol.c
 	"arbol.h"
 
-1780052205 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\arbol.h
+1780856842 c:\users\bangho\documents\github\desert-eagle.-tp-aye\bibliotecas\arbol.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -515,5 +517,25 @@
 	<string.h>
 
 1780801142 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\ranking.c
+	"Ranking.h"
+
+1780854782 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.h
+	"../Bibliotecas/arbol.h"
+	<stdio.h>
+	"Jugador.h"
+	"Archivos.h"
+
+1780854782 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\ranking.h
+	"../Bibliotecas/TdaListaDinamica.h"
+	"Partida.h"
+	"Archivos.h"
+	"Juego.h"
+	<stdio.h>
+	<string.h>
+
+1780863311 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.c
+	"indiceJugador.h"
+
+1780859945 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\ranking.c
 	"Ranking.h"
 

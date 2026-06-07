@@ -13,8 +13,6 @@ typedef struct
 } tJugadorArchivo;
 
 int buscarJugadoresPorNombre(FILE* archivo, char* nombre, tLista* resultados);
-unsigned obtenerPosicionJugador(FILE *archivo, const char *nickname);
-int buscarJugador(FILE *archivo, const char *nickname, tJugador *jugador);
 void darDeAltaJugador(FILE *archivo,const char* nombre, const char *nickname, tJugador *jugador);
 unsigned obtenerUltimoIdJugador(FILE *archivo);
 unsigned obtenerUltimoIdPartida(FILE* archivo);

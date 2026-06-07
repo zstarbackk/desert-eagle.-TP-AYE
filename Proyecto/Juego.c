@@ -2,7 +2,6 @@
 #include "Bandido.h"
 #include "Utils.h"
 
-
 void generarNickname(char* nombre, char* nickname, unsigned tam)
 {
     int n = rand() % 10000;
@@ -27,17 +26,36 @@ int seleccionarJugador(int cantidad)
     return opcion;
 }
 
+void altaNuevoJugador(FILE* archivo, char* nombre, tJugador* jugador, tArbol* indice)
+{
+    char nickname[TAM_NICKNAME];
+    tIndiceJugador indiceEncontrado;
+    unsigned posRegistro;
+
+    printf("Generando apodo...\n");
+    do
+    {
+        generarNickname(nombre, nickname, TAM_NICKNAME);
+    } while(buscarIndiceJugador(indice, nickname, &indiceEncontrado) != JUGADOR_INEXISTENTE);
+
+    printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
+    fseek(archivo, 0, SEEK_END);
+    posRegistro = ftell(archivo);
+    darDeAltaJugador(archivo, nombre, nickname, jugador);
+    if(insertarIndiceJugador(indice, nickname, posRegistro)==EXITO)
+        printf("Indice actualizado correctamente\n");
+    else
+        printf("Error de actualizacion, contacte al equipo de desarrollo\n");
+}
+
 int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
 {
     char nombre[TAM_NICKNAME];
-    char nickname[TAM_NICKNAME];
     FILE* archivo;
     tLista resultados;
     tJugadorArchivo jugadorEncontrado;
-    tIndiceJugador indiceEncontrado;
     int cantidad;
     int opcion;
-    unsigned posRegistro;
 
     printf("Bienvenido a 'Caravana del desierto'\n");
     printf("Ingrese su nombre: ");
@@ -46,44 +64,24 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
 
     if(abrirArchivo(&archivo, ARCH_JUGADORES, "a+b") != EXITO)
         return ERROR_APERTURA;
+
     crearLista(&resultados);
-
-
-    cantidad=buscarJugadoresPorNombre(archivo, nombre, &resultados);
+    cantidad = buscarJugadoresPorNombre(archivo, nombre, &resultados);
 
     if(cantidad == 0)
     {
-        printf("Generando apodo...\n");
-        do
-        {
-            generarNickname(nombre, nickname, TAM_NICKNAME);
-        } while(buscarIndiceJugador(indiceJugador, nickname, &indiceEncontrado) != JUGADOR_INEXISTENTE);
-
-        printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
-        fseek(archivo, 0,SEEK_END);
-        posRegistro = ftell(archivo);
-        darDeAltaJugador(archivo, nombre, nickname, jugador);
-        insertarIndiceJugador(indiceJugador,nickname,posRegistro);
+        altaNuevoJugador(archivo, nombre, jugador, indiceJugador);
     }
     else if(cantidad != ERROR)
     {
         printf("\nJugadores encontrados con ese nombre:\n");
-        mostrarLista(&resultados,mostrarJugadoresEncontrados);
+        mostrarLista(&resultados, mostrarJugadoresEncontrados);
         printf("%u. Ninguno es el mio\n", cantidad + 1);
         opcion = seleccionarJugador(cantidad);
 
         if(opcion == (cantidad + 1))
         {
-            printf("Generando apodo...\n");
-            do
-            {
-                generarNickname(nombre, nickname, TAM_NICKNAME);
-            } while(buscarIndiceJugador(indiceJugador, nickname, &indiceEncontrado) != JUGADOR_INEXISTENTE);
-            printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
-            fseek(archivo, 0,SEEK_END);
-            posRegistro = ftell(archivo);
-            darDeAltaJugador(archivo, nombre, nickname, jugador);
-            insertarIndiceJugador(indiceJugador,nickname,posRegistro);
+            altaNuevoJugador(archivo, nombre, jugador, indiceJugador);
         }
         else
         {
@@ -92,7 +90,6 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
                 jugador->idJugador = jugadorEncontrado.idJugador;
                 strcpy(jugador->nickname, jugadorEncontrado.nickname);
                 printf("Bienvenido de vuelta, %s!\n", jugador->nickname);
-
             }
             else
             {
@@ -115,13 +112,18 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
     vaciarLista(&resultados);
     return EXITO;
 }
-void mostrarRanking(int cant){
+
+int mostrarRanking(int cant)
+{
     FILE * pf = fopen(ARCH_PARTIDAS, "rb");
     tLista listaId, listaRank;
-    if(pf==NULL){
-        fclose(pf);
-        return ERROR_APERTURA;
-    }
+    int ret;
+
+    ret = abrirArchivo(&pf,ARCH_PARTIDAS,"rb");
+
+    if(ret!=EXITO)
+        return ret;
+
     crearLista(&listaId);
     crearLista(&listaRank);
     cargarRanking(pf,&listaId);
@@ -129,6 +131,7 @@ void mostrarRanking(int cant){
     listarTopJugadores(&listaRank, cant);
     vaciarLista(&listaRank);
     vaciarLista(&listaId);
+
     return EXITO;
 }
 
@@ -153,7 +156,8 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
                 finalizarPartida(jugador, resultado);
                 break;
             case 2:
-                mostrarRanking(10);
+                if(mostrarRanking(TOTAL_RANKING) != EXITO)
+                    printf("No fue posible mostrar el rankig, contacte al equipo de desarrollo\n");
                 break;
             /*case 3:
                 mostrarAyuda();

@@ -7,9 +7,11 @@ int cargarRanking(FILE *archivo, tLista *lista){
     while(fread(&partida,sizeof(partida),1,archivo)){
         rank.total = partida.puntaje;
         rank.idJugador = partida.idJugador;
-        insertarOrdenado(lista, &rank, sizeof(tRanking),cmpIndiceJugadorPorId, sumarPuntos);
+        insertarOrdenado(lista, &rank, sizeof(tRanking),cmpIndiceJugadorPorId,sumarPuntos);
     }
     fclose(archivo);
+
+    return EXITO;
 }
 
 int cmpRankingPorPuntos(const void* a, const void* b)
@@ -23,6 +25,8 @@ int cmpRankingPorPuntos(const void* a, const void* b)
     if (jugA->idJugador > jugB->idJugador) return 1;
     if (jugA->idJugador < jugB->idJugador) return -1;
 
+    return 0;
+
 }
 
 void generarListaTop(tLista* listaPorId, tLista* listaPorPuntos)
@@ -31,7 +35,7 @@ void generarListaTop(tLista* listaPorId, tLista* listaPorPuntos)
 
     while(aux != NULL)
     {
-        insertarOrdenado(listaPorPuntos, aux->info, sizeof(tRanking), cmpRankingPorPuntos, NULL);
+        insertarOrdenado(listaPorPuntos, aux->info, sizeof(tRanking), cmpRankingPorPuntos,NULL);
 
         aux = aux->sig;
     }

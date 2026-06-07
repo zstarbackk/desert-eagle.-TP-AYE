@@ -10,10 +10,11 @@ int main()
     tTablero tablero;
     tArbol indiceJugador;
 
-    crearArbolB(&indiceJugador);
-    cargarIndiceJugadores(&indiceJugador, ARCH_JUGADORES_IDX, ARCH_JUGADORES);
     srand(time(NULL));
 
+    crearArbolB(&indiceJugador);
+    if(cargarIndiceJugadores(&indiceJugador, ARCH_JUGADORES_IDX, ARCH_JUGADORES) != EXITO)
+        printf("No se encontro informacion para cargar el indice\n");
 
     if(ingresarJugador(&jugador, &indiceJugador)!=EXITO)
     {

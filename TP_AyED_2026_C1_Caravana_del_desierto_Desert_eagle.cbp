@@ -76,6 +76,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Proyecto/Partida.h" />
+		<Unit filename="Proyecto/Ranking.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Proyecto/Ranking.h" />
 		<Unit filename="Proyecto/Tablero.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -84,14 +88,15 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Proyecto/Utils.h" />
+		<Unit filename="Proyecto/indiceJugador.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Proyecto/indiceJugador.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
-			<code_completion />
-			<envvars />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

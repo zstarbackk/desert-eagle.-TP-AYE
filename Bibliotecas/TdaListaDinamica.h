@@ -21,6 +21,10 @@ int insertarAlFinal(tLista* pl, const void* info, unsigned tamInfo);
 void vaciarLista(tLista* pl);
 void mapLista(tLista* pl, void (*accion)(const void*, unsigned));
 
+int insertarOrdenado(tLista* pl, const void* info, unsigned tamInfo,
+                     int (*cmp)(const void*, const void*),
+                     void (*accion)(void*, const void*));
+
 int insertarOrdenadoAdelante(tLista* pl, const void* info, unsigned tamInfo,
                              int (*cmp)(const void*, const void*), int duplicados,
                              void (*accion)(void*, const void*));

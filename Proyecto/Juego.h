@@ -13,6 +13,7 @@
 #define ARCH_CONFIGURACION "Archivos/config.txt"
 #define ARCH_CARAVANA "Archivos/caravana.txt"
 #define ARCH_PARTIDAS "Archivos/partidas.dat"
+#define TOTAL_RANKING 10
 
 int ingresarJugador(tJugador *jugador, tArbol *indiceJugador);
 tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config);
@@ -20,7 +21,7 @@ int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos);
 int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero);
 tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig * config);
 void finalizarPartida(tJugador* jugador, tResultadoPartida resultado);
-void mostrarRanking(int cant);
+int mostrarRanking(int cant);
 
 void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config);
 #endif // JUEGO_H_INCLUDED
