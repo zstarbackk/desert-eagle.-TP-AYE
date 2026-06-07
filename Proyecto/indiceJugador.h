@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "Jugador.h"
 #include "Archivos.h"
+#define ARCH_TEMPORAL "indice_temp.idx"
 typedef struct
 {
     char nickname[TAM_NICKNAME];

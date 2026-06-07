@@ -519,7 +519,7 @@
 1780801142 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\ranking.c
 	"Ranking.h"
 
-1780854782 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.h
+1780869245 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.h
 	"../Bibliotecas/arbol.h"
 	<stdio.h>
 	"Jugador.h"
@@ -533,7 +533,7 @@
 	<stdio.h>
 	<string.h>
 
-1780863311 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.c
+1780869245 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.c
 	"indiceJugador.h"
 
 1780859945 source:c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\ranking.c

@@ -30,18 +30,26 @@ int regenerarIndiceJugadores(tArbol* indice, const char * nombreArchivoUsuarios)
     tJugadorArchivo registroArchivo;
     FILE * pf;
     unsigned offsetReg;
+    size_t tamRegistro;
     int ret;
 
     ret=abrirArchivo(&pf, nombreArchivoUsuarios,"rb");
     if(ret != EXITO)
         return ret;
 
+    tamRegistro=sizeof(tJugadorArchivo);
+
     printf("\n\nRegenerando Indice jugadores...");
     offsetReg = 0;
     while(fread(&registroArchivo, sizeof(tJugadorArchivo), 1, pf) == 1)
     {
-       insertarIndiceJugador(indice, registroArchivo.nickname, offsetReg);
-       offsetReg += sizeof(tJugadorArchivo);
+       ret= insertarIndiceJugador(indice, registroArchivo.nickname, offsetReg);
+       if(ret != EXITO)
+            {
+               fclose(pf);
+               return ret;
+            }
+       offsetReg += tamRegistro;
     }
     fclose(pf);
     printf("Indice regenerado exitosamente.\n\n");
@@ -53,7 +61,7 @@ int guardarIndiceJugadores(const tArbol* indice, const char* nombreArchivoIndice
     FILE *archTemp;
     int ret;
 
-    ret=abrirArchivo(&archTemp,"indice_temp.idx","wb");
+    ret=abrirArchivo(&archTemp,ARCH_TEMPORAL,"wb");
     if (ret !=EXITO)
         return ret;
 
@@ -61,7 +69,7 @@ int guardarIndiceJugadores(const tArbol* indice, const char* nombreArchivoIndice
     fclose(archTemp);
 
     remove(nombreArchivoIndice);
-    rename("indice_temp.idx", nombreArchivoIndice);
+    rename(ARCH_TEMPORAL, nombreArchivoIndice);
 
     return EXITO;
 }
@@ -81,8 +89,14 @@ int buscarIndiceJugador(tArbol* indice, const char* nickname, tIndiceJugador* in
 int insertarIndiceJugador(tArbol* indice, const char* nickname, unsigned posicionRegistro)
 {
     tIndiceJugador jug;
+    int ret;
+
     strcpy(jug.nickname, nickname);
     jug.posicionRegistro = posicionRegistro;
-    insertarEnArbolBRec(indice, &jug, sizeof(tIndiceJugador),cmpIndiceJugadorPorNickname);
+    ret = insertarEnArbolBRec(indice, &jug, sizeof(tIndiceJugador),cmpIndiceJugadorPorNickname);
+
+    if(!ret)
+        return ret;
+
     return EXITO;
 }
