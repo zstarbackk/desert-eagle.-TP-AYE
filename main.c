@@ -22,6 +22,7 @@ int main()
     }
     guardarIndiceJugadores(&indiceJugador,ARCH_JUGADORES_IDX);
     mostrarMenu(&jugador,&tablero,&config);
+
 //  probarGenerarTablero();
 
     return 0;

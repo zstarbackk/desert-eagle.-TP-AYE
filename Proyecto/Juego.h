@@ -6,6 +6,7 @@
 #include "Tablero.h"
 #include "Partida.h"
 #include "indiceJugador.h"
+#include "Ranking.h"
 #include "../Bibliotecas/colaCircular.h"
 #define ARCH_JUGADORES "Archivos/jugadores.dat"
 #define ARCH_JUGADORES_IDX "Archivos/jugadores.idx"
@@ -14,10 +15,12 @@
 #define ARCH_PARTIDAS "Archivos/partidas.dat"
 
 int ingresarJugador(tJugador *jugador, tArbol *indiceJugador);
-void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config);
 tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config);
 int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos);
 int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero);
 tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig * config);
 void finalizarPartida(tJugador* jugador, tResultadoPartida resultado);
+void mostrarRanking(int cant);
+
+void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config);
 #endif // JUEGO_H_INCLUDED

@@ -115,7 +115,22 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
     vaciarLista(&resultados);
     return EXITO;
 }
-
+void mostrarRanking(int cant){
+    FILE * pf = fopen(ARCH_PARTIDAS, "rb");
+    tLista listaId, listaRank;
+    if(pf==NULL){
+        fclose(pf);
+        return ERROR_APERTURA;
+    }
+    crearLista(&listaId);
+    crearLista(&listaRank);
+    cargarRanking(pf,&listaId);
+    generarListaTop(&listaId, &listaRank);
+    listarTopJugadores(&listaRank, cant);
+    vaciarLista(&listaRank);
+    vaciarLista(&listaId);
+    return EXITO;
+}
 
 void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
 {
@@ -137,10 +152,10 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
                 resultado = jugarPartida(jugador, tablero, config);
                 finalizarPartida(jugador, resultado);
                 break;
-          /*  case 2:
-                mostrarRanking();
+            case 2:
+                mostrarRanking(10);
                 break;
-            case 3:
+            /*case 3:
                 mostrarAyuda();
                 break;  */
             case 4:

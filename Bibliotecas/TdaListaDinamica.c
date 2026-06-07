@@ -66,6 +66,42 @@ void mapLista(tLista* pl, void (*accion)(const void*, unsigned))
         pl = &(*pl)->sig;
     }
 }
+int insertarOrdenado(tLista* pl, const void* info, unsigned tamInfo,
+                     int (*cmp)(const void*, const void*),
+                     void (*accion)(void*, const void*))
+{
+    tNodoL* nue;
+
+    while(*pl && cmp(info, (*pl)->info) > 0)
+        pl = &(*pl)->sig;
+
+    if(*pl && cmp(info, (*pl)->info) == 0)
+    {
+        if(accion)
+            accion((*pl)->info, info);
+
+        return EXITO;
+    }
+
+    nue = malloc(sizeof(tNodoL));
+    if(nue == NULL)
+        return ERROR_MEMORIA;
+
+    nue->info = malloc(tamInfo);
+    if(nue->info == NULL)
+    {
+        free(nue);
+        return ERROR_MEMORIA;
+    }
+
+    memcpy(nue->info, info, tamInfo);
+    nue->tamInfo = tamInfo;
+
+    nue->sig = *pl;
+    *pl = nue;
+
+    return EXITO;
+}
 
 int insertarOrdenadoAdelante(tLista* pl, const void* info, unsigned tamInfo,
                              int (*cmp)(const void*, const void*), int duplicados,
