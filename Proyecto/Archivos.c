@@ -3,17 +3,18 @@
 int buscarJugadoresPorNombre(FILE* archivo, char* nombre, tLista* resultados)
 {
     tJugadorArchivo registro;
+    char nickname[TAM_NICKNAME];
     int cantidad = 0;
+    unsigned tamRegistro = sizeof(tJugadorArchivo);
 
     rewind(archivo);
-    while(fread(&registro, sizeof(tJugadorArchivo), 1, archivo) == 1)
+    while(fread(&registro, tamRegistro, 1, archivo) == 1)
     {
         if(strcasecmp(registro.nombre, nombre) == 0)
         {
-
-            if(insertarAlFinal(resultados,&registro,sizeof(tJugadorArchivo))!=EXITO)
+            strcpy(nickname, registro.nickname);
+            if(insertarAlFinal(resultados, nickname, TAM_NICKNAME) != EXITO)
                 return ERROR;
-
             cantidad++;
         }
     }
@@ -141,6 +142,8 @@ int mostrarAyuda(const char* nombreArchivo)
         if(!archivo)
             return ERROR_APERTURA;
     }
+
+    system("cls");
 
     while(fgets(linea, sizeof(linea), archivo))
         printf("%s", linea);

@@ -19,10 +19,12 @@ int main()
     if(ingresarJugador(&jugador, &indiceJugador)!=EXITO)
     {
         printf("Error en la autenticacion. Vuelva a iniciar sesion\n");
+        vaciarArbol(&indiceJugador);
         exit(1);
     }
     guardarIndiceJugadores(&indiceJugador,ARCH_JUGADORES_IDX);
     mostrarMenu(&jugador,&tablero,&config);
+    vaciarArbol(&indiceJugador);
 
 //  probarGenerarTablero();
 

@@ -1,0 +1,30 @@
+=== AYUDA - CARAVANA DEL DESIERTO ===
+
+Objetivo:
+Llegar desde el Campamento Inicial (I) hasta la Ciudad Refugio (S) sin perder todas tus vidas.
+
+Como jugar:
+- En cada turno tiras un dado de 1 a 6.
+- El numero obtenido indica exactamente cuantas posiciones debes moverte.
+- Puedes elegir avanzar (F) o retroceder (B), si el movimiento es valido.
+- Si avanzas y pasas la salida, rebotas hacia atras con los pasos sobrantes.
+- No puedes retroceder atravesando el inicio.
+
+Casilleros:
+I = Inicio
+S = Salida
+P = Premio: suma 1 punto
+V = Vida extra: suma 1 vida
+O = Oasis: protege contra el proximo peligro
+T = Tormenta: pierdes el proximo turno si no estas protegido
+B = Bandido: si te intercepta, pierdes 1 vida y vuelves al inicio
+. = Casillero despejado
+
+Bandidos:
+- Se mueven automaticamente despues del jugador.
+- Intentan acercarse por el camino mas corto.
+
+Fin de la partida:
+- Ganas si llegas a la Ciudad Refugio.
+- Pierdes si te quedas sin vidas.
+- Al finalizar se muestra tu historial de movimientos.

@@ -10,8 +10,7 @@ void generarNickname(char* nombre, char* nickname, unsigned tam)
 
 void mostrarJugadoresEncontrados(const void* dato, unsigned inc)
 {
-    tJugadorArchivo registro = *(tJugadorArchivo*)dato;
-    printf("%u. %s\n",inc+1, registro.nickname);
+    printf("%u. %s\n", inc + 1, (char*)dato);
 }
 
 int seleccionarJugador(int cantidad)
@@ -40,7 +39,7 @@ void altaNuevoJugador(FILE* archivo, char* nombre, tJugador* jugador, tArbol* in
 
     printf("Su apodo sera: %s\nNo lo olvides!\n", nickname);
     fseek(archivo, 0, SEEK_END);
-    posRegistro = ftell(archivo);
+    posRegistro = ftell(archivo)/sizeof(tJugadorArchivo);
     darDeAltaJugador(archivo, nombre, nickname, jugador);
     if(insertarIndiceJugador(indice, nickname, posRegistro)==EXITO)
         printf("Indice actualizado correctamente\n");
@@ -51,9 +50,11 @@ void altaNuevoJugador(FILE* archivo, char* nombre, tJugador* jugador, tArbol* in
 int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
 {
     char nombre[TAM_NICKNAME];
+    char nicknameElegido[TAM_NICKNAME];
     FILE* archivo;
     tLista resultados;
     tJugadorArchivo jugadorEncontrado;
+    tIndiceJugador indiceEncontrado;
     int cantidad;
     int opcion;
 
@@ -85,15 +86,19 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
         }
         else
         {
-            if(buscarEnListaPorPosicion(&resultados, opcion - 1, &jugadorEncontrado, sizeof(tJugadorArchivo)) == EXITO)
+            buscarEnListaPorPosicion(&resultados, opcion - 1, nicknameElegido, TAM_NICKNAME);
+
+            if(buscarIndiceJugador(indiceJugador, nicknameElegido, &indiceEncontrado) == EXITO)
             {
+                fseek(archivo, indiceEncontrado.posicionRegistro * sizeof(tJugadorArchivo), SEEK_SET);
+                fread(&jugadorEncontrado, sizeof(tJugadorArchivo), 1, archivo);
                 jugador->idJugador = jugadorEncontrado.idJugador;
                 strcpy(jugador->nickname, jugadorEncontrado.nickname);
                 printf("Bienvenido de vuelta, %s!\n", jugador->nickname);
             }
             else
             {
-                printf("Error al recuperar el jugador seleccionado.\n");
+                printf("Error al recuperar el jugador. Contacte al equipo de desarrollo\n");
                 fclose(archivo);
                 vaciarLista(&resultados);
                 return ERROR;
