@@ -1,63 +1,83 @@
 #include "Jugador.h"
 
-void inicializarEstadoJugador(tJugador * jugador,unsigned vidasInicio, tPosicion inicio)
+ void accionCambiarTieneJugador(void* dato, void* ctx)
 {
-    tCasillero* cas = (tCasillero*)inicio->info;
+    tCasillero* cas = (tCasillero*)dato;
+    int* valor = (int*)ctx;
 
-    jugador->vidas=vidasInicio;
-    jugador->puntaje=0,
-    jugador->protegidoPorOasis=0;
-    jugador->pierdeTurno=0;
-    jugador->cantMovimientos=0;
-    crearLista(&jugador->historialMovimientos);
-    jugador->posicionActual=inicio;
-
-    cas->tieneJugador = 1;
+    cas->tieneJugador = *valor;
 }
 
-int generarMovimientoJugador( tJugador * jugador, const tTablero *tablero, unsigned dado, tMovimiento *mov, tDireccion dir)
+void inicializarEstadoJugador(tJugador* jugador, unsigned vidasInicio, tCursorDC inicio)
 {
-    tPosicion actual=jugador->posicionActual;
-    unsigned pasosAdelante=0;
-    unsigned pasosAtras=0;
+    int tieneJugador = 1;
+    jugador->vidas = vidasInicio;
+    jugador->puntaje = 0;
+    jugador->protegidoPorOasis = 0;
+    jugador->pierdeTurno = 0;
+    jugador->cantMovimientos = 0;
+    crearLista(&jugador->historialMovimientos);
+    jugador->posicionActual = inicio;
+
+    modificarActualDC(inicio, accionCambiarTieneJugador, &tieneJugador);
+}
+
+int generarMovimientoJugador(tJugador* jugador, const tTablero* tablero,unsigned dado,tMovimiento* mov, tDireccion dir)
+{
+    tCursorDC actual = jugador->posicionActual;
+    unsigned pasosAdelante = 0;
+    unsigned pasosAtras = 0;
     tMovimientoHistorico movHist;
+    int ret;
+
     while(dado--)
     {
-        if(actual==tablero->fin)
-            dir=ATRAS;
-        if(dir ==ADELANTE)
+        if(mismoCursorDC(actual, tablero->fin))
+            dir = ATRAS;
+
+        if(dir == ADELANTE)
         {
-            actual=actual->sig;
+            actual = siguienteDC(actual);
             pasosAdelante++;
         }
         else
         {
-            actual=actual->ant;
+            actual = anteriorDC(actual);
             pasosAtras++;
         }
     }
 
     if(pasosAdelante)
     {
-        movHist=crearMovimientoHistorico(ADELANTE,pasosAdelante);
-        if(insertarAlFinal(&jugador->historialMovimientos,&movHist,sizeof(movHist))!=EXITO)
+        movHist = crearMovimientoHistorico(ADELANTE, pasosAdelante);
+
+        ret = insertarAlFinal(&jugador->historialMovimientos, &movHist, sizeof(movHist));
+        if(ret != EXITO)
             return ERROR_MEMORIA;
     }
+
     if(pasosAtras)
     {
-        movHist=crearMovimientoHistorico(ATRAS,pasosAtras);
-        insertarAlFinal(&jugador->historialMovimientos,&movHist,sizeof(movHist));
+        movHist = crearMovimientoHistorico(ATRAS, pasosAtras);
+
+        ret = insertarAlFinal(&jugador->historialMovimientos, &movHist, sizeof(movHist));
+        if(ret != EXITO)
+            return ERROR_MEMORIA;
     }
+
     jugador->cantMovimientos++;
-    *mov=crearMovimiento(ACTOR_JUGADOR,jugador->idJugador,jugador->posicionActual,actual,dir);
+
+    *mov = crearMovimiento(ACTOR_JUGADOR,jugador->idJugador,jugador->posicionActual,actual,dir);
+
     return EXITO;
 }
 
-void mostrarMovimientoHistorico(const void* info, unsigned tamInfo)
+ void mostrarMovimientoHistorico(const void* info, unsigned tamInfo)
 {
-    tMovimientoHistorico* mov = (tMovimientoHistorico*)info;
+    const tMovimientoHistorico* mov = (const tMovimientoHistorico*)info;
 
-    printf("%c%u ", mov->direccion, mov->cantidad);
+    printf("|%c%u|", mov->direccion, mov->cantidad);
+
 }
 
 void mostrarHistorialJugador(tJugador* jugador)
@@ -67,8 +87,7 @@ void mostrarHistorialJugador(tJugador* jugador)
     if(listaVacia(&jugador->historialMovimientos))
         printf("sin movimientos");
     else
-        mapLista(&jugador->historialMovimientos, mostrarMovimientoHistorico);
-
+        mostrarLista(&jugador->historialMovimientos,mostrarMovimientoHistorico);
     printf("\n");
 }
 

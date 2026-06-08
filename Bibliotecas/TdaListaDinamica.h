@@ -1,9 +1,5 @@
 #ifndef TDALISTADINAMICA_H_INCLUDED
 #define TDALISTADINAMICA_H_INCLUDED
-#include <stdio.h>
-#include <stdlib.h>
-#include "../Proyecto/Errores.h"
-#define MINIMO( X , Y ) ( ( X ) <= ( Y ) ? ( X ) : ( Y ) )
 
 typedef struct sNodoL
 {
@@ -19,7 +15,7 @@ int listaLlena(const tLista* pl, unsigned tamInfo);
 int listaVacia(const tLista* pl);
 int insertarAlFinal(tLista* pl, const void* info, unsigned tamInfo);
 void vaciarLista(tLista* pl);
-void mapLista(tLista* pl, void (*accion)(const void*, unsigned));
+int mapLista(tLista* pl, int (*accion)(void* dato, unsigned tamDato, void* ctx), void* ctx);
 
 int insertarOrdenado(tLista* pl, const void* info, unsigned tamInfo,
                      int (*cmp)(const void*, const void*),
@@ -50,5 +46,11 @@ void seleccionSortLista(tLista* pl, int (*cmp)(const void*, const void*));
 void mostrarLista (const tLista* L, void(*mostrar)(const void*, unsigned));
 
 int buscarEnListaPorPosicion(const tLista* pl, int pos, void* res, unsigned cantBytes);
+int buscarEnListaPorClave(const tLista* pl,void* datoEncontrado,unsigned tamDato,const void* clave,
+                          int (*cmp)(const void* clave, const void* dato));
+
+int modificarEnListaPorClave(tLista* pl,const void* clave,int (*cmp)(const void* clave, const void* dato),void (*accion)(void* dato, void* ctx),
+                             void* ctx);
+
 
 #endif // TDALISTADINAMICA_H_INCLUDED

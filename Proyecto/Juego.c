@@ -1,6 +1,35 @@
 #include "Juego.h"
-#include "Bandido.h"
 #include "Utils.h"
+#include "../Bibliotecas/listaDobleCircular.h"
+#include "../Bibliotecas/TdaListaDinamica.h"
+typedef struct
+{
+    const tJugador* jugador;
+    const tTablero* tablero;
+    tCola* colaMovimientos;
+} tCtxEncolarBandidos;
+
+static int accionEncolarMovimientoBandido(void* dato, unsigned tamDato, void* ctx)
+{
+    tBandido* bandido = (tBandido*)dato;
+    tCtxEncolarBandidos* contexto = (tCtxEncolarBandidos*)ctx;
+    tMovimiento mov;
+
+    if(!bandido->activo)
+        return EXITO;
+
+    mov = generarMovimientoBandido(bandido, contexto->jugador, contexto->tablero);
+
+    return encolar(contexto->colaMovimientos, &mov, sizeof(tMovimiento));
+}
+
+static void accionCambiarEvento(void* dato, void* ctx)
+{
+    tCasillero* cas = (tCasillero*)dato;
+    tTipoEvento* evento = (tTipoEvento*)ctx;
+
+    cas->tipoEvento = *evento;
+}
 
 void generarNickname(char* nombre, char* nickname, unsigned tam)
 {
@@ -178,6 +207,7 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
         printf("4. Salir\n");
         printf("Ingrese una opcion: ");
         scanf("%d", &opcion);
+        getchar();
 
         switch(opcion)
         {
@@ -202,26 +232,30 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
 
 }
 
-tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config)
+tResultadoPartida inicializarPartida(tJugador* jugador, tTablero* tablero, tConfig* config)
 {
     int ret;
 
-    ret=cargarConfiguracion(ARCH_CONFIGURACION,config);
+    ret = cargarConfiguracion(ARCH_CONFIGURACION, config);
     if(ret != EXITO)
         return PARTIDA_ERROR;
 
     do
     {
         printf("Generando tablero...\n");
-        ret=generarTablero(tablero,config);
 
+        ret = generarTablero(tablero, config);
         if(ret != EXITO)
-           return PARTIDA_ERROR;
+            return PARTIDA_ERROR;
 
         printf("Validando tablero...\n");
 
-    }while(validarTablero(tablero)!=EXITO);
+        ret = validarTablero(tablero);
 
+        if(ret != EXITO)
+            vaciarTablero(tablero);
+
+    } while(ret != EXITO);
 
     printf("Tablero valido.\n");
 
@@ -229,22 +263,26 @@ tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfi
     if(ret != EXITO)
         return PARTIDA_ERROR;
 
-    inicializarEstadoJugador(jugador,config->vidas_inicio,tablero->inicio);
-
+    inicializarEstadoJugador(jugador, config->vidas_inicio, tablero->inicio);
 
     return PARTIDA_EN_CURSO;
 }
 
+
 int puedeRetroceder(const tJugador* jugador, unsigned pasos)
 {
-    tPosicion act = jugador->posicionActual;
+    tCursorDC act = jugador->posicionActual;
+    tCasillero cas;
 
     while(pasos--)
     {
-        if(((tCasillero*)act->info)->tipoEvento == INICIO)
+        if(verActualDC(act, &cas, sizeof(tCasillero)) != EXITO)
             return NO_RETROCEDE;
 
-        act = act->ant;
+        if(cas.tipoEvento == INICIO)
+            return NO_RETROCEDE;
+
+        act = anteriorDC(act);
     }
 
     return EXITO;
@@ -277,144 +315,158 @@ tDireccion pedirDireccion(const tJugador* jugador, unsigned dado)
     return dir == 'B' ? ATRAS : ADELANTE;
 }
 
-int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos)
+int prepararTurno(tJugador* jugador, tTablero* tablero, tCola* colaMovimientos)
 {
     int ret;
     unsigned dado;
     char tecla;
     tMovimiento mov;
-    tBandido *bandido;
-    tLista *pl=&tablero->bandidos;
     tDireccion direccion;
+    tCtxEncolarBandidos ctxBandidos;
 
     if(jugador->pierdeTurno)
     {
-        jugador->pierdeTurno=0;
-
+        jugador->pierdeTurno = 0;
+        printf("Perdiste este turno. Los bandidos se mueven...\n\n");
     }
     else
     {
-
         do
         {
-           printf("Presione ENTER para tirar el dado..\n");
-           fflush(stdin);
-           scanf("%c", &tecla);
-           if(tecla != '\n')
-            printf("Tecla invalida.\n");
-        }while(tecla != '\n');
+            printf("Presione ENTER para tirar el dado..\n");
+            scanf("%c", &tecla);
 
-        dado=tirarDado();
+            if(tecla != '\n')
+                printf("Tecla invalida.\n");
 
-        //system("cls");
+        } while(tecla != '\n');
+
+        dado = tirarDado();
 
         printf("El dado giro en el aire y cayo, el numero es: %u.\n", dado);
 
         direccion = pedirDireccion(jugador, dado);
 
         if(direccion == ATRAS)
-           printf("Retrocede %u casilleros, suerte!!.\n\n", dado);
+            printf("Retrocede %u casilleros, suerte!!.\n\n", dado);
         else
-           printf("Avanza %u casilleros, suerte!!.\n\n", dado);
+            printf("Avanza %u casilleros, suerte!!.\n\n", dado);
 
-        ret=generarMovimientoJugador(jugador,tablero,dado,&mov,direccion);
-        if(ret!=EXITO)
-            return ret;
-        ret=encolar(colaMovimientos,&mov,sizeof(tMovimiento));
-        if(ret!=EXITO)
+        ret = generarMovimientoJugador(jugador, tablero, dado, &mov, direccion);
+        if(ret != EXITO)
             return ret;
 
+        ret = encolar(colaMovimientos, &mov, sizeof(tMovimiento));
+        if(ret != EXITO)
+            return ret;
     }
 
+    ctxBandidos.jugador = jugador;
+    ctxBandidos.tablero = tablero;
+    ctxBandidos.colaMovimientos = colaMovimientos;
 
-    while(*pl)
-    {
-        bandido=(tBandido*)(*pl)->info;
-        if(bandido->activo)
-        {
-            mov=generarMovimientoBandido(bandido,jugador,tablero);
-            ret=encolar(colaMovimientos,&mov,sizeof(tMovimiento));
-            if(ret!=EXITO)
-                return ret;
-        }
-        pl=&(*pl)->sig;
-    }
+    ret = mapLista(&tablero->bandidos, accionEncolarMovimientoBandido, &ctxBandidos);
+
+    if(ret != EXITO)
+        return ret;
 
     return EXITO;
-
 }
 
 
-void aplicarEvento(tJugador* jugador, tCasillero* cas)
+void aplicarEvento(tJugador* jugador, tCursorDC posicion)
 {
-    switch(cas->tipoEvento)
+    tCasillero cas;
+    tTipoEvento despejado = DESPEJADO;
+
+    if(verActualDC(posicion, &cas, sizeof(tCasillero)) != EXITO)
+        return;
+
+    switch(cas.tipoEvento)
     {
         case PREMIO:
-            printf("Felicidades, se ha topado con un premio, su puntaje se ha incrementado con exito!!.\n\n");
+            printf("Encontraste un premio. Sumaste 1 punto.\n\n");
             jugador->puntaje++;
-            cas->tipoEvento = DESPEJADO;
+            modificarActualDC(posicion, accionCambiarEvento, &despejado);
             break;
+
         case VIDA_EXTRA:
-            printf("Parece que es su dia de suerte, ha conseguido una vida extra, aprovechela! \n\n");
+            printf("Encontraste una vida extra. Sumaste 1 vida.\n\n");
             jugador->vidas++;
-            cas->tipoEvento = DESPEJADO;
+            modificarActualDC(posicion, accionCambiarEvento, &despejado);
             break;
+
         case OASIS:
             printf("Llegaste a un oasis. Tendras proteccion contra el proximo peligro.\n\n");
             jugador->protegidoPorOasis = 1;
-            cas->tipoEvento = DESPEJADO;
+            modificarActualDC(posicion, accionCambiarEvento, &despejado);
             break;
+
         case TORMENTA:
-            printf("A juzgar por el viento se avecina una tormenta, menos mal que traje paraguas.\n\n");
+            printf("Caíste en una tormenta de arena.\n\n");
+
             if(!jugador->protegidoPorOasis)
-                {
-                   printf("Has perdido un turno, es el turno de los bandidos, tenga cuidado!!.\n\n");
-                   jugador->pierdeTurno = 1;
-                }
+            {
+                printf("Perdes el proximo turno.\n\n");
+                jugador->pierdeTurno = 1;
+            }
             else
-                {
-                   printf("Que util el oasis no? Esta vez te salvaste, a seguir jugando!!.\n\n");
-                   jugador->protegidoPorOasis = 0;
-                }
-                cas->tipoEvento = DESPEJADO;
+            {
+                printf("La proteccion del oasis te salvo de la tormenta, Suerte!.\n\n");
+                jugador->protegidoPorOasis = 0;
+            }
+
+            modificarActualDC(posicion, accionCambiarEvento, &despejado);
             break;
+
         default:
             break;
     }
 }
 
-void interceptarJugador(tJugador* jugador, tBandido* bandido, tCasillero* cas, tTablero* tablero)
+void interceptarJugador(tJugador* jugador, const tBandido* bandido, tCursorDC posicionIntercepcion, tTablero* tablero)
 {
-    tCasillero* casInicio = (tCasillero*)tablero->inicio->info;
+    int tieneJugador;
+    unsigned idBandido;
 
     if(jugador->protegidoPorOasis)
     {
-        printf("Buena suerte, tenias blindaje contra bandidos, sigue con cuidado que ya no lo tienes!!.\n\n");
+        printf("Tenias proteccion de oasis. El bandido no te quita vida.\n\n");
         jugador->protegidoPorOasis = 0;
     }
     else
     {
-        printf("Fuiste interceptado por el bandido %u, volviste al inicio [);].\n\n", bandido->idBandido);
-        // mover jugador al inicio
-        cas->tieneJugador = 0;
-        casInicio->tieneJugador = 1;
+        printf("Fuiste interceptado por el bandido %u. Volves al inicio.\n\n",
+               bandido->idBandido);
+
+        tieneJugador = 0;
+        modificarActualDC(posicionIntercepcion, accionCambiarTieneJugador, &tieneJugador);
+
+        tieneJugador = 1;
+        modificarActualDC(tablero->inicio, accionCambiarTieneJugador, &tieneJugador);
+
         jugador->posicionActual = tablero->inicio;
-        // reducir vida
         jugador->vidas--;
-        printf("Vidas restantes: %d, suerte!!. \n", jugador->vidas);
+
+        printf("Vidas restantes: %d.\n", jugador->vidas);
     }
-    // desactivar bandido
-    cas->idBandido = 0;
-    desactivarBandido(bandido);
+
+    idBandido = 0;
+    modificarActualDC(posicionIntercepcion, accionCambiarIdBandido, &idBandido);
+
+    modificarEnListaPorClave(&tablero->bandidos,&bandido->idBandido,cmpBandidoPorId,accionDesactivarBandido,NULL);
 }
+
 
 int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero)
 {
     tMovimiento mov;
-    tCasillero* casOrigen;
-    tCasillero* casDestino;
-    tBandido* bandido;
+    tCasillero casOrigen;
+    tCasillero casDestino;
+    tBandido bandido;
     int ret;
+    int tieneJugador;
+    unsigned idBandido;
 
     while(!colaVacia(cola))
     {
@@ -422,67 +474,92 @@ int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero)
         if(ret != EXITO)
             return ret;
 
-        casOrigen  = (tCasillero*)mov.origen->info;
-        casDestino = (tCasillero*)mov.destino->info;
-
-        if(mov.actor == ACTOR_JUGADOR) //en preparar turno ya se contempla si pierde el turno porque no genera el movimiento
+        if(mov.actor == ACTOR_JUGADOR)
         {
-            casOrigen->tieneJugador  = 0;
-            casDestino->tieneJugador = 1;
-            jugador->posicionActual  = mov.destino;
-            aplicarEvento(jugador, casDestino);
+            tieneJugador = 0;
+            ret = modificarActualDC(mov.origen, accionCambiarTieneJugador, &tieneJugador);
+            if(ret != EXITO)
+                return ret;
+
+            tieneJugador = 1;
+            ret = modificarActualDC(mov.destino, accionCambiarTieneJugador, &tieneJugador);
+            if(ret != EXITO)
+                return ret;
+
+            jugador->posicionActual = mov.destino;
+
+            aplicarEvento(jugador, mov.destino);
+
             pausar();
         }
         else
         {
-            bandido = buscarBandidoPorId(&tablero->bandidos, mov.idActor);
+            ret = buscarEnListaPorClave(&tablero->bandidos,&bandido,sizeof(tBandido),&mov.idActor,cmpBandidoPorId);
 
-            if(bandido && bandido->activo)
+            if(ret == EXITO && bandido.activo)
             {
                 ajustarDestinoBandido(&mov);
 
-                casOrigen = (tCasillero*)bandido->posicionActual->info;
-                casDestino = (tCasillero*)mov.destino->info;
+                if(!mismoCursorDC(mov.destino, bandido.posicionActual))
+                {
+                    ret = verActualDC(bandido.posicionActual, &casOrigen, sizeof(tCasillero));
+                    if(ret != EXITO)
+                        return ret;
 
-                if(mov.destino != bandido->posicionActual)
+                    if(casOrigen.idBandido == bandido.idBandido)
                     {
-                        if(casOrigen->idBandido == bandido->idBandido)
-                        casOrigen->idBandido = 0;
-
-                        casDestino->idBandido = bandido->idBandido;
-                        bandido->posicionActual = mov.destino;
+                        idBandido = 0;
+                        ret = modificarActualDC(bandido.posicionActual,
+                                                accionCambiarIdBandido,
+                                                &idBandido);
+                        if(ret != EXITO)
+                            return ret;
                     }
+
+                    idBandido = bandido.idBandido;
+                    ret = modificarActualDC(mov.destino,accionCambiarIdBandido,&idBandido);
+                    if(ret != EXITO)
+                        return ret;
+
+                    ret = modificarEnListaPorClave(&tablero->bandidos,&bandido.idBandido,cmpBandidoPorId,
+                                                   accionActualizarPosicionBandido,&mov.destino);
+                    if(ret != EXITO)
+                        return ret;
+                }
             }
         }
-
     }
-    casDestino = (tCasillero*)jugador->posicionActual->info;
-    if(casDestino->idBandido)
+
+    ret = verActualDC(jugador->posicionActual, &casDestino, sizeof(tCasillero));
+    if(ret != EXITO)
+        return ret;
+
+    if(casDestino.idBandido)
     {
-        bandido = buscarBandidoPorId(&tablero->bandidos, casDestino->idBandido);
-        if(bandido && bandido->activo)
-            interceptarJugador(jugador, bandido, casDestino, tablero);
-        pausar();
+        ret = buscarEnListaPorClave(&tablero->bandidos,&bandido,sizeof(tBandido),&casDestino.idBandido,cmpBandidoPorId);
+        if(ret == EXITO && bandido.activo)
+        {
+            interceptarJugador(jugador, &bandido, jugador->posicionActual, tablero);
+            pausar();
+        }
     }
 
     return EXITO;
 }
 
-tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig *config)
+tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig* config)
 {
     tCola cola;
-    tCasillero* casActual;
+    tCasillero casActual;
     tResultadoPartida resultado;
     int ret;
 
-    resultado=inicializarPartida(jugador,tablero,config);
+    resultado = inicializarPartida(jugador, tablero, config);
 
     if(resultado != PARTIDA_EN_CURSO)
         return resultado;
 
     crearCola(&cola);
-
-    //system("cls");
 
     printf("\n");
     printf("Cuenta con %d vidas, a jugar!\n", jugador->vidas);
@@ -499,6 +576,7 @@ tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig *co
             vaciarCola(&cola);
             return PARTIDA_ERROR;
         }
+
         ret = procesarMovimientos(&cola, jugador, tablero);
         if(ret != EXITO)
         {
@@ -506,23 +584,32 @@ tResultadoPartida jugarPartida(tJugador* jugador, tTablero* tablero, tConfig *co
             return PARTIDA_ERROR;
         }
 
-        casActual = (tCasillero*)jugador->posicionActual->info;
-        if(casActual->tipoEvento == SALIDA)
+        ret = verActualDC(jugador->posicionActual, &casActual, sizeof(tCasillero));
+        if(ret != EXITO)
+        {
+            vaciarCola(&cola);
+            return PARTIDA_ERROR;
+        }
+
+        if(casActual.tipoEvento == SALIDA)
             resultado = PARTIDA_GANADA;
         else if(jugador->vidas <= 0)
             resultado = PARTIDA_PERDIDA;
-
     }
 
     vaciarCola(&cola);
     return resultado;
 }
 
+
 void finalizarPartida(tJugador* jugador, tResultadoPartida resultado)
 {
     if(resultado == PARTIDA_GANADA)
-        printf("Felicitaciones %s, llegaste a la Ciudad Refugio!.\n", jugador->nickname);
-    else if (resultado == PARTIDA_PERDIDA)
+    {
+       printf("Felicitaciones %s, llegaste a la Ciudad Refugio!.\n", jugador->nickname);
+       if(jugador->puntaje==0)
+            jugador->puntaje++; //solo por ganar le sumamos un punto, asi si no agarro ningun premio, cuenta en el ranking
+    }else if (resultado == PARTIDA_PERDIDA)
         printf("Game over %s, perdiste todas tus vidas!.\n", jugador->nickname);
     else
         printf("Ocurrio un error durante la partida.\n");

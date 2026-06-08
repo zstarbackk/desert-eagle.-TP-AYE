@@ -1,5 +1,9 @@
 #include "TdaListaDinamica.h"
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "../Proyecto/Errores.h"
+#define MINIMO( X , Y ) ( ( X ) <= ( Y ) ? ( X ) : ( Y ) )
 
 
 void crearLista(tLista* pl)
@@ -58,14 +62,24 @@ void vaciarLista(tLista* pl)
     }
 }
 
-void mapLista(tLista* pl, void (*accion)(const void*, unsigned))
+int mapLista(tLista* pl,
+             int (*accion)(void* dato, unsigned tamDato, void* ctx),
+             void* ctx)
 {
+    if(!pl || !accion)
+        return ERROR;
+
     while(*pl)
     {
-        accion((*pl)->info, (*pl)->tamInfo);
-        pl = &(*pl)->sig;
+        if(accion((*pl)->info, (*pl)->tamInfo, ctx) != EXITO)
+            return ERROR;
+
+        pl =&(*pl)->sig;
     }
+    return EXITO;
 }
+
+
 int insertarOrdenado(tLista* pl, const void* info, unsigned tamInfo,
                      int (*cmp)(const void*, const void*),
                      void (*accion)(void*, const void*))
@@ -345,3 +359,42 @@ int buscarEnListaPorPosicion(const tLista* pl, int pos, void* res, unsigned cant
 
     return EXITO;
 }
+
+int buscarEnListaPorClave(const tLista* pl,void* datoEncontrado, unsigned tamDato,const void* clave,int (*cmp)(const void* clave, const void* dato))
+{
+    if(!pl || !clave || !cmp)
+        return ERROR;
+
+    while(*pl)
+    {
+        if(cmp(clave, (*pl)->info) == 0)
+        {
+            memcpy(datoEncontrado, (*pl)->info, MINIMO((*pl)->tamInfo, tamDato));
+            return EXITO;
+        }
+        pl = &(*pl)->sig;
+    }
+    return DATO_NO_ENCONTRADO;
+}
+
+int modificarEnListaPorClave(tLista* pl,const void* clave,int (*cmp)(const void* clave, const void* dato),void (*accion)(void* dato, void* ctx),
+                             void* ctx)
+{
+    if(!pl || !cmp || !accion)
+        return ERROR;
+
+    while(*pl)
+    {
+        if(cmp(clave, (*pl)->info) == 0)
+        {
+            accion((*pl)->info, ctx);
+            return EXITO;
+        }
+
+        pl = &(*pl)->sig;
+    }
+
+    return DATO_NO_ENCONTRADO;
+}
+
+

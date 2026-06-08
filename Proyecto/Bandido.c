@@ -1,53 +1,77 @@
 #include "Bandido.h"
 #include "Jugador.h"
+#include <stdlib.h>
 
-void inicializarBandido(tBandido * bandido,unsigned idBandido, tPosicion posicion)
+void inicializarBandido(tBandido* bandido, unsigned idBandido, tCursorDC posicion)
 {
-    bandido->idBandido=idBandido;
-    bandido->activo=1;
-    bandido->posicionActual= posicion;
+    bandido->idBandido = idBandido;
+    bandido->activo = 1;
+    bandido->posicionActual = posicion;
 }
 
-void desactivarBandido(tBandido* bandido)
+ void accionDesactivarBandido(void* dato, void* ctx)
 {
-    bandido->activo=0;
+    tBandido* bandido = (tBandido*)dato;
+
+    (void)ctx;
+
+    bandido->activo = 0;
+}
+ void accionActualizarPosicionBandido(void* dato, void* ctx)
+{
+    tBandido* bandido = (tBandido*)dato;
+    tCursorDC* nuevaPosicion = (tCursorDC*)ctx;
+
+    bandido->posicionActual = *nuevaPosicion;
+}
+void accionCambiarIdBandido(void* dato, void* ctx)
+{
+    tCasillero* cas = (tCasillero*)dato;
+    unsigned* idBandido = (unsigned*)ctx;
+
+    cas->idBandido = *idBandido;
 }
 
-tBandido* buscarBandidoPorId(tLista* bandidos, unsigned idBandido)
+int cmpBandidoPorId(const void* clave, const void* dato)
 {
-    tBandido* bandido;
+    const unsigned* idBuscado = (const unsigned*)clave;
+    const tBandido* bandido = (const tBandido*)dato;
 
-    while(*bandidos)
+    if(*idBuscado > bandido->idBandido)
+        return 1;
+
+    if(*idBuscado < bandido->idBandido)
+        return -1;
+
+    return 0;
+}
+
+
+int distanciaAdelante(tCursorDC origen, tCursorDC destino, unsigned cantidadCasilleros)
+{
+    unsigned distancia = 0;
+    tCursorDC actual = origen;
+
+    while(!mismoCursorDC(actual, destino) && distancia < cantidadCasilleros)
     {
-        bandido = (tBandido*)(*bandidos)->info;
-
-        if(bandido->idBandido == idBandido)
-            return bandido;
-
-        bandidos = &(*bandidos)->sig;
-    }
-
-    return NULL;
-}
-
-int distanciaAdelante(const tPosicion origen, const tPosicion destino)
-{
-    int distancia=0;
-    tPosicion actual=origen;
-    while(actual!=destino)
-    {
-        actual=actual->sig;
+        actual = siguienteDC(actual);
         distancia++;
     }
+
     return distancia;
 }
 
-tDireccion decidirDireccionBandido(const tBandido* bandido,const tPosicion posJugador,const tTablero *tablero)
+tDireccion decidirDireccionBandido(const tBandido* bandido, const tCursorDC posJugador, const tTablero* tablero)
 {
-    int adelante=distanciaAdelante(bandido->posicionActual,posJugador);
-    int atras=(tablero->cantidadCasilleros-adelante)% tablero->cantidadCasilleros;
-    if(adelante<= atras)
+    int adelante, atras;
+
+    adelante = distanciaAdelante(bandido->posicionActual,posJugador,tablero->cantidadCasilleros);
+
+    atras = (tablero->cantidadCasilleros - adelante) % tablero->cantidadCasilleros;
+
+    if(adelante <= atras)
         return ADELANTE;
+
     return ATRAS;
 }
 
@@ -57,8 +81,9 @@ tMovimiento generarMovimientoBandido(const tBandido* bandido, const tJugador* ju
     unsigned cantidad;
     unsigned i;
     tDireccion dir;
-    tPosicion destino;
-    tCasillero* cas;
+    tCursorDC destino;
+    tCasillero cas;
+    int ret;
 
     dir = decidirDireccionBandido(bandido, jugador->posicionActual, tablero);
 
@@ -66,57 +91,76 @@ tMovimiento generarMovimientoBandido(const tBandido* bandido, const tJugador* ju
 
     for(i = 0; i < MAX_MOVIMIENTO_BANDIDO; i++)
     {
-        cantidad = ((cantidadInicial - 1 + i) % MAX_MOVIMIENTO_BANDIDO) + 1; //prueba una cantidad aleatoria, si n sirve prueba las otras
-
-        destino = bandido->posicionActual;                                  //sin cambiar de direccion, si no sirve ninguna, se queda en el lugar
+        /*
+            Se prueba primero una cantidad aleatoria.
+            Si esa cantidad hace que el bandido termine en INICIO o SALIDA,
+            se prueban las demás cantidades posibles manteniendo la misma dirección.
+        */
+        cantidad = ((cantidadInicial - 1 + i) % MAX_MOVIMIENTO_BANDIDO) + 1;
 
         if(dir == ADELANTE)
-        {
-            while(cantidad--)
-                destino = destino->sig;
-        }
+            destino = avanzarNDC(bandido->posicionActual, cantidad);
         else
+            destino = retrocederNDC(bandido->posicionActual, cantidad);
+
+        ret = verActualDC(destino, &cas, sizeof(tCasillero));
+
+        if(ret != EXITO)
         {
-            while(cantidad--)
-                destino = destino->ant;
+            // se queda en el lugar
+            return crearMovimiento(ACTOR_BANDIDO, bandido->idBandido, bandido->posicionActual, bandido->posicionActual, dir);
         }
 
-        cas = (tCasillero*)destino->info;
-
-        if(cas->tipoEvento != INICIO && cas->tipoEvento != SALIDA )
-            return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,destino,dir);
-
+        /*
+            El bandido puede pasar por INICIO o SALIDA durante el recorrido,
+            pero no puede terminar su movimiento en esos casilleros.
+        */
+        if(cas.tipoEvento != INICIO && cas.tipoEvento != SALIDA)
+        {
+            return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido, bandido->posicionActual,destino,dir);
+        }
     }
-    //se queda en el lugar
-    return crearMovimiento(ACTOR_BANDIDO,bandido->idBandido,bandido->posicionActual,bandido->posicionActual,dir);
-}
 
+       // Si ninguna cantidad genera un destino válido,el bandido queda quieto.
+
+    return crearMovimiento(ACTOR_BANDIDO, bandido->idBandido, bandido->posicionActual, bandido->posicionActual, dir);
+}
 
 void ajustarDestinoBandido(tMovimiento* mov)
 {
-    tCasillero* cas;
-    tPosicion destino;
+    tCasillero cas;
+    tCursorDC destino;
     unsigned intentos = 0;
 
-    cas = (tCasillero*)mov->destino->info;
+    if(verActualDC(mov->destino, &cas, sizeof(tCasillero)) != EXITO)
+    {
+        mov->destino = mov->origen;
+        return;
+    }
 
-    if(cas->idBandido == 0 )
+    //Si el destino original no tiene bandido,no hace falta ajustar.
+
+    if(cas.idBandido == 0)
         return;
 
     destino = mov->destino;
 
+    //Si el destino ya fue ocupado por otro bandido al procesar la cola,busca una nueva casilla en la misma dirección.
+
     while(intentos < MAX_MOVIMIENTO_BANDIDO)
     {
         if(mov->direccion == ADELANTE)
-            destino = destino->sig;
+            destino = siguienteDC(destino);
         else
-            destino = destino->ant;
+            destino = anteriorDC(destino);
 
-        cas = (tCasillero*)destino->info;
+        if(verActualDC(destino, &cas, sizeof(tCasillero)) != EXITO)
+        {
+            mov->destino = mov->origen; //queda igual
+            return;
+        }
 
-        if(cas->idBandido == 0 &&
-           cas->tipoEvento != INICIO &&
-           cas->tipoEvento != SALIDA)
+        if(cas.idBandido == 0 && cas.tipoEvento != INICIO && cas.tipoEvento != SALIDA)
         {
             mov->destino = destino;
             return;
@@ -125,7 +169,8 @@ void ajustarDestinoBandido(tMovimiento* mov)
         intentos++;
     }
 
+    //Si no se encontró una alternativa válida,el bandido queda en su origen.
+
     mov->destino = mov->origen;
 }
-
 
