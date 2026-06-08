@@ -1,18 +1,31 @@
 #include "Ranking.h"
-int cargarRanking(FILE *archivo, tLista *lista){
+int cargarRanking(FILE *archivo, tLista *lista)
+{
     tRanking rank;
     tPartida partida;
+    int ret;
 
     rewind(archivo);
-    while(fread(&partida,sizeof(partida),1,archivo)){
+
+    while(fread(&partida, sizeof(tPartida), 1, archivo) == 1)
+    {
         rank.total = partida.puntaje;
         rank.idJugador = partida.idJugador;
-        insertarOrdenado(lista, &rank, sizeof(tRanking),cmpIndiceJugadorPorId,sumarPuntos);
+        rank.nickname[0] = '\0';
+
+        ret = insertarOrdenado(lista,
+                               &rank,
+                               sizeof(tRanking),
+                               cmpIndiceJugadorPorId,
+                               sumarPuntos);
+
+        if(ret != EXITO)
+            return ret;
     }
-    fclose(archivo);
 
     return EXITO;
 }
+
 
 int cmpRankingPorPuntos(const void* a, const void* b)
 {
@@ -29,32 +42,41 @@ int cmpRankingPorPuntos(const void* a, const void* b)
 
 }
 
-void generarListaTop(tLista* listaPorId, tLista* listaPorPuntos)
+int generarListaTop(tLista* listaPorId, tLista* listaPorPuntos)
 {
     tNodoL* aux = *listaPorId;
+    int ret;
 
     while(aux != NULL)
     {
-        insertarOrdenado(listaPorPuntos, aux->info, sizeof(tRanking), cmpRankingPorPuntos,NULL);
+        ret = insertarOrdenado(listaPorPuntos,
+                               aux->info,
+                               sizeof(tRanking),
+                               cmpRankingPorPuntos,
+                               NULL);
+
+        if(ret != EXITO)
+            return ret;
 
         aux = aux->sig;
     }
+
+    return EXITO;
 }
-int listarTopJugadores(tLista * lista, int cant)
+
+int listarTopJugadores(tLista* lista, int cant)
 {
     tNodoL* aux = *lista;
     tRanking* rank;
     tJugadorArchivo jugArchivo;
     int contador = 0;
     long offset;
+    FILE* archJugadores;
+    int ret;
 
-
-    FILE *archJugadores = fopen(ARCH_JUGADORES, "rb");
-    if(archJugadores == NULL)
-    {
-        printf("Error: No se pudo abrir el archivo de jugadores.\n");
-        return 0;
-    }
+    ret = abrirArchivo(&archJugadores, ARCH_JUGADORES, "rb");
+    if(ret != EXITO)
+        return ret;
 
     printf("\n--- TOP %d JUGADORES ---\n", cant);
 
@@ -62,16 +84,24 @@ int listarTopJugadores(tLista * lista, int cant)
     {
         rank = (tRanking*)aux->info;
 
+        offset = (long)(rank->idJugador - 1) * sizeof(tJugadorArchivo);
 
-        offset = (rank->idJugador - 1) * sizeof(tJugadorArchivo);
-        fseek(archJugadores, offset, SEEK_SET);
-
-        if(fread(&jugArchivo, sizeof(tJugador), 1, archJugadores) == 1){
-            printf("%d. Nickname: %-15s | Puntos: %u\n",
-                       contador + 1,
-                       jugArchivo.nickname,
-                       rank->total);
+        if(fseek(archJugadores, offset, SEEK_SET) != 0)
+        {
+            fclose(archJugadores);
+            return ERROR_ARCHIVO;
         }
+
+        if(fread(&jugArchivo, sizeof(tJugadorArchivo), 1, archJugadores) != 1)
+        {
+            fclose(archJugadores);
+            return ERROR_LECTURA;
+        }
+
+        printf("%d. Nickname: %-15s | Puntos: %u\n",
+               contador + 1,
+               jugArchivo.nickname,
+               rank->total);
 
         aux = aux->sig;
         contador++;
@@ -80,9 +110,10 @@ int listarTopJugadores(tLista * lista, int cant)
     printf("------------------------\n");
 
     fclose(archJugadores);
-
-    return contador;
+    return EXITO;
 }
+
+
 int cmpIndiceJugadorPorId(const void* a, const void* b)
 {
     const tRanking* jugA = (const tRanking*)a;

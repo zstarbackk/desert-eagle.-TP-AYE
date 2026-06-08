@@ -14,6 +14,7 @@
 #define ARCH_CARAVANA "Archivos/caravana.txt"
 #define ARCH_PARTIDAS "Archivos/partidas.dat"
 #define TOTAL_RANKING 10
+#define ARCH_AYUDA "Archivos/ayuda.txt"
 
 int ingresarJugador(tJugador *jugador, tArbol *indiceJugador);
 tResultadoPartida inicializarPartida(tJugador* jugador,tTablero* tablero, tConfig *config);

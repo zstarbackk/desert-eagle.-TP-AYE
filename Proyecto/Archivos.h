@@ -17,5 +17,6 @@ void darDeAltaJugador(FILE *archivo,const char* nombre, const char *nickname, tJ
 unsigned obtenerUltimoIdJugador(FILE *archivo);
 unsigned obtenerUltimoIdPartida(FILE* archivo);
 int guardarPartida(const char* nombreArchivo, const tJugador* jugador, tResultadoPartida resultado);
-
+int mostrarAyuda(const char* nombreArchivo);
+int crearArchivoAyuda(const char* nombreArchivo);
 #endif // ARCHIVOS_H_INCLUDED

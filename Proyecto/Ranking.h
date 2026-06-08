@@ -17,6 +17,6 @@ int listarTopJugadores(tLista * lista, int cant);
 void sumarPuntos(void *registro, const void* infoPartida);
 int cmpIndiceJugadorPorId(const void* a, const void* b);
 int cmpRankingPorPuntos(const void* a, const void* b);
-void generarListaTop(tLista* listaPorId, tLista* listaPorPuntos);
+int generarListaTop(tLista* listaPorId, tLista* listaPorPuntos);
 
 #endif // RANKING_H_INCLUDED

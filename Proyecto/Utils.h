@@ -8,5 +8,5 @@
 int tirarDado(void);
 int abrirArchivo(FILE**,const char*,const char*);
 int trozarLinea(char *, char **, char **);
-
+void pausar(void);
 #endif // UTILS_H_INCLUDED

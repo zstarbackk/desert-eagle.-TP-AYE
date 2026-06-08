@@ -42,3 +42,11 @@ int trozarLinea(char *linea, char **clave, char **valor)
 
     return EXITO;
 }
+
+void pausar(void)
+{
+    printf("\nPresione ENTER para continuar...\n");
+    fflush(stdout);
+    getchar();
+}
+

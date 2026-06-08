@@ -115,25 +115,50 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
 
 int mostrarRanking(int cant)
 {
-    FILE * pf = fopen(ARCH_PARTIDAS, "rb");
+    FILE *pf;
     tLista listaId, listaRank;
     int ret;
 
-    ret = abrirArchivo(&pf,ARCH_PARTIDAS,"rb");
-
-    if(ret!=EXITO)
+    ret = abrirArchivo(&pf, ARCH_PARTIDAS, "rb");
+    if(ret != EXITO)
         return ret;
 
     crearLista(&listaId);
     crearLista(&listaRank);
-    cargarRanking(pf,&listaId);
-    generarListaTop(&listaId, &listaRank);
-    listarTopJugadores(&listaRank, cant);
+
+    ret = cargarRanking(pf, &listaId);
+    fclose(pf);
+
+    if(ret != EXITO)
+    {
+        vaciarLista(&listaId);
+        vaciarLista(&listaRank);
+        return ret;
+    }
+
+    ret = generarListaTop(&listaId, &listaRank);
+    if(ret != EXITO)
+    {
+        vaciarLista(&listaId);
+        vaciarLista(&listaRank);
+        return ret;
+    }
+
+    ret = listarTopJugadores(&listaRank, cant);
+    if(ret != EXITO)
+    {
+        vaciarLista(&listaId);
+        vaciarLista(&listaRank);
+        return ret;
+    }
+
     vaciarLista(&listaRank);
     vaciarLista(&listaId);
 
     return EXITO;
 }
+
+
 
 void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
 {
@@ -159,9 +184,9 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
                 if(mostrarRanking(TOTAL_RANKING) != EXITO)
                     printf("No fue posible mostrar el rankig, contacte al equipo de desarrollo\n");
                 break;
-            /*case 3:
-                mostrarAyuda();
-                break;  */
+            case 3:
+                mostrarAyuda(ARCH_AYUDA);
+                break;
             case 4:
                 printf("Hasta luego, %s!\n", jugador->nickname);
                 break;
@@ -260,7 +285,7 @@ int prepararTurno(tJugador* jugador,tTablero* tablero, tCola *colaMovimientos)
     if(jugador->pierdeTurno)
     {
         jugador->pierdeTurno=0;
-        printf("Ha perdido un turno por la tormenta, es el turno de los bandidos, tenga cuidado!!.\n\n");
+
     }
     else
     {
@@ -338,7 +363,7 @@ void aplicarEvento(tJugador* jugador, tCasillero* cas)
             printf("A juzgar por el viento se avecina una tormenta, menos mal que traje paraguas.\n\n");
             if(!jugador->protegidoPorOasis)
                 {
-                   printf("Te costara un turno (-_-)\n\n");
+                   printf("Has perdido un turno, es el turno de los bandidos, tenga cuidado!!.\n\n");
                    jugador->pierdeTurno = 1;
                 }
             else
@@ -346,7 +371,7 @@ void aplicarEvento(tJugador* jugador, tCasillero* cas)
                    printf("Que util el oasis no? Esta vez te salvaste, a seguir jugando!!.\n\n");
                    jugador->protegidoPorOasis = 0;
                 }
-
+                cas->tipoEvento = DESPEJADO;
             break;
         default:
             break;
@@ -365,13 +390,13 @@ void interceptarJugador(tJugador* jugador, tBandido* bandido, tCasillero* cas, t
     else
     {
         printf("Fuiste interceptado por el bandido %u, volviste al inicio [);].\n\n", bandido->idBandido);
-
         // mover jugador al inicio
         cas->tieneJugador = 0;
         casInicio->tieneJugador = 1;
         jugador->posicionActual = tablero->inicio;
         // reducir vida
         jugador->vidas--;
+        printf("Vidas restantes: %d, suerte!!. \n", jugador->vidas);
     }
     // desactivar bandido
     cas->idBandido = 0;
@@ -401,6 +426,7 @@ int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero)
             casDestino->tieneJugador = 1;
             jugador->posicionActual  = mov.destino;
             aplicarEvento(jugador, casDestino);
+            pausar();
         }
         else
         {
@@ -431,6 +457,7 @@ int procesarMovimientos(tCola* cola, tJugador* jugador, tTablero* tablero)
         bandido = buscarBandidoPorId(&tablero->bandidos, casDestino->idBandido);
         if(bandido && bandido->activo)
             interceptarJugador(jugador, bandido, casDestino, tablero);
+        pausar();
     }
 
     return EXITO;
