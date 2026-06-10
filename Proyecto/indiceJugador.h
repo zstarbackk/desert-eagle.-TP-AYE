@@ -15,7 +15,7 @@ typedef struct
 int cmpIndiceJugadorPorNickname(const void* a, const void* b);
 
 int cargarIndiceJugadores(tArbol* indice, const char* nombreArchivoIndice, const char * nombreArchivoUsuarios);
-int regenerarIndiceJugadores(tArbol* indice, const char * nombreArchivoUsuarios);
+int regenerarIndiceJugadores(tArbol* indice, const char* nombreArchivoUsuarios, const char * nombreArchivoIndice);
 int guardarIndiceJugadores(const tArbol* indice, const char* nombreArchivoIndice);
 int buscarIndiceJugador(tArbol* indice, const char* nickname, tIndiceJugador* indiceEncontrado);
 int insertarIndiceJugador(tArbol* indice, const char* nickname, unsigned posicionRegistro);

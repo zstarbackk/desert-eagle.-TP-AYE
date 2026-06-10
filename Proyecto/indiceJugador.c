@@ -17,83 +17,53 @@ int cargarIndiceJugadores(tArbol* indice, const char* nombreArchivoIndice, const
     if(ret != EXITO)
     {
         printf("\nIndice no encontrado. Se regenera...\n\n");
-        return regenerarIndiceJugadores(indice, nombreArchivoUsuarios);
+        return regenerarIndiceJugadores(indice, nombreArchivoUsuarios, nombreArchivoIndice);
     }
-
-    while(fread(&registroJugador, sizeof(tIndiceJugador), 1, archIdx) == 1)
-    {
-        ret = insertarIndiceJugador(indice, registroJugador.nickname, registroJugador.posicionRegistro);
-
-        if(ret != EXITO)
-        {
-            fclose(archIdx);
-            return ret;
-        }
-    }
-
+    cargarArbolDesdeArchivoOrdenado(indice,archIdx,sizeof(tIndiceJugador));
     fclose(archIdx);
     return EXITO;
 }
 
-//int regenerarIndiceJugadores(tArbol* indice, const char * nombreArchivoUsuarios)
-//{
-//    tJugadorArchivo registroArchivo;
-//    FILE * pf;
-//    unsigned offsetReg;
-//    size_t tamRegistro;
-//    int ret;
-//
-//    ret=abrirArchivo(&pf, nombreArchivoUsuarios,"rb");
-//    if(ret != EXITO)
-//        return ret;
-//
-//    tamRegistro=sizeof(tJugadorArchivo);
-//
-//    printf("\n\nRegenerando Indice jugadores...");
-//    offsetReg = 0;
-//    while(fread(&registroArchivo, sizeof(tJugadorArchivo), 1, pf) == 1)
-//    {
-//       ret= insertarIndiceJugador(indice, registroArchivo.nickname, offsetReg);
-//       if(ret != EXITO)
-//            {
-//               fclose(pf);
-//               return ret;
-//            }
-//       offsetReg += tamRegistro;
-//    }
-//    fclose(pf);
-//    printf("Indice regenerado exitosamente.\n\n");
-//    return EXITO;
-//}
+unsigned leerJugadorIndice(void* info, FILE* pf, unsigned* tam) {
+    tJugadorArchivo jugador;
+    tIndiceJugador* indice = (tIndiceJugador*)info;
 
-int regenerarIndiceJugadores(tArbol* indice, const char* nombreArchivoUsuarios)
-{
-    tJugadorArchivo registroArchivo;
-    FILE* pf;
-    unsigned posicionRegistro = 0;
+    long pos = ftell(pf);
+
+    if(fread(&jugador, sizeof(tJugadorArchivo), 1, pf) == 1) {
+
+        strcpy(indice->nickname, jugador.nickname);
+
+        indice->posicionRegistro = pos / sizeof(tJugadorArchivo);
+
+        return *tam;
+    }
+
+    return 0; // Fin de archivo o error
+}
+int regenerarIndiceJugadores(tArbol* indice, const char* nombreArchivoUsuarios, const char * nombreArchivoIndice) {
+    FILE* archIdx;
     int ret;
-
-    ret = abrirArchivo(&pf, nombreArchivoUsuarios, "rb");
-
-    if(ret != EXITO)
-        return ret;
 
     printf("\nRegenerando indice de jugadores...\n");
 
-    while(fread(&registroArchivo, sizeof(tJugadorArchivo), 1, pf) == 1)
-    {
-        ret = insertarIndiceJugador(indice, registroArchivo.nickname, posicionRegistro);
-
-        if(ret != EXITO)
-        {
-            fclose(pf);
-            return ret;
-        }
-
-        posicionRegistro++;
+    if (!crearArchivoIndice(nombreArchivoUsuarios, nombreArchivoIndice, sizeof(tIndiceJugador), leerJugadorIndice, cmpIndiceJugadorPorNickname)) {
+        return 0;
     }
 
-    fclose(pf);
+
+    ret = abrirArchivo(&archIdx, nombreArchivoIndice, "rb");
+    if(ret != EXITO) {
+        return ret;
+    }
+
+
+    vaciarArbol(indice);
+    if (!cargarArbolDesdeArchivoOrdenado(indice, archIdx, sizeof(tIndiceJugador))) {
+        fclose(archIdx);
+        return 0;
+    }
+    fclose(archIdx);
 
     printf("Indice regenerado exitosamente.\n\n");
     return EXITO;
@@ -146,8 +116,7 @@ int buscarIndiceJugador(tArbol* indice, const char* nickname, tIndiceJugador* in
     return JUGADOR_INEXISTENTE;
 }
 
-int insertarIndiceJugador(tArbol* indice, const char* nickname, unsigned posicionRegistro)
-{
+int insertarIndiceJugador(tArbol* indice, const char* nickname, unsigned posicionRegistro){
     tIndiceJugador jug;
 
     strcpy(jug.nickname, nickname);
