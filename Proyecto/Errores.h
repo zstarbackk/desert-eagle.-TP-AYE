@@ -57,6 +57,8 @@
 
 #define NO_RETROCEDE -115
 
+#define ERROR_CARGA_ARBOL   -120
+
 
 //const char* mensaje_error(int cod);
 

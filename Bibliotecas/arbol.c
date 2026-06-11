@@ -143,13 +143,14 @@ void eliminarRaiz(tArbol *p){
     *reemp = (*reemp)->der ? (*reemp)->der : (*reemp)->izq;
 
 }
+//rev
 int cargarArbolDesdeArchivoDesordenado(tArbol *p, FILE *pf, unsigned tam, LEER leer, CMP cmp){
     void *info;
     info = malloc(tam);
     if(!info){
         return 0;
     }
-    while(leer(info, pf, &tam) == tam){
+    while(leer(info, pf) == EXITO){
         insertarEnArbolBRec(p, info, tam, cmp);
     }
     free(info);
@@ -166,9 +167,8 @@ int cargarArchivoDesdeArbol(tArbol *p, FILE *pf){
 int cargarArchivoDesdeArbolBalanceado(const tArbol *p, FILE *pf){
     if(!*p)return 0;
 
-    fwrite((*p)->dato, (*p)->tam, 1, pf);
-
     cargarArchivoDesdeArbolBalanceado(&(*p)->izq, pf);
+    fwrite((*p)->dato, (*p)->tam, 1, pf);
     cargarArchivoDesdeArbolBalanceado(&(*p)->der, pf);
     return 1;
 }
@@ -242,11 +242,11 @@ int __cargarArbolDesdeArchivoOrdenado(tArbol *p, FILE *pf, unsigned tam, int li,
 
     return 1;
 }
-
+//rev
 int buscarEnArbolIndice(tArbol *p, void *dato, const void *clave, FILE *pf, LEER leer, CMP cmp){
     tArbol *pBuscado = buscarNodo(p, clave, cmp);
     if(!pBuscado) return 0;
-    if(!leer(dato, pf, (*pBuscado)->dato)) return 0;
+    if(!leer(dato, pf)) return 0;
     return 1;
 }
 

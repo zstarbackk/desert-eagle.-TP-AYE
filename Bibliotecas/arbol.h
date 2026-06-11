@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../Proyecto/Errores.h"
 
 #define MIN(x,y) ((x)<(y)?(x):(y))
 #define MAX(x,y) ((x)>(y)?(x):(y))
@@ -17,7 +18,7 @@ typedef struct sNodo{
 
 typedef tNodo* tArbol;
 typedef int (*CMP)(const void*, const void*);
-typedef int (*LEER)(void* dest, FILE *arch, void *param);
+typedef unsigned (*LEER)(void* dest, FILE *arch);
 
 void crearArbolB(tArbol *p);
 int insertarEnArbolBRec(tArbol *p, void *dato, unsigned tam, CMP cmp);
