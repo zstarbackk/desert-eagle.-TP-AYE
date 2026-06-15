@@ -45,7 +45,7 @@ int crearCasilleros(tTablero* tablero, unsigned cantidadCasilleros)
     }
 
     tablero->inicio = obtenerPrimeroDC(&(tablero->casilleros));
-    tablero->fin = tablero->casilleros; //por ser circular, apunta al ultimo
+    tablero->fin = obtenerUltimoDC(&(tablero->casilleros));
     tablero->cantidadCasilleros = cantidadCasilleros;
 
     return EXITO;

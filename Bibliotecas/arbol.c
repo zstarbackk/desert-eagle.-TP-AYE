@@ -75,6 +75,7 @@ void vaciarArbol(tArbol *p){
     vaciarArbol(&(*p)->der);
     free((*p)->dato);
     free(*p);
+    *p=NULL;
 }
 tArbol* buscarNodo(tArbol *p, const void *clave, CMP cmp){
     int comp;
@@ -158,14 +159,14 @@ int cargarArbolDesdeArchivoDesordenado(tArbol *p, FILE *pf, unsigned tam, LEER l
 }
 
 int cargarArchivoDesdeArbol(tArbol *p, FILE *pf){
-    if(!*p)return 0;
+    if(!*p)return 1;
     cargarArchivoDesdeArbol(&(*p)->izq, pf);
     fwrite((*p)->dato, (*p)->tam, 1, pf);
     cargarArchivoDesdeArbol(&(*p)->der, pf);
     return 1;
 }
 int cargarArchivoDesdeArbolBalanceado(const tArbol *p, FILE *pf){
-    if(!*p)return 0;
+    if(!*p)return 1;
 
     cargarArchivoDesdeArbolBalanceado(&(*p)->izq, pf);
     fwrite((*p)->dato, (*p)->tam, 1, pf);

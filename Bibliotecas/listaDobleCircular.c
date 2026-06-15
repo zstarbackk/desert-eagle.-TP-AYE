@@ -112,7 +112,7 @@ int verActualDC(tCursorDC cursor, void* dato, unsigned tamDato)
     if(!cursor || !dato)
         return ERROR;
 
-    memcpy(dato, cursor->info, MIN(tamDato, cursor->tamInfo));
+    memcpy(dato, cursor->info, MINIMO(tamDato, cursor->tamInfo));
 
     return EXITO;
 }

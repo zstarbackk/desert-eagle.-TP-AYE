@@ -1,6 +1,6 @@
 #ifndef LISTADOBLECIRCULAR_H_INCLUDED
 #define LISTADOBLECIRCULAR_H_INCLUDED
-
+#define MINIMO( X , Y ) ( ( X ) <= ( Y ) ? ( X ) : ( Y ) )
 typedef struct tnodo
 {
     void* info;

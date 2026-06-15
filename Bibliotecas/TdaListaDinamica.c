@@ -354,6 +354,8 @@ int buscarEnListaPorPosicion(const tLista* pl, int pos, void* res, unsigned cant
         pl = &(*pl)->sig;
         i++;
     }
+    if(*pl)
+        return DATO_NO_ENCONTRADO;
 
     memcpy(res, (*pl)->info, MINIMO(cantBytes, (*pl)->tamInfo));
 

@@ -115,7 +115,14 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
         }
         else
         {
-            buscarEnListaPorPosicion(&resultados, opcion - 1, nicknameElegido, TAM_NICKNAME);
+            if(buscarEnListaPorPosicion(&resultados, opcion - 1, nicknameElegido, TAM_NICKNAME)!=EXITO)
+            {
+                printf("Error al recuperar el nickname seleccionado.\n");
+                fclose(archivo);
+                vaciarLista(&resultados);
+                return ERROR;
+            }
+
 
             if(buscarIndiceJugador(indiceJugador, nicknameElegido, &indiceEncontrado) == EXITO)
             {
@@ -214,6 +221,7 @@ void mostrarMenu(tJugador *jugador, tTablero *tablero, tConfig *config)
             case 1:
                 resultado = jugarPartida(jugador, tablero, config);
                 finalizarPartida(jugador, resultado);
+                vaciarTablero(tablero);
                 break;
             case 2:
                 if(mostrarRanking(TOTAL_RANKING) != EXITO)
@@ -246,7 +254,10 @@ tResultadoPartida inicializarPartida(tJugador* jugador, tTablero* tablero, tConf
 
         ret = generarTablero(tablero, config);
         if(ret != EXITO)
+        {
+            vaciarTablero(tablero);
             return PARTIDA_ERROR;
+        }
 
         printf("Validando tablero...\n");
 
@@ -261,7 +272,11 @@ tResultadoPartida inicializarPartida(tJugador* jugador, tTablero* tablero, tConf
 
     ret = exportarTablero(tablero, ARCH_CARAVANA);
     if(ret != EXITO)
+    {
+        vaciarTablero(tablero);
         return PARTIDA_ERROR;
+    }
+
 
     inicializarEstadoJugador(jugador, config->vidas_inicio, tablero->inicio);
 
@@ -617,4 +632,6 @@ void finalizarPartida(tJugador* jugador, tResultadoPartida resultado)
     mostrarHistorialJugador(jugador);
     if(guardarPartida(ARCH_PARTIDAS,jugador, resultado)!=EXITO)
         printf("No se pudo guardar la partida.\n");
+
+    vaciarLista(&jugador->historialMovimientos);
 }
