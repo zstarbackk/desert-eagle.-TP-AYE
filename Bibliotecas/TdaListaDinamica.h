@@ -51,6 +51,7 @@ int buscarEnListaPorClave(const tLista* pl,void* datoEncontrado,unsigned tamDato
 
 int modificarEnListaPorClave(tLista* pl,const void* clave,int (*cmp)(const void* clave, const void* dato),void (*accion)(void* dato, void* ctx),
                              void* ctx);
+int sacarPrimeroLista(tLista* pl, void* info, unsigned tamBuffer);
 
 
 #endif // TDALISTADINAMICA_H_INCLUDED

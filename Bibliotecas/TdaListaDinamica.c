@@ -354,7 +354,7 @@ int buscarEnListaPorPosicion(const tLista* pl, int pos, void* res, unsigned cant
         pl = &(*pl)->sig;
         i++;
     }
-    if(*pl)
+    if(*pl==NULL)
         return DATO_NO_ENCONTRADO;
 
     memcpy(res, (*pl)->info, MINIMO(cantBytes, (*pl)->tamInfo));
@@ -399,4 +399,25 @@ int modificarEnListaPorClave(tLista* pl,const void* clave,int (*cmp)(const void*
     return DATO_NO_ENCONTRADO;
 }
 
+int sacarPrimeroLista(tLista* pl, void* info, unsigned tamBuffer)
+{
+    tNodoL* elim;
+
+
+    if(*pl == NULL)
+        return DATO_NO_ENCONTRADO;
+
+    elim = *pl;
+    *pl = elim->sig;
+
+
+    if(info != NULL)
+        memcpy(info, elim->info, MINIMO(elim->tamInfo, tamBuffer));
+
+
+    free(elim->info);
+    free(elim);
+
+    return EXITO;
+}
 

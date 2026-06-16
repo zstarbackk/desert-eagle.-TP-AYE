@@ -47,7 +47,7 @@
 	<stdio.h>
 	<string.h>
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\main.c
+1781557581 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -405,16 +405,16 @@
 	<stdlib.h>
 	"../Proyecto/Errores.h"
 
-1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\errores.h
+1781557581 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\errores.h
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.c
+1781562132 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.c
 	"listaDobleCircular.h"
 	"../Proyecto/Errores.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1781044810 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.h
+1781562132 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\listadoblecircular.h
 
 1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\bandido.c
 	"Bandido.h"
@@ -432,7 +432,7 @@
 	"../Bibliotecas/TdaListaDinamica.h"
 	"Config.h"
 
-1781044810 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
+1781576108 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.h
 
 1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\config.h
 	"Errores.h"
@@ -468,7 +468,7 @@
 1780357046 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\partida.h
 	"Jugador.h"
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\tablero.c
+1781562132 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\tablero.c
 	"Tablero.h"
 	"Bandido.h"
 	"Utils.h"
@@ -476,15 +476,16 @@
 1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\utils.c
 	"Utils.h"
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.c
+1781562132 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.c
 	"arbol.h"
 
-1781044810 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.h
+1781557581 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\arbol.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	"../Proyecto/Errores.h"
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
+1781577044 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\bibliotecas\tdalistadinamica.c
 	"TdaListaDinamica.h"
 	<string.h>
 	<stdio.h>
@@ -516,16 +517,16 @@
 1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\archivos.c
 	"Archivos.h"
 
-1781120623 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\indicejugador.c
+1781557581 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\indicejugador.c
 	"indiceJugador.h"
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.c
+1781562132 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\juego.c
 	"Juego.h"
 	"Utils.h"
 	"../Bibliotecas/listaDobleCircular.h"
 	"../Bibliotecas/TdaListaDinamica.h"
 
-1781044810 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\ranking.h
+1781576409 c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\ranking.h
 	"../Bibliotecas/TdaListaDinamica.h"
 	"Partida.h"
 	"Archivos.h"
@@ -533,7 +534,7 @@
 	<stdio.h>
 	<string.h>
 
-1781044810 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\ranking.c
+1781576359 source:c:\users\isaac\onedrive\desktop\aye 2026\desert-eagle.-tp-aye\proyecto\ranking.c
 	"Ranking.h"
 
 1781198764 c:\users\bangho\documents\github\desert-eagle.-tp-aye\proyecto\indicejugador.h

@@ -44,30 +44,27 @@ int cmpRankingPorPuntos(const void* a, const void* b)
 
 int generarListaTop(tLista* listaPorId, tLista* listaPorPuntos)
 {
-    tNodoL* aux = *listaPorId;
+    tRanking bufferRanking;
     int ret;
 
-    while(aux != NULL)
+    while(sacarPrimeroLista(listaPorId, &bufferRanking, sizeof(tRanking)) == EXITO)
     {
         ret = insertarOrdenado(listaPorPuntos,
-                               aux->info,
+                               &bufferRanking,
                                sizeof(tRanking),
                                cmpRankingPorPuntos,
                                NULL);
 
         if(ret != EXITO)
             return ret;
-
-        aux = aux->sig;
     }
 
     return EXITO;
 }
 
-int listarTopJugadores(tLista* lista, int cant)
+int listarTopJugadores(const tLista* lista, int cant)
 {
-    tNodoL* aux = *lista;
-    tRanking* rank;
+    tRanking rank;
     tJugadorArchivo jugArchivo;
     int contador = 0;
     long offset;
@@ -80,11 +77,10 @@ int listarTopJugadores(tLista* lista, int cant)
 
     printf("\n--- TOP %d JUGADORES ---\n", cant);
 
-    while(aux != NULL && contador < cant)
-    {
-        rank = (tRanking*)aux->info;
 
-        offset = (long)(rank->idJugador - 1) * sizeof(tJugadorArchivo);
+    while(contador < cant && buscarEnListaPorPosicion(lista, contador, &rank, sizeof(tRanking)) == EXITO)
+    {
+        offset = (long)(rank.idJugador - 1) * sizeof(tJugadorArchivo);
 
         if(fseek(archJugadores, offset, SEEK_SET) != 0)
         {
@@ -101,9 +97,7 @@ int listarTopJugadores(tLista* lista, int cant)
         printf("%d. Nickname: %-15s | Puntos: %u\n",
                contador + 1,
                jugArchivo.nickname,
-               rank->total);
-
-        aux = aux->sig;
+               rank.total);
         contador++;
     }
 

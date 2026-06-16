@@ -13,7 +13,7 @@ typedef struct{
 }tRanking;
 
 int cargarRanking(FILE *archivo, tLista *lista);
-int listarTopJugadores(tLista * lista, int cant);
+int listarTopJugadores(const tLista * lista, int cant);
 void sumarPuntos(void *registro, const void* infoPartida);
 int cmpIndiceJugadorPorId(const void* a, const void* b);
 int cmpRankingPorPuntos(const void* a, const void* b);
