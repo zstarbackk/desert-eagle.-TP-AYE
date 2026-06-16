@@ -1,33 +1,5 @@
 #include "Config.h"
 
-int crearArchivoPrueba()
-{
-    FILE * pf = fopen("config.txt", "wt");
-    tConfig config;
-    if(pf ==  NULL)
-    {
-        printf("error al generar archivo de configuracion...\n\n");
-        return ERROR_ARCHIVO;
-    }
-    config.cantidad_posiciones = 10;
-    config.maximo_bandidos = 1;
-    config.maximo_oasis = 1;
-    config.maximo_premios = 2;
-    config.maximo_tormentas = 0;
-    config.maximo_vidas_extra = 0;
-    config.vidas_inicio = 1;
-    fprintf(pf, "cantidad_posiciones=%u\n", config.cantidad_posiciones);
-    fprintf(pf, "vidas_inicio=%u\n", config.vidas_inicio);
-    fprintf(pf, "maximo_bandidos=%u\n", config.maximo_bandidos);
-    fprintf(pf, "maximo_premios=%u\n", config.maximo_premios);
-    fprintf(pf, "maximo_vidas_extra=%u\n", config.maximo_vidas_extra);
-    fprintf(pf, "maximo_oasis=%u\n", config.maximo_oasis);
-    fprintf(pf, "maximo_tormentas=%u\n", config.maximo_tormentas);
-    fclose(pf);
-
-    return EXITO;
-}
-
 void cargarValor(const char *clave,const char *valor, tConfig *config)
 {
     if (strcmp(clave, "cantidad_posiciones") == 0)

@@ -27,7 +27,5 @@ int main()
     mostrarMenu(&jugador,&tablero,&config);
     vaciarArbol(&indiceJugador);
 
-//  probarGenerarTablero();
-
     return 0;
 }

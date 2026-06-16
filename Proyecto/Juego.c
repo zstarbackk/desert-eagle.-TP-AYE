@@ -157,44 +157,34 @@ int ingresarJugador(tJugador* jugador, tArbol *indiceJugador)
 int mostrarRanking(int cant)
 {
     FILE *pf;
-    tLista listaId, listaRank;
+    tLista listaRank;
     int ret;
 
     ret = abrirArchivo(&pf, ARCH_PARTIDAS, "rb");
     if(ret != EXITO)
         return ret;
 
-    crearLista(&listaId);
     crearLista(&listaRank);
 
-    ret = cargarRanking(pf, &listaId);
+    ret = cargarRanking(pf, &listaRank);
     fclose(pf);
 
     if(ret != EXITO)
     {
-        vaciarLista(&listaId);
         vaciarLista(&listaRank);
         return ret;
     }
 
-    ret = generarListaTop(&listaId, &listaRank);
-    if(ret != EXITO)
-    {
-        vaciarLista(&listaId);
-        vaciarLista(&listaRank);
-        return ret;
-    }
+    seleccionSortLista(&listaRank,cmpRankingPorPuntos);
 
     ret = listarTopJugadores(&listaRank, cant);
     if(ret != EXITO)
     {
-        vaciarLista(&listaId);
         vaciarLista(&listaRank);
         return ret;
     }
 
     vaciarLista(&listaRank);
-    vaciarLista(&listaId);
 
     return EXITO;
 }
@@ -418,7 +408,7 @@ void aplicarEvento(tJugador* jugador, tCursorDC posicion)
             break;
 
         case TORMENTA:
-            printf("Caíste en una tormenta de arena.\n\n");
+            printf("Caiste en una tormenta de arena.\n\n");
 
             if(!jugador->protegidoPorOasis)
             {
@@ -622,8 +612,7 @@ void finalizarPartida(tJugador* jugador, tResultadoPartida resultado)
     if(resultado == PARTIDA_GANADA)
     {
        printf("Felicitaciones %s, llegaste a la Ciudad Refugio!.\n", jugador->nickname);
-       if(jugador->puntaje==0)
-            jugador->puntaje++; //solo por ganar le sumamos un punto, asi si no agarro ningun premio, cuenta en el ranking
+            jugador->puntaje++;
     }else if (resultado == PARTIDA_PERDIDA)
         printf("Game over %s, perdiste todas tus vidas!.\n", jugador->nickname);
     else

@@ -12,6 +12,7 @@ typedef enum
 
 typedef struct
 {
+    char nickname[TAM_NICKNAME];
     unsigned idPartida;
     unsigned idJugador;
     unsigned puntaje;

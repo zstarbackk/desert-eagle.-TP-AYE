@@ -1,4 +1,5 @@
 #include "Ranking.h"
+
 int cargarRanking(FILE *archivo, tLista *lista)
 {
     tRanking rank;
@@ -11,7 +12,7 @@ int cargarRanking(FILE *archivo, tLista *lista)
     {
         rank.total = partida.puntaje;
         rank.idJugador = partida.idJugador;
-        rank.nickname[0] = '\0';
+        strcpy(rank.nickname,partida.nickname);
 
         ret = insertarOrdenado(lista,
                                &rank,
@@ -42,68 +43,24 @@ int cmpRankingPorPuntos(const void* a, const void* b)
 
 }
 
-int generarListaTop(tLista* listaPorId, tLista* listaPorPuntos)
-{
-    tRanking bufferRanking;
-    int ret;
-
-    while(sacarPrimeroLista(listaPorId, &bufferRanking, sizeof(tRanking)) == EXITO)
-    {
-        ret = insertarOrdenado(listaPorPuntos,
-                               &bufferRanking,
-                               sizeof(tRanking),
-                               cmpRankingPorPuntos,
-                               NULL);
-
-        if(ret != EXITO)
-            return ret;
-    }
-
-    return EXITO;
-}
-
 int listarTopJugadores(const tLista* lista, int cant)
 {
     tRanking rank;
-    tJugadorArchivo jugArchivo;
     int contador = 0;
-    long offset;
-    FILE* archJugadores;
-    int ret;
-
-    ret = abrirArchivo(&archJugadores, ARCH_JUGADORES, "rb");
-    if(ret != EXITO)
-        return ret;
 
     printf("\n--- TOP %d JUGADORES ---\n", cant);
 
-
     while(contador < cant && buscarEnListaPorPosicion(lista, contador, &rank, sizeof(tRanking)) == EXITO)
     {
-        offset = (long)(rank.idJugador - 1) * sizeof(tJugadorArchivo);
-
-        if(fseek(archJugadores, offset, SEEK_SET) != 0)
-        {
-            fclose(archJugadores);
-            return ERROR_ARCHIVO;
-        }
-
-        if(fread(&jugArchivo, sizeof(tJugadorArchivo), 1, archJugadores) != 1)
-        {
-            fclose(archJugadores);
-            return ERROR_LECTURA;
-        }
-
         printf("%d. Nickname: %-15s | Puntos: %u\n",
                contador + 1,
-               jugArchivo.nickname,
+               rank.nickname,
                rank.total);
         contador++;
     }
 
     printf("------------------------\n");
 
-    fclose(archJugadores);
     return EXITO;
 }
 
@@ -120,7 +77,9 @@ int cmpIndiceJugadorPorId(const void* a, const void* b)
         return -1;
     return 0;
 }
-void sumarPuntos(void *registro, const void* infoPartida){
+
+void sumarPuntos(void *registro, const void* infoPartida)
+{
     tRanking* regAct = (tRanking*)registro;
     const tRanking* info = (const tRanking*)infoPartida;
     regAct->total += info->total;

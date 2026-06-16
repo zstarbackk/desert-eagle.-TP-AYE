@@ -44,7 +44,6 @@ int validarTablero(tTablero* tablero);
 void vaciarTablero(tTablero* tablero);
 int exportarTablero(const tTablero* tablero, char* nombreArchivo);
 void mostrarTablero(const tTablero* tablero, FILE* salida);
-void probarGenerarTablero(void);
 
 // Primitivas de tablero útiles para otros módulos
 

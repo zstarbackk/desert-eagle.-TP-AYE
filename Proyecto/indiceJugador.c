@@ -93,18 +93,7 @@ int guardarIndiceJugadores(const tArbol* indice, const char* nombreArchivoIndice
 
     return EXITO;
 }
-//int buscarIndiceJugador(tArbol* indice, const char* nickname, tIndiceJugador* indiceEncontrado)
-//{
-//    tArbol * nodoAux;
-//
-//    strcpy(indiceEncontrado->nickname, nickname);
-//    if((nodoAux =buscarNodo(indice,indiceEncontrado, cmpIndiceJugadorPorNickname))!=NULL)
-//    {
-//        printf("Usuario encontrado!");
-//        return EXITO;
-//    }
-//    return JUGADOR_INEXISTENTE;
-//}
+
 int buscarIndiceJugador(tArbol* indice, const char* nickname, tIndiceJugador* indiceEncontrado)
 {
     tIndiceJugador clave;

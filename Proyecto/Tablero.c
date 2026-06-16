@@ -256,28 +256,6 @@ int exportarTablero(const tTablero* tablero, char* nombreArchivo)
     return EXITO;
 }
 
-void probarGenerarTablero(void)
-{
-    tConfig config;
-    tTablero tablero;
-
-    if(cargarConfiguracion("Archivos/config.txt", &config) != EXITO)
-    {
-        printf("Error cargando configuracion\n");
-        return;
-    }
-
-    if(generarTablero(&tablero, &config) != EXITO)
-    {
-        printf("Error generando tablero\n");
-        return;
-    }
-
-    mostrarTablero(&tablero, stdout);
-
-    vaciarTablero(&tablero);
-}
-
 int validarTablero(tTablero* tablero)
 {
     unsigned i;
