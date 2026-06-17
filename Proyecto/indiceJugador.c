@@ -16,7 +16,6 @@ int cargarIndiceJugadores(tArbol* indice, const char* nombreArchivoIndice, const
 
     if(ret != EXITO)
     {
-        printf("\nIndice no encontrado. Se regenera...\n\n");
         return regenerarIndiceJugadores(indice, nombreArchivoUsuarios, nombreArchivoIndice);
     }
 

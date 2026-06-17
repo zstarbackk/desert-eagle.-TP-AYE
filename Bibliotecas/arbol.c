@@ -224,23 +224,32 @@ int __cargarArbolDesdeArchivoOrdenado(tArbol *p, FILE *pf, unsigned tam, int li,
     (*p)->dato = malloc(tam);
     if(!(*p)->dato){
         free(*p);
+        *p=NULL;
         return 0;
     }
+
+    (*p)->der = NULL;
+    (*p)->izq = NULL;
+
     fseek(pf, med * tam, SEEK_SET);
     if(!fread((*p)->dato, tam, 1, pf)){
         free((*p)->dato);
         free(*p);
-        return 1;
+        *p=NULL;
+        return 0;
     }
     (*p)->tam = tam;
-    (*p)->der = NULL;
-    (*p)->izq = NULL;
 
     if(!__cargarArbolDesdeArchivoOrdenado(&(*p)->izq, pf, tam, li, med - 1))
-        return 0;
+        {
+          vaciarArbol(p);
+          return 0;
+        }
     if(!__cargarArbolDesdeArchivoOrdenado(&(*p)->der, pf, tam, med + 1, ls))
-        return 0;
-
+        {
+          vaciarArbol(p);
+          return 0;
+        }
     return 1;
 }
 //rev
